@@ -9,10 +9,10 @@ import org.springframework.context.annotation.ComponentScan;
 
 @Entity
 @ComponentScan
-public class Customer {
+public class Admin {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int customerId;
+	private int adminId;
 	private String userName;
 	private String password;
 	private String address;
@@ -20,11 +20,11 @@ public class Customer {
 	private String email;
 
 	public int getCustomerId() {
-		return customerId;
+		return adminId;
 	}
 
 	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
+		this.adminId = customerId;
 	}
 
 	public String getUserName() {
@@ -69,7 +69,7 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [customerId=" + customerId + ", userName=" + userName + ", password=" + password + ", address="
+		return "Customer [customerId=" + adminId + ", userName=" + userName + ", password=" + password + ", address="
 				+ address + ", mobileNumber=" + mobileNumber + ", email=" + email + "]";
 	}
 

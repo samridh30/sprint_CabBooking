@@ -11,7 +11,7 @@ import Cab.Service.demo.Service.CustomerServiceImpl;
 import Cab.Service.demo.model.Customer;
 
 @RestController
-public class customerController {
+public class CustomerController {
 	@Autowired
 	private CustomerServiceImpl cust;
 	

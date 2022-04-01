@@ -2,8 +2,10 @@ package Cab.Service.demo.Service;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import cg.feb18.spring.cabservice.model.Cab;
-import cg.feb18.spring.cabservice.repository.*;
+
+import Cab.Service.demo.model.Cab;
+import Cab.Service.demo.repository.ICabRepositoryImpl;
+
 import java.util.List;
 
 
@@ -24,6 +26,7 @@ public class CabServiceImpl implements ICabService {
 			csRepo.save(cab);
 			return cab;
 		}
+		}
 		
 		
 		public Cab updateCab(Cab cab) {
@@ -35,6 +38,7 @@ public class CabServiceImpl implements ICabService {
 			else {
 				return null;
 			}
+		}
 			
 		
 			public Cab deleteCab(int cabId) {
@@ -59,7 +63,9 @@ public class CabServiceImpl implements ICabService {
 			
 			
 			public int countCabsOfType(String carType) {
+				return 0;
 				
 	
 	}
-		}
+}
+		

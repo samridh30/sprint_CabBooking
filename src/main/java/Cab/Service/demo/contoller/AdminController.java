@@ -18,7 +18,7 @@ import Cab.Service.demo.model.Admin;
 
 @RestController
 @RequestMapping("/admin")
-public class adminController {
+public class AdminController {
 
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 

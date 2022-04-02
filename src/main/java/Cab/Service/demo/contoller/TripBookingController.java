@@ -2,6 +2,7 @@ package Cab.Service.demo.contoller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -18,6 +19,7 @@ import Cab.Service.demo.model.TripBooking;
 @RequestMapping("/Trip")
 public class TripBookingController {
 	//insertTripBooking
+	@Autowired
 	TripBookingServiceImpl trip;
 	@PostMapping("/insert")
 	TripBooking insertTripBooking(@RequestBody TripBooking tripBooking) {

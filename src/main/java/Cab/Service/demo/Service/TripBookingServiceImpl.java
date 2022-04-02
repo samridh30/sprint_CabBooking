@@ -2,13 +2,17 @@ package Cab.Service.demo.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import Cab.Service.demo.model.TripBooking;
 import Cab.Service.demo.repository.TripBookingRepositoryImpl;
 
 @Service
 public class TripBookingServiceImpl implements ITripBookingService {
+	@Autowired
 	TripBookingRepositoryImpl tripRepo;
+	
 
 	@Override
 	public TripBooking insertTripBooking(TripBooking tripBooking) {
@@ -52,8 +56,10 @@ public class TripBookingServiceImpl implements ITripBookingService {
 
 	@Override
 	public TripBooking calculateBill(int customerId) {
-
-		return null;
+		float rate=tripRepo.findByPerKmRate(customerId);
+		TripBooking trip= tripRepo.getById(customerId);
+		trip.setBill(trip.getDistanceInKm()*rate);
+		return trip;
 	}
 
 }

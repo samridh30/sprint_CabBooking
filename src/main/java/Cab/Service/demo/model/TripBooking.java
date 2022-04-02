@@ -13,13 +13,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+//enum TripStatus {
+//	  IN_PROGRESS,
+//	  FINISHED
+//	}
+
 @Entity
 @Table(name="TripBooking_table")
 public class TripBooking {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int tripBookingId;
-	@OneToOne(cascade=CascadeType.ALL,targetEntity=Customer.class)
+	@OneToOne(targetEntity=Customer.class)
 	private int customerId;
 	@ManyToOne(cascade=CascadeType.ALL)
 	private Driver driver;
@@ -30,6 +35,7 @@ public class TripBooking {
 	private boolean status;
 	private float distanceInKm;
 	private float bill;
+	
 	public int getTripBookingId() {
 		return tripBookingId;
 	}

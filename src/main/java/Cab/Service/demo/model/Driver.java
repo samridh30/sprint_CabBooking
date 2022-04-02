@@ -24,17 +24,7 @@ private float rating;
 @OneToOne
 private Cab cab;
 
-//@OneToMany
-//
-//private List<TripBooking> Trip_id;
 
-
-//public List<TripBooking> getTrip_id() {
-//	return Trip_id;
-//}
-//public void setTrip_id(List<TripBooking> trip_id) {
-//	Trip_id = trip_id;
-//}
 public int getDriverId() {
 	return driverId;
 }

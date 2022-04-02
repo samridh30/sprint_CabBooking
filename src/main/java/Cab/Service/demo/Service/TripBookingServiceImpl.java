@@ -7,7 +7,6 @@ import Cab.Service.demo.model.TripBooking;
 import Cab.Service.demo.repository.TripBookingRepositoryImpl;
 
 @Service
-///////
 public class TripBookingServiceImpl implements ITripBookingService {
 	TripBookingRepositoryImpl tripRepo;
 

@@ -9,5 +9,4 @@ import Cab.Service.demo.model.Admin;
 public interface AdminRepositoryImpl extends JpaRepository<Admin, Integer> {
 
 	public abstract Admin findByUserName(String userName);
-
 }

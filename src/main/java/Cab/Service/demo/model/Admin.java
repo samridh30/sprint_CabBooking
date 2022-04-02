@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @Entity
 @ComponentScan
-@Table(name="Admin_table")
+@Table(name = "Admin_table")
 public class Admin {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,12 +28,12 @@ public class Admin {
 	@Column(name = "Email")
 	private String email;
 
-	public int getCustomerId() {
+	public int getAdminId() {
 		return adminId;
 	}
 
-	public void setCustomerId(int customerId) {
-		this.adminId = customerId;
+	public void setAdminId(int adminId) {
+		this.adminId = adminId;
 	}
 
 	public String getUserName() {

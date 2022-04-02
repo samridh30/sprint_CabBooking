@@ -19,7 +19,7 @@ public class TripBooking {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int tripBookingId;
-	@OneToOne(targetEntity=Customer.class)
+	@OneToOne(cascade=CascadeType.ALL,targetEntity=Customer.class)
 	private int customerId;
 	@ManyToOne(cascade=CascadeType.ALL)
 	private Driver driver;

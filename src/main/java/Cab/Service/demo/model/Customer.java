@@ -1,15 +1,23 @@
 package Cab.Service.demo.model;
 
+import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import org.springframework.context.annotation.ComponentScan;
 
 @Entity
 @ComponentScan
+@Table(name="Customer_table")
 public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +27,16 @@ public class Customer {
 	private String address;
 	private String mobileNumber;
 	private String email;
+	@OneToOne
+	private TripBooking book_id;
+
+	public TripBooking getBook_id() {
+		return book_id;
+	}
+
+	public void setBook_id(TripBooking book_id) {
+		this.book_id = book_id;
+	}
 
 	public int getCustomerId() {
 		return customerId;

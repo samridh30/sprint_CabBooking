@@ -5,13 +5,10 @@ import java.util.List;
 import Cab.Service.demo.model.Cab;
 
 public interface ICabRepository {
-	public Cab insertCab(Cab cab);
+	Cab insertCab(Cab cab);
+	Cab updateCab(Cab cab);
+	Cab deleteCab(int cabId);
+	List<Cab> viewCabsOfType(String carType);
+	int countCabsOfType(String carType);
 
-	public Cab updateCab(Cab cab);
-
-	public Cab deleteCab(int cab);
-
-	public List<Cab> viewCabsOfType(String carType);
-
-	public int countCabsOfType(String carType);
 }

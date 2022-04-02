@@ -1,21 +1,30 @@
 package Cab.Service.demo.model;
 
-import java.sql.Driver;
+
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import org.springframework.beans.factory.annotation.Autowired;
+
 @Entity
+@Table(name="TripBooking_table")
 public class TripBooking {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int tripBookingId;
+	@OneToOne(targetEntity=Customer.class)
 	private int customerId;
-	@Autowired
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Driver driver;
 	private String fromLocation;
 	private String toLocation;
@@ -36,11 +45,11 @@ public class TripBooking {
 	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
 	}
-	public Driver getDricer() {
+	public Driver getDriver() {
 		return driver;
 	}
-	public void setDricer(Driver dricer) {
-		this.driver = dricer;
+	public void setDriver(Driver driver) {
+		this.driver = driver;
 	}
 	public String getFromLocation() {
 		return fromLocation;
@@ -84,14 +93,9 @@ public class TripBooking {
 	public void setBill(float bill) {
 		this.bill = bill;
 	}
-	@Override
-	public String toString() {
-		return "TripBooking [tripBookingId=" + tripBookingId + ", customerId=" + customerId + ", dricer=" + driver
-				+ ", fromLocation=" + fromLocation + ", toLocation=" + toLocation + ", fromDateTime=" + fromDateTime
-				+ ", toDateTime=" + toDateTime + ", status=" + status + ", distanceInKm=" + distanceInKm + ", bill="
-				+ bill + "]";
-	}
 	
+	
+
 	
 	
 

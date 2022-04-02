@@ -5,10 +5,9 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import Cab.Service.demo.model.TripBooking;
+import Cab.Service.demo.model.Cab;
 @Repository
-public interface TripBookingRepositoryImpl extends JpaRepository<TripBooking, Integer>{
-	List<TripBooking> findByCustomerId(int customerId);
-	
+public interface CabRepositoryImpl extends JpaRepository<Cab, Integer> {
+	List<Cab> findByCarType(String carType);
 
 }

@@ -1,29 +1,33 @@
 package Cab.Service.demo.model;
 
-import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-public class Cab{
+@Entity
+@Table(name="Cab_table")
+public class Cab {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="Cab_Id")
 	private int cabId;
+	@Column(name="Car_Type")
 	private String carType;
-	@Override
-	public int hashCode() {
-		return Objects.hash(cabId, carType, perKmRate);
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Cab other = (Cab) obj;
-		return cabId == other.cabId && Objects.equals(carType, other.carType)
-				&& Float.floatToIntBits(perKmRate) == Float.floatToIntBits(other.perKmRate);
-	}
+	@Column(name="RatePerKm")
 	private float perKmRate;
+	
+	
+	
+	
+	
 	public int getCabId() {
 		return cabId;
+	}
+	public void setCabId(int cabId) {
+		this.cabId = cabId;
 	}
 	public String getCarType() {
 		return carType;
@@ -37,15 +41,11 @@ public class Cab{
 	public void setPerKmRate(float perKmRate) {
 		this.perKmRate = perKmRate;
 	}
-	public void setCabId(int cabId) {
-		this.cabId = cabId;
-	}
-	public Cab() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 	@Override
 	public String toString() {
-		return "CabService [cabId=" + cabId + ", carType=" + carType + ", perKmRate=" + perKmRate + "]";
+		return "Cab [cabId=" + cabId + ", carType=" + carType + ", perKmRate=" + perKmRate + "]";
 	}
+	
+	
+
 }

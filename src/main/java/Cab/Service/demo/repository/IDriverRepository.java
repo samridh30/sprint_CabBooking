@@ -5,14 +5,10 @@ import java.util.List;
 import Cab.Service.demo.model.Driver;
 
 public interface IDriverRepository {
+	Driver insertDriver(Driver driver);
+	Driver updateDriver(Driver driver);
+	Driver deleteDriver(int driverId);
+	List<Driver> viewBestDrivers();
+	Driver viewDriver(int driverId);
 
-	public Driver insertDriver(Driver driver);
-
-	public Driver updateDriver(Driver driver);
-
-	public Driver deleteDriver(int driverId);
-
-	public List<Driver> ViewBestDrivers();
-
-	public Driver viewDriver(int driverId);
 }

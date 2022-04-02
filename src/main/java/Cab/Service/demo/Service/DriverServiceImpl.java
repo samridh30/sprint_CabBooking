@@ -6,18 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import Cab.Service.demo.model.Driver;
-import Cab.Service.demo.repository.IDriverRepository;
+import Cab.Service.demo.repository.DriverRepositoryImpl;
 
 @Service
-public class DriverService implements IDriverService {
+public class DriverServiceImpl implements IDriverService {
 	
 	@Autowired
-	private IDriverRepository driRepo;
+	private DriverRepositoryImpl driRepo;
 
 	@Override
 	public Driver insertDriver(Driver driver) {
 		Optional<Driver> dri = driRepo.findById(driver.getDriverId());
 		if(dri.isPresent()) {
+			System.out.println("Duplicate Id");
 			return null;
 		}
 		else {
@@ -52,8 +53,7 @@ public class DriverService implements IDriverService {
 
 	@Override
 	public List<Driver> ViewBestDrivers() {
-		
-		return null;
+		return driRepo.findByViewBestDrivers();
 	}
 
 	@Override

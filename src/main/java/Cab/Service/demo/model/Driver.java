@@ -1,28 +1,40 @@
 package Cab.Service.demo.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.context.annotation.ComponentScan;
 
 @Entity
-@ComponentScan
-@Table(name = "Driver")
+@Table(name = "Driver_table")
 public class Driver {
 @Id
-@GeneratedValue(strategy=GenerationType.IDENTITY)
-@Column(name = "Driver_Id")
+@GeneratedValue(strategy = GenerationType.IDENTITY)
 private int driverId;
-@Column(name = "License_No")
 private String licenseNo;
-@Column(name = "Rating")
 private float rating;
-@Column(name = "Cab")
+@OneToOne
 private Cab cab;
+
+//@OneToMany
+//
+//private List<TripBooking> Trip_id;
+
+
+//public List<TripBooking> getTrip_id() {
+//	return Trip_id;
+//}
+//public void setTrip_id(List<TripBooking> trip_id) {
+//	Trip_id = trip_id;
+//}
 public int getDriverId() {
 	return driverId;
 }
@@ -45,17 +57,6 @@ public Cab getCab() {
 	return cab;
 }
 public void setCab(Cab cab) {
-	this.cab = cab;
-}
-public Driver() {
-	super();
-	
-}
-public Driver(int driverId, String licenseNo, float rating, Cab cab) {
-	super();
-	this.driverId = driverId;
-	this.licenseNo = licenseNo;
-	this.rating = rating;
 	this.cab = cab;
 }
 @Override

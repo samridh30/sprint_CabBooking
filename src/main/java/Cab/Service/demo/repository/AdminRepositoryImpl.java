@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import Cab.Service.demo.model.Admin;
 
 @Repository
-public interface IAdminRepositoryImpl extends JpaRepository<Admin, Integer> {
+public interface AdminRepositoryImpl extends JpaRepository<Admin, Integer> {
 
 	public abstract Admin findByUserName(String userName);
 

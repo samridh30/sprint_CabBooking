@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import Cab.Service.demo.model.Customer;
 
 @Repository
-public interface ICustomerRepositorimpl extends JpaRepository<Customer, Integer> {
+public interface CustomerRepositorImpl extends JpaRepository<Customer, Integer> {
 	
 	public abstract Customer findByUserName(String userName);
 	

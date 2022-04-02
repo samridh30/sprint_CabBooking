@@ -1,9 +1,14 @@
 package Cab.Service.demo.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
 
 import Cab.Service.demo.model.Driver;
 
-public interface IDriverRepository extends JpaRepository<Driver, Integer> {
+public interface IDriverRepository {
+	Driver insertDriver(Driver driver);
+	Driver updateDriver(Driver driver);
+	Driver deleteDriver(int driverId);
+	List<Driver> viewBestDrivers();
+	Driver viewDriver(int driverId);
 
 }

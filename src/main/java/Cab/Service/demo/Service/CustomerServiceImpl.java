@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import Cab.Service.demo.model.Customer;
-import Cab.Service.demo.repository.ICustomerRepositorimpl;
+import Cab.Service.demo.repository.CustomerRepositorImpl;
 @Service
 public class CustomerServiceImpl implements ICustomerService {
 	
 	@Autowired
-	private ICustomerRepositorimpl custRepo;
+	private CustomerRepositorImpl custRepo;
 
 	@Override
 	public Customer insertCustomer(Customer customer) {

@@ -16,7 +16,6 @@ import javax.persistence.Table;
 //	}
 
 @Entity
-@Table(name = "TripBooking_table")
 //@Data
 public class TripBooking {
 	@Id

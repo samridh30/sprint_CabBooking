@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import Cab.Service.demo.model.Admin;
+import Cab.Service.demo.model.Cab;
 import Cab.Service.demo.model.TripBooking;
 
 public interface IAdminService {
@@ -16,7 +17,11 @@ public interface IAdminService {
 
 	public Admin deleteAdmin(int adminId);
 
-	public List<TripBooking> getAllTrips(int customerId);
+	public List<Cab> getCabs();
+
+	public List<Cab> getByCarTypes(String carType);
+
+	public List<TripBooking> getAllTrips();
 
 	public List<TripBooking> getTripsCabwise();
 

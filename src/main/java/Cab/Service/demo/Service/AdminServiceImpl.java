@@ -1,7 +1,6 @@
 package Cab.Service.demo.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,8 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import Cab.Service.demo.model.Admin;
+import Cab.Service.demo.model.Cab;
 import Cab.Service.demo.model.TripBooking;
 import Cab.Service.demo.repository.AdminRepositoryImpl;
+import Cab.Service.demo.repository.CabRepositoryImpl;
+import Cab.Service.demo.repository.TripBookingRepositoryImpl;
 
 @Service
 public class AdminServiceImpl implements IAdminService {
@@ -21,6 +23,10 @@ public class AdminServiceImpl implements IAdminService {
 
 	@Autowired
 	private AdminRepositoryImpl adminRepo;
+	@Autowired
+	private TripBookingRepositoryImpl tripRepo;
+	@Autowired
+	private CabRepositoryImpl car_repo;
 
 	@Override
 	public List<Admin> getAllAdmin() {
@@ -58,9 +64,19 @@ public class AdminServiceImpl implements IAdminService {
 	}
 
 	@Override
-	public List<TripBooking> getAllTrips(int customerId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Cab> getCabs() {
+		return car_repo.findAll();
+	}
+
+	@Override
+	public List<Cab> getByCarTypes(String carType) {
+		return car_repo.findByCarType(carType);
+	}
+
+	@Override
+	public List<TripBooking> getAllTrips() {
+		List<TripBooking> trip = tripRepo.findAll();
+		return trip;
 	}
 
 	@Override
@@ -86,4 +102,5 @@ public class AdminServiceImpl implements IAdminService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 }

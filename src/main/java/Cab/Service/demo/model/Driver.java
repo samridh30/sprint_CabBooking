@@ -2,6 +2,7 @@ package Cab.Service.demo.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,11 +18,11 @@ import org.springframework.context.annotation.ComponentScan;
 @Table(name = "Driver_table")
 public class Driver {
 @Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
+@GeneratedValue
 private int driverId;
 private String licenseNo;
 private float rating;
-@OneToOne
+@OneToOne(cascade= {CascadeType.MERGE ,CascadeType.PERSIST})
 private Cab cab;
 
 

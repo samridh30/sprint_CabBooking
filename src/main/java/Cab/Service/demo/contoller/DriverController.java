@@ -18,14 +18,20 @@ import Cab.Service.demo.Service.DriverServiceImpl;
 import Cab.Service.demo.model.Driver;
 
 @RestController
+
 @RequestMapping("/drv")
+
+
 public class DriverController {
 	@Autowired
 	private DriverServiceImpl drive;
 	
+
 	//http://localhost:8088/drv/insert-driver
 	@PostMapping("/insert-driver")
 	public Driver intDriver(@RequestBody Driver driver) {
+
+	
 		return drive.insertDriver(driver);
 		
 	}

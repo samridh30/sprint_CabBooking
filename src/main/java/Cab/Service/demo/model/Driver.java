@@ -3,6 +3,10 @@ package Cab.Service.demo.model;
 import java.util.List;
 
 
+
+
+import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,27 +22,19 @@ import javax.persistence.Table;
 @Table(name = "driver_table")
 public class Driver {
 @Id
+
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 @Column(name = "driver_Id")
+
 private int driverId;
 @Column(name = "license_No")
 private String licenseNo;
 @Column(name = "rating")
 private float rating;
-@OneToOne
+@OneToOne(cascade= {CascadeType.MERGE ,CascadeType.PERSIST})
 private Cab cab;
 
-//@OneToMany
-//
-//private List<TripBooking> Trip_id;
 
-
-//public List<TripBooking> getTrip_id() {
-//	return Trip_id;
-//}
-//public void setTrip_id(List<TripBooking> trip_id) {
-//	Trip_id = trip_id;
-//}
 public int getDriverId() {
 	return driverId;
 }

@@ -20,23 +20,16 @@ import org.springframework.context.annotation.ComponentScan;
 @Table(name="Customer_table")
 public class Customer {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue
 	private int customerId;
 	private String userName;
 	private String password;
 	private String address;
 	private String mobileNumber;
 	private String email;
-	@OneToOne
-	private TripBooking book_id;
+	
 
-	public TripBooking getBook_id() {
-		return book_id;
-	}
 
-	public void setBook_id(TripBooking book_id) {
-		this.book_id = book_id;
-	}
 
 	public int getCustomerId() {
 		return customerId;

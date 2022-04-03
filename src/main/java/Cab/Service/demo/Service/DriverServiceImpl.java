@@ -47,8 +47,10 @@ public class DriverServiceImpl implements IDriverService {
 			driRepo.deleteById(driverId);
 			return dri.get();
 		}
+		else {
 	
 		return null;
+	}
 	}
 
 	@Override

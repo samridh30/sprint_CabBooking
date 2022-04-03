@@ -10,44 +10,44 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name="Cab_table")
+@Table(name = "Cab_table")
 public class Cab {
 	@Id
 	@GeneratedValue
-	@Column(name="Cab_Id")
+	@Column(name = "Cab_Id")
 	private int cabId;
-	@Column(name="Car_Type")
+	@Column(name = "Car_Type")
 	private String carType;
-	@Column(name="RatePerKm")
+	@Column(name = "RatePerKm")
 	private float perKmRate;
-	
-	
-	
-	
-	
+
 	public int getCabId() {
 		return cabId;
 	}
+
 	public void setCabId(int cabId) {
 		this.cabId = cabId;
 	}
+
 	public String getCarType() {
 		return carType;
 	}
+
 	public void setCarType(String carType) {
 		this.carType = carType;
 	}
+
 	public float getPerKmRate() {
 		return perKmRate;
 	}
+
 	public void setPerKmRate(float perKmRate) {
 		this.perKmRate = perKmRate;
 	}
+
 	@Override
 	public String toString() {
 		return "Cab [cabId=" + cabId + ", carType=" + carType + ", perKmRate=" + perKmRate + "]";
 	}
-	
-	
 
 }

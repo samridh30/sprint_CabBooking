@@ -10,22 +10,14 @@ import javax.persistence.Table;
 import org.springframework.context.annotation.ComponentScan;
 
 @Entity
-@ComponentScan
-@Table(name = "Admin_table")
 public class Admin {
 	@Id
 	@GeneratedValue
-	@Column(name = "admin_id")
 	private int adminId;
-	@Column(name = "User_Name")
 	private String userName;
-	@Column(name = "Password")
 	private String password;
-	@Column(name = "Address")
 	private String address;
-	@Column(name = "MobileNumber")
 	private String mobileNumber;
-	@Column(name = "Email")
 	private String email;
 
 	public int getAdminId() {

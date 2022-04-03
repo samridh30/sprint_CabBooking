@@ -27,27 +27,37 @@ public class CustomerController {
 	@Autowired
 	private CustomerServiceImpl cust;
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
+	
+	//http://localhost:8088/Customer/register
 	@PostMapping("/register")
 	public ResponseEntity<Customer> register(@RequestBody Customer appUser) {
 		LOG.info("Register Customer");
 		return new ResponseEntity<Customer>(cust.insertCustomer(appUser), HttpStatus.OK);
 	}
+	
+	//http://localhost:8088/Customer/update
 	@PutMapping("/update")
 	public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer) {
 		LOG.info(customer.toString());
 		return new ResponseEntity<Customer>(cust.updateCustomer(customer),HttpStatus.OK);
 	}
+	
+	//http://localhost:8088/Customer/delete/{Id}
 	@DeleteMapping("/delete/{Id}")
 	public ResponseEntity<Customer> deleteCustomer(@PathVariable(name="Id") int Id) {
 		LOG.info(Integer.toString(Id));
 		return new ResponseEntity<Customer>(cust.deleteCustomer(Id), HttpStatus.OK);
 		
 	}
+	
+	//http://localhost:8088/Customer/AllCustomers
 	@GetMapping("/AllCustomers")
 	public ResponseEntity<List<Customer>> viewCustomers(){
 		LOG.info("All Customers Fetched");
 		return new ResponseEntity<List<Customer>>(cust.viewCustomers(), HttpStatus.OK);
 	}
+	
+	//http://localhost:8088/Customer/viewCustomer/{Id}
 	@GetMapping("/viewCustomer/{Id}")
 	public ResponseEntity<Customer> viewCustomer(@PathVariable(name="Id") int Id) {
 		return new ResponseEntity<Customer>(cust.viewCustomer(Id), HttpStatus.OK);

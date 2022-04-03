@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import Cab.Service.demo.Exception.CustomerNotFoundException;
 import Cab.Service.demo.model.Customer;
 import Cab.Service.demo.repository.CustomerRepositorImpl;
 
@@ -35,7 +36,7 @@ public class CustomerServiceImpl implements ICustomerService {
 			custRepo.save(customer);
 			return customer;
 		} else {
-			return null;
+			 throw new CustomerNotFoundException("Invalid Customer");
 		}
 	}
 
@@ -45,16 +46,16 @@ public class CustomerServiceImpl implements ICustomerService {
 		if (cus.isPresent()) {
 			custRepo.deleteById(customerId);
 			return cus.get();
+		}else {
+			throw new CustomerNotFoundException("Invalid Id-"+customerId);
 		}
-
-		return null;
 	}
 
 	@Override
 	public List<Customer> viewCustomers() {
 		List<Customer> cus = custRepo.findAll();
 		if (cus.isEmpty()) {
-			return null;
+			throw new CustomerNotFoundException("Empty Table");
 		} else {
 			return cus;
 		}
@@ -66,8 +67,7 @@ public class CustomerServiceImpl implements ICustomerService {
 		if (cus.isPresent()) {
 			return cus.get();
 		} else {
-
-			return null;
+			throw new CustomerNotFoundException("Invalid Id");
 		}
 	}
 

@@ -17,7 +17,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 @Entity
 @ComponentScan
-@Table(name="Customer_table")
 public class Customer {
 	@Id
 	@GeneratedValue

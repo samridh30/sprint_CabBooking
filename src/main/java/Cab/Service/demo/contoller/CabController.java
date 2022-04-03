@@ -27,7 +27,7 @@ public class CabController {
 		return car.updateCab(cab);
 	
 	}
-	@DeleteMapping("/Cab/Delete")
+	@DeleteMapping("/Delete")
 	public Cab deleteCab(Cab cab) {
 		return car.deleteCab(cab);
 	

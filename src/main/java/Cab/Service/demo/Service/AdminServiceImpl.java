@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import Cab.Service.demo.model.Admin;
+import Cab.Service.demo.model.Cab;
 import Cab.Service.demo.model.TripBooking;
 import Cab.Service.demo.repository.AdminRepositoryImpl;
+import Cab.Service.demo.repository.CabRepositoryImpl;
 import Cab.Service.demo.repository.TripBookingRepositoryImpl;
 
 @Service
@@ -23,6 +25,8 @@ public class AdminServiceImpl implements IAdminService {
 	private AdminRepositoryImpl adminRepo;
 	@Autowired
 	private TripBookingRepositoryImpl tripRepo;
+	@Autowired
+	private CabRepositoryImpl car_repo;
 
 	@Override
 	public List<Admin> getAllAdmin() {
@@ -60,6 +64,16 @@ public class AdminServiceImpl implements IAdminService {
 	}
 
 	@Override
+	public List<Cab> getCabs() {
+		return car_repo.findAll();
+	}
+
+	@Override
+	public List<Cab> getByCarTypes(String carType) {
+		return car_repo.findByCarType(carType);
+	}
+
+	@Override
 	public List<TripBooking> getAllTrips() {
 		List<TripBooking> trip = tripRepo.findAll();
 		return trip;
@@ -88,4 +102,5 @@ public class AdminServiceImpl implements IAdminService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 }

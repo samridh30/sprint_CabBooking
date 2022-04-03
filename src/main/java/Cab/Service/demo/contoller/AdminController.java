@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import Cab.Service.demo.Service.AdminServiceImpl;
 import Cab.Service.demo.model.Admin;
+import Cab.Service.demo.model.Cab;
 
 @RestController
 @RequestMapping("/admin")
@@ -28,24 +29,43 @@ public class AdminController {
 	@Autowired
 	private AdminServiceImpl adm;
 
+//	http://localhost:8088/admin/getAll
+//	Fetches all Admins as a list
 	@GetMapping("getAll")
 	public ResponseEntity<List<Admin>> getAdmin() {
 		LOG.info("ok");
 		return new ResponseEntity<List<Admin>>(adm.getAllAdmin(), HttpStatus.OK);
 	}
 
+//	http://localhost:8088/admin/getCabs
+	@GetMapping("/getCabs")
+	public ResponseEntity<List<Cab>> getAllCab() {
+//		LOG.info();
+		return new ResponseEntity<List<Cab>>(adm.getCabs(), HttpStatus.OK);
+	}
+
+//	http://localhost:8088/admin/getCabs/mini
+	@GetMapping("/getCabs/{carType}")
+	public ResponseEntity<List<Cab>> getByCarType(@PathVariable(name = "carType") String carType) {
+		LOG.info(carType);
+		return new ResponseEntity<List<Cab>>(adm.getByCarTypes(carType), HttpStatus.OK);
+	}
+
+//	http://localhost:8088/admin/register
 	@PostMapping("/register")
 	public ResponseEntity<Admin> insertAdmin(@RequestBody Admin admin) {
 		LOG.info(admin.toString());
 		return new ResponseEntity<Admin>(adm.insertAdmin(admin), HttpStatus.CREATED);
 	}
 
+//	http://localhost:8088/admin/update
 	@PutMapping("/update")
 	public ResponseEntity<Admin> updateAdmin(@RequestBody Admin admin) {
 		LOG.info(admin.toString());
 		return new ResponseEntity<Admin>(adm.updateAdmin(admin), HttpStatus.OK);
 	}
 
+//	//	http://localhost:8088/admin/delete/{1}
 	@DeleteMapping("/delete/{eid}")
 	public ResponseEntity<Admin> deleteAdmin(@PathVariable(name = "eid") String adminId) {
 		LOG.info(adminId);

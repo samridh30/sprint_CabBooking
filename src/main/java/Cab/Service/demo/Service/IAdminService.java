@@ -16,7 +16,7 @@ public interface IAdminService {
 
 	public Admin deleteAdmin(int adminId);
 
-	public List<TripBooking> getAllTrips(int customerId);
+	public List<TripBooking> getAllTrips();
 
 	public List<TripBooking> getTripsCabwise();
 

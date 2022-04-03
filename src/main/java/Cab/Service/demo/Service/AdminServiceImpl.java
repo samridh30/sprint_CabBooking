@@ -1,7 +1,6 @@
 package Cab.Service.demo.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 import Cab.Service.demo.model.Admin;
 import Cab.Service.demo.model.TripBooking;
 import Cab.Service.demo.repository.AdminRepositoryImpl;
+import Cab.Service.demo.repository.TripBookingRepositoryImpl;
 
 @Service
 public class AdminServiceImpl implements IAdminService {
@@ -21,6 +21,8 @@ public class AdminServiceImpl implements IAdminService {
 
 	@Autowired
 	private AdminRepositoryImpl adminRepo;
+	@Autowired
+	private TripBookingRepositoryImpl tripRepo;
 
 	@Override
 	public List<Admin> getAllAdmin() {
@@ -58,9 +60,9 @@ public class AdminServiceImpl implements IAdminService {
 	}
 
 	@Override
-	public List<TripBooking> getAllTrips(int customerId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<TripBooking> getAllTrips() {
+		List<TripBooking> trip = tripRepo.findAll();
+		return trip;
 	}
 
 	@Override

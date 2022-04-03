@@ -6,17 +6,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import Cab.Service.demo.model.Customer;
 import Cab.Service.demo.model.TripBooking;
-import Cab.Service.demo.repository.CustomerRepositorImpl;
 import Cab.Service.demo.repository.TripBookingRepositoryImpl;
 
 @Service
 public class TripBookingServiceImpl implements ITripBookingService {
 	@Autowired
 	TripBookingRepositoryImpl tripRepo;
-	@Autowired
-	CustomerRepositorImpl cus;
 	
 
 	@Override
@@ -25,8 +21,8 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		if(trip.isPresent()) {
 			return null;
 		}else {
-			tripRepo.save(tripBooking);
-			return tripBooking;
+			return tripRepo.save(tripBooking);
+			
 		}
 	}
 
@@ -34,12 +30,12 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	public TripBooking updateTripBooking(TripBooking tripBooking) {
 		Optional<TripBooking> trip=tripRepo.findById(tripBooking.getTripBookingId());
 		if(trip.isPresent()) {
-			tripRepo.save(tripBooking);
+			return tripRepo.save(tripBooking);
 		}else {
 			return null;
 		}
 
-		return null;
+	
 	}
 
 	@Override
@@ -55,8 +51,8 @@ public class TripBookingServiceImpl implements ITripBookingService {
 
 	@Override
 	public List<TripBooking> ViewAllTripsCustomer(int customerId) {
-		Optional<Customer> c=cus.findById(customerId);
-		List<TripBooking> trip= tripRepo.findByCustomer(c.get());
+		
+		List<TripBooking> trip= tripRepo.findByCustomer(customerId);
 		return trip;
 	}
 

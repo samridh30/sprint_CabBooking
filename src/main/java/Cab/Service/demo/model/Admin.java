@@ -14,7 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
 @Table(name = "Admin_table")
 public class Admin {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue
 	@Column(name = "admin_id")
 	private int adminId;
 	@Column(name = "User_Name")

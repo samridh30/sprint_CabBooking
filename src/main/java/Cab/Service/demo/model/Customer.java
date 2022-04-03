@@ -20,7 +20,7 @@ import org.springframework.context.annotation.ComponentScan;
 @Table(name="Customer_table")
 public class Customer {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue
 	private int customerId;
 	private String userName;
 	private String password;

@@ -35,6 +35,7 @@ public class Customer {
 	private String password;
 	private String address;
 	private String mobileNumber;
+	
 	@Email
 	private String email;
 	private Role role;

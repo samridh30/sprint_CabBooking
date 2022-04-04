@@ -15,6 +15,8 @@ import javax.persistence.Table;
 
 import org.springframework.context.annotation.ComponentScan;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @ComponentScan
 public class Customer {
@@ -26,12 +28,21 @@ public class Customer {
 	private String address;
 	private String mobileNumber;
 	private String email;
-	
+	@JsonIgnore
+	private boolean status=true;
 
 
 
 	public int getCustomerId() {
 		return customerId;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 
 	public void setCustomerId(int customerId) {

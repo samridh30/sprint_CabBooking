@@ -10,6 +10,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 //enum TripStatus {
 //	  IN_PROGRESS,
 //	  FINISHED
@@ -17,21 +22,24 @@ import javax.persistence.Table;
 
 @Entity
 //@Data
+@Component
 public class TripBooking {
 	@Id
 	@GeneratedValue
 	private int tripBookingId;
-	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@ManyToOne(cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "customer_Id")
 	private Customer customer;
-	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@ManyToOne(cascade = {  CascadeType.MERGE })
 	@JoinColumn(name = "driver_Id")
 	private Driver driver;
 	private String fromLocation;
 	private String toLocation;
 	private LocalDateTime fromDateTime;
 	private LocalDateTime toDateTime;
-	private boolean status = true;
+
+	//@JsonIgnore
+	private boolean status=true;
 	private float distanceInKm;
 	private float bill;
 

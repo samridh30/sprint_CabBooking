@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import Cab.Service.demo.Exception.CabNotFoundException;
 import Cab.Service.demo.model.Cab;
 import Cab.Service.demo.repository.CabRepositoryImpl;
+
 @Service
 public class CabServiceImpl implements ICabService {
 	@Autowired
@@ -16,27 +17,27 @@ public class CabServiceImpl implements ICabService {
 
 	@Override
 	public Cab insertCab(Cab cab) {
-		Optional<Cab> car=car_repo.findById(cab.getCabId());
-		if(car.isEmpty()) {
+		Optional<Cab> car = car_repo.findById(cab.getCabId());
+		if (car.isEmpty()) {
 			car_repo.save(cab);
 			return cab;
-		}else {
+		} else {
 			return null;
 		}
 	}
 
 	@Override
 	public Cab updateCab(Cab cab) {
-		Optional<Cab> car=car_repo.findById(cab.getCabId());
-		if(car.isPresent()) {
+		Optional<Cab> car = car_repo.findById(cab.getCabId());
+		if (car.isPresent()) {
 			car_repo.save(cab);
 			return cab;
-		}else {
-			 throw new CabNotFoundException("Invalid Customer");
+		} else {
+			throw new CabNotFoundException("Invalid Customer");
 		}
 	}
 
-	@Override
+	@Overrid
 	public Cab deleteCab(int cabId) {
 		Optional<Cab> car=car_repo.findById(cabId);
 		if(car.isPresent()) {
@@ -49,13 +50,13 @@ public class CabServiceImpl implements ICabService {
 
 	@Override
 	public List<Cab> viewCabsOfType(String carType) {
-		List<Cab> car= car_repo.findByCarType(carType);
+		List<Cab> car = car_repo.findByCarType(carType);
 		return car;
 	}
 
 	@Override
 	public int countCabsOfType(String carType) {
-	
+
 		return 0;
 	}
 

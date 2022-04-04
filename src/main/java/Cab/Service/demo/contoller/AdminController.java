@@ -20,6 +20,8 @@ import Cab.Service.demo.Service.AdminServiceImpl;
 import Cab.Service.demo.model.Admin;
 import Cab.Service.demo.model.Cab;
 
+//admin/Driver/getDriver
+///admin/cab/getCabs
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
@@ -31,7 +33,7 @@ public class AdminController {
 
 //	http://localhost:8088/admin/getAll
 //	Fetches all Admins as a list
-	@GetMapping("getAll")
+	@GetMapping("/getAll")
 	public ResponseEntity<List<Admin>> getAdmin() {
 		LOG.info("ok");
 		return new ResponseEntity<List<Admin>>(adm.getAllAdmin(), HttpStatus.OK);

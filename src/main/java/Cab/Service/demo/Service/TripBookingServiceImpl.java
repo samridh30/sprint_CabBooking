@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import Cab.Service.demo.Exception.TripNotFoundException;
 import Cab.Service.demo.model.TripBooking;
 import Cab.Service.demo.repository.TripBookingRepositoryImpl;
 
@@ -21,7 +22,12 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		if(trip.isPresent()) {
 			return null;
 		}else {
-			return tripRepo.save(tripBooking);
+			tripRepo.save(tripBooking);
+
+			int cus_id=tripBooking.getCustomer().getCustomerId();
+			TripBooking book=calculateBill(cus_id);
+			
+			return tripRepo.save(book);
 			
 		}
 	}
@@ -32,7 +38,7 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		if(trip.isPresent()) {
 			return tripRepo.save(tripBooking);
 		}else {
-			return null;
+			throw new TripNotFoundException("Invalid Data");
 		}
 
 	
@@ -45,7 +51,7 @@ public class TripBookingServiceImpl implements ITripBookingService {
 			tripRepo.deleteById(tripBookingId);
 			return trip.get();		}
 		else {
-			return null;
+			throw new TripNotFoundException("Invalid Id-"+tripBookingId);
 		}
 	}
 
@@ -54,12 +60,14 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		
 		List<TripBooking> trip= tripRepo.findByCustomer(customerId);
 		return trip;
+		//return null;
 	}
 
 	@Override
 	public TripBooking calculateBill(int customerId) {
 		float rate=tripRepo.findByPerKmRate(customerId);
-		TripBooking trip= tripRepo.getById(customerId);
+		TripBooking t= tripRepo.findByCustomerId(customerId);
+		TripBooking trip= tripRepo.getById(t.getTripBookingId());
 		trip.setBill(trip.getDistanceInKm()*rate);
 		return trip;
 	}

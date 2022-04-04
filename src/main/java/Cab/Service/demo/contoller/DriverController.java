@@ -41,7 +41,7 @@ public class DriverController {
 		return drive.updateDriver(driver);
 		
 	}
-	//http://localhost:8088/drv/delete-driver
+	//http://localhost:8088/drv/delete-driver/{did}
 	@DeleteMapping("/delete-driver")
 	public Driver delDriver( @PathVariable(name ="did") int driverId) {
 		return drive.deleteDriver(driverId);
@@ -54,7 +54,7 @@ public class DriverController {
 		return drive.ViewBestDrivers();
 	}
 
-	//http://localhost:8088/drv/view-drivers
+	//http://localhost:8088/drv/view-drivers/{did}
 	@GetMapping("/view-driver")
 	public Driver ViewDriver( @PathVariable(name = "did") int driverId) {
 		return drive.viewDriver(driverId);

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import Cab.Service.demo.Exception.CabNotFoundException;
 import Cab.Service.demo.model.Cab;
 import Cab.Service.demo.repository.CabRepositoryImpl;
 @Service
@@ -31,8 +32,8 @@ public class CabServiceImpl implements ICabService {
 			car_repo.save(cab);
 			return cab;
 		}else {
-	
-		return null;}
+			 throw new CabNotFoundException("Invalid Customer");
+		}
 	}
 
 	@Override
@@ -42,7 +43,7 @@ public class CabServiceImpl implements ICabService {
 			car_repo.delete(cab);
 			return cab;
 		}else {
-			return null;
+			throw new CabNotFoundException("Invalid Id");
 		}
 	}
 

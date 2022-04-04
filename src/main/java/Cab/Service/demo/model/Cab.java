@@ -17,6 +17,15 @@ public class Cab {
 	private int cabId;
 	private String carType;
 	private float perKmRate;
+	private String status;
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	public int getCabId() {
 		return cabId;
@@ -44,7 +53,7 @@ public class Cab {
 
 	@Override
 	public String toString() {
-		return "Cab [cabId=" + cabId + ", carType=" + carType + ", perKmRate=" + perKmRate + "]";
+		return "Cab [cabId=" + cabId + ", carType=" + carType + ", perKmRate=" + perKmRate + ", status=" + status + "]";
 	}
 
 }

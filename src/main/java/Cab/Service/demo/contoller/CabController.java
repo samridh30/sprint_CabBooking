@@ -16,19 +16,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import Cab.Service.demo.Service.CabServiceImpl;
 import Cab.Service.demo.model.Cab;
+
 @RestController
 @RequestMapping("/cab")
 public class CabController {
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private CabServiceImpl car;
-	
+
 	@PostMapping("/insert")
 	public ResponseEntity<Cab> insertCab(@RequestBody Cab cab) {
 		LOG.info(cab.toString());
 		return new ResponseEntity<Cab>(car.insertCab(cab), HttpStatus.CREATED);
-		}
-	
+	}
+
 	@PutMapping("/update")
 	public ResponseEntity<Cab> updateCab(@RequestBody Cab cab) {
 		LOG.info(cab.toString());
@@ -47,5 +48,3 @@ public class CabController {
 //		return new ResponseEntity<Cab>(car.viewCabsofType(carType), HttpStatus.OK);
 //	}
 	}
-
-

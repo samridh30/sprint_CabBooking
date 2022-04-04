@@ -16,7 +16,7 @@ public interface TripBookingRepositoryImpl extends JpaRepository<TripBooking, In
 	List<TripBooking> findByCustomer(@Param("customerId")  int customerId);
 	
 	@Transactional
-	@Query(value= "select c.per_km_rate from trip_booking t  join driver d on d.driver_id=t.driver_id join cab c on d.cab_cab_id=c.cab_id where t.customer_id=:Id", nativeQuery=true)
+	@Query(value= "select c.per_km_rate from trip_booking t  join driver d on d.driver_id=t.driver_id join cab c on d.cab_cab_id=c.cab_id where t.customer_id=:Id and t.status=true", nativeQuery=true)
 	float findByPerKmRate(@Param("Id")int Id);
 	
 	@Transactional
@@ -24,8 +24,20 @@ public interface TripBookingRepositoryImpl extends JpaRepository<TripBooking, In
 	@Query(value="delete from trip_booking t where t.customer_id=:Id", nativeQuery=true)
 	void deleteTripByCustomerId(@Param("Id")int Id);
 	
-	@Query(value="select * from trip_booking t where t.customer_id=:Id", nativeQuery=true)
+	@Query(value="select * from trip_booking t where t.customer_id=:Id and t.status=true", nativeQuery=true)
 	TripBooking findByCustomerId(@Param("Id") int customerId);
+	
+	public default boolean validateTripInsert(int Id) {
+		
+		return true;
+		
+	}
+	
+	@Query(value="select t.customer_id from trip_booking t where t.customer_id=:customerId and t.status=true", nativeQuery=true)
+	List<Integer> IsCustomerInTrip(@Param("customerId")  int customerId);
+	
+	
+	 
 	
 
 }

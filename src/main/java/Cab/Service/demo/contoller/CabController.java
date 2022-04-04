@@ -34,17 +34,17 @@ public class CabController {
 	public ResponseEntity<Cab> updateCab(@RequestBody Cab cab) {
 		LOG.info(cab.toString());
 		return new ResponseEntity<Cab>(car.updateCab(cab), HttpStatus.CREATED);
-		}
-	
+	}
+
 	@DeleteMapping("/delete/{cabId}")
 	public ResponseEntity<Cab> deleteCab(@PathVariable(name = "cabId") int cabId) {
 		LOG.info(Integer.toString(cabId));
 		return new ResponseEntity<Cab>(car.deleteCab(cabId), HttpStatus.OK);
 	}
-	
-//	@GetMapping("/view/{carType}")
-//	ResponseEntity<Cab> viewCabsofType(@PathVariable(name="carType") String carType){
+
+//	@GetMapping("/view")
+//	ResponseEntity<Cab> ViewAllCabs(@PathVariable(name = "carType") String carType) {
 //		LOG.info(carType);
 //		return new ResponseEntity<Cab>(car.viewCabsofType(carType), HttpStatus.OK);
 //	}
-	}
+}

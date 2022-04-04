@@ -43,14 +43,6 @@ public class Customer {
 		return customerId;
 	}
 
-	public boolean isStatus() {
-		return status;
-	}
-
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
-
 	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
 	}

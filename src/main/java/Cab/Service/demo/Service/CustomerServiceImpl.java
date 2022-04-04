@@ -86,9 +86,8 @@ public class CustomerServiceImpl implements ICustomerService {
 	@Override
 	public Customer loginUser(String email, String password) {
 //		LOG.info(appUser.toString());
-		System.out.println(email + password);
-		System.out.println(custRepo.findByEmail(email));
 		Customer customer = custRepo.findByEmail(email);
+		System.out.println(custRepo.findByEmail(email).getCustomerId());
 
 		System.out.println(customer.toString());
 		if (password.equals(customer.getPassword())) {

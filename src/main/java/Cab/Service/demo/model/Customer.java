@@ -10,6 +10,8 @@ import javax.validation.constraints.Size;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Component
 public class Customer {
@@ -39,6 +41,14 @@ public class Customer {
 
 	public int getCustomerId() {
 		return customerId;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 
 	public void setCustomerId(int customerId) {

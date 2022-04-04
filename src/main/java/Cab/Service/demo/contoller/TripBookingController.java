@@ -57,10 +57,28 @@ public class TripBookingController {
 	}
 	
 	//http://localhost:8088/Trip/bill/{Id}
-//	@GetMapping("/bill/{Id}")
-//	ResponseEntity<TripBooking> calculateBill(@PathVariable(name="Id") int Id) {
-//		LOG.info(Integer.toString(Id)+"Bill");
-//		return new ResponseEntity<TripBooking>(trip.calculateBill(Id), HttpStatus.OK);
-//	}
+	@GetMapping("/bill/{Id}")
+	ResponseEntity<TripBooking> calculateBill(@PathVariable(name="Id") int Id) {
+		LOG.info(Integer.toString(Id)+"Bill");
+		return new ResponseEntity<TripBooking>(trip.calculateBill(Id), HttpStatus.OK);
+	}
+	
+	//http://localhost:8088/Trip/endTrip/68
+	@PutMapping("/endTrip/{Id}")
+	ResponseEntity<TripBooking> endTripBooking(@PathVariable(name="Id") int Id) {
+		LOG.info(Integer.toString(Id)+" "+"Updated");
+		return new ResponseEntity<TripBooking>(trip.endTrip(Id), HttpStatus.OK);
+	}
+	
+	//http://localhost:8088/Trip/view/kukatpally/nyz
+	@GetMapping("/view/{fromlocation}/{tolocation}")
+	ResponseEntity<TripBooking> BookCab(@PathVariable(name="fromlocation") String fromlocation, @PathVariable(name="tolocation") String tolocation){
+		LOG.info(fromlocation+"Feteched");
+		return new ResponseEntity<TripBooking>(trip.BookCab(fromlocation, tolocation, 69), HttpStatus.OK);
+	}
+
+	
+	
+
 
 }

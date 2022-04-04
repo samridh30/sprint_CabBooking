@@ -2,15 +2,13 @@ package Cab.Service.demo.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import Cab.Service.demo.model.Admin;
-import Cab.Service.demo.model.Cab;
+import Cab.Service.demo.model.Role;
 import Cab.Service.demo.model.TripBooking;
 import Cab.Service.demo.repository.AdminRepositoryImpl;
 import Cab.Service.demo.repository.CabRepositoryImpl;
@@ -28,55 +26,75 @@ public class AdminServiceImpl implements IAdminService {
 	@Autowired
 	private CabRepositoryImpl car_repo;
 
-	@Override
-	public List<Admin> getAllAdmin() {
-		return adminRepo.findAll();
-	}
+	@Autowired
+	private CustomerServiceImpl User;
+
+//	@Override
+//	public List<Admin> getAllAdmin() {
+//		return adminRepo.findAll();
+//	}
+//
+//	@Override
+//	public Admin insertAdmin(Admin admin) {
+//		LOG.info(admin.toString());
+//		Optional<Admin> ad = adminRepo.findById(admin.getAdminId());
+//		if (ad.isPresent())
+//			return null;
+//		else
+//			adminRepo.save(admin);
+//		return admin;
+//	}
+//
+//	@Override
+//	public Admin updateAdmin(Admin admin) {
+//		Optional<Admin> ad = adminRepo.findById(admin.getAdminId());
+//		if (ad.isPresent())
+//			return adminRepo.save(admin);
+//		else
+//			return null;
+//	}
+//
+//	@Override
+//	public Admin deleteAdmin(int adminId) {
+//		Optional<Admin> ad = adminRepo.findById(adminId);
+//		if (ad.isPresent()) {
+//			adminRepo.deleteById(adminId);
+//			return ad.get();
+//		}
+//		return null;
+//	}
+//
+//	@Override
+//	public List<Cab> getCabs() {
+//		return car_repo.findAll();
+//	}
+//
+//	@Override
+//	public List<Cab> getByCarTypes(String carType) {
+//		return car_repo.findByCarType(carType);
+//	}
 
 	@Override
-	public Admin insertAdmin(Admin admin) {
-		LOG.info(admin.toString());
-		Optional<Admin> ad = adminRepo.findById(admin.getAdminId());
-		if (ad.isPresent())
-			return null;
-		else
-			adminRepo.save(admin);
-		return admin;
-	}
-
-	@Override
-	public Admin updateAdmin(Admin admin) {
-		Optional<Admin> ad = adminRepo.findById(admin.getAdminId());
-		if (ad.isPresent())
-			return adminRepo.save(admin);
-		else
-			return null;
-	}
-
-	@Override
-	public Admin deleteAdmin(int adminId) {
-		Optional<Admin> ad = adminRepo.findById(adminId);
-		if (ad.isPresent()) {
-			adminRepo.deleteById(adminId);
-			return ad.get();
+	public List<TripBooking> getAllTrips() {
+		if (User.loggedInUser != null) {
+			if (User.loggedInUser.getRole() == Role.ADMIN) {
+				List<TripBooking> trip = tripRepo.findAll();
+				return trip;
+			}
 		}
 		return null;
 	}
 
 	@Override
-	public List<Cab> getCabs() {
-		return car_repo.findAll();
-	}
-
-	@Override
-	public List<Cab> getByCarTypes(String carType) {
-		return car_repo.findByCarType(carType);
-	}
-
-	@Override
-	public List<TripBooking> getAllTrips() {
-		List<TripBooking> trip = tripRepo.findAll();
-		return trip;
+	public String check() {
+		if (User.loggedInUser != null) {
+			if (User.loggedInUser.getRole() == Role.ADMIN) {
+				return "Works";
+			} else {
+				return "Not logged IN";
+			}
+		}
+		return "Not logged in";
 	}
 
 	@Override

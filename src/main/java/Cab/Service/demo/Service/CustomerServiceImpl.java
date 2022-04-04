@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import Cab.Service.demo.Exception.CustomerNotFoundException;
+import Cab.Service.demo.Exception.InvalidUserNamePasswordException;
 import Cab.Service.demo.model.Customer;
-import Cab.Service.demo.model.TripBooking;
 import Cab.Service.demo.repository.CustomerRepositorImpl;
 import Cab.Service.demo.repository.TripBookingRepositoryImpl;
 
@@ -20,6 +20,9 @@ public class CustomerServiceImpl implements ICustomerService {
 	@Autowired
 	private TripBookingRepositoryImpl trip;
 
+	@Autowired
+	Customer loggedInUser;
+
 	@Override
 	public Customer insertCustomer(Customer customer) {
 		Optional<Customer> cus = custRepo.findById(customer.getCustomerId());
@@ -28,12 +31,10 @@ public class CustomerServiceImpl implements ICustomerService {
 		} else {
 			custRepo.save(customer);
 			return customer;
-			
-			
+
 		}
 
 	}
-	
 
 	@Override
 	public Customer updateCustomer(Customer customer) {
@@ -42,33 +43,23 @@ public class CustomerServiceImpl implements ICustomerService {
 			custRepo.save(customer);
 			return customer;
 		} else {
-			 throw new CustomerNotFoundException("Invalid Customer");
+			throw new CustomerNotFoundException("Invalid Customer");
 		}
 	}
 
 	@Override
 	public Customer deleteCustomer(int customerId) {
 		Optional<Customer> cus = custRepo.findById(customerId);
-		if(cus.isPresent()) {
+		if (cus.isPresent()) {
 
-		trip.deleteTripByCustomerId(customerId);
-		custRepo.deleteCustomerById(customerId);
-		return cus.get();}
-		else {
-			throw new CustomerNotFoundException("Invalid Id-"+customerId);
-			
+			trip.deleteTripByCustomerId(customerId);
+			custRepo.deleteCustomerById(customerId);
+			return cus.get();
+		} else {
+			throw new CustomerNotFoundException("Invalid Id-" + customerId);
+
 		}
-		
-		//return null;
-//		Optional<Customer> cus = custRepo.findById(customerId);
-//		if (cus.isPresent()) {
-//			custRepo.deleteById(customerId);
-//			return cus.get();
-//		}else {
-//			throw new CustomerNotFoundException("Invalid Id-"+customerId);
-//		}
-		
-		
+
 	}
 
 	@Override
@@ -84,7 +75,6 @@ public class CustomerServiceImpl implements ICustomerService {
 	@Override
 	public Customer viewCustomer(int customerId) {
 
-		
 		Optional<Customer> cus = custRepo.findById(customerId);
 		if (cus.isPresent()) {
 			return cus.get();
@@ -94,13 +84,34 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	@Override
-	public Customer validateCustomer(String userName, String password) {
-		Customer cus = custRepo.findByUserName(userName);
-		if (userName == cus.getUserName() && password == cus.getPassword()) {
-			return cus;
+	public Customer loginUser(String email, String password) {
+//		LOG.info(appUser.toString());
+		System.out.println(email + password);
+		System.out.println(custRepo.findByEmail(email));
+		Customer customer = custRepo.findByEmail(email);
+
+		System.out.println(customer.toString());
+		if (password.equals(customer.getPassword())) {
+			loggedInUser = customer;
+			return customer;
 		} else {
-			return null;
+			throw new InvalidUserNamePasswordException("Invalid UserName or Password");
 		}
+	}
+
+	@Override
+	public String logoutUser(String userName) {
+		if (loggedInUser.getUserName().equals(userName)) {
+			loggedInUser = null;
+			return userName;
+		} else
+			throw new InvalidUserNamePasswordException("Invalid UserName or Password");
+	}
+
+	@Override
+	public Customer validateCustomer(String userName, String password) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

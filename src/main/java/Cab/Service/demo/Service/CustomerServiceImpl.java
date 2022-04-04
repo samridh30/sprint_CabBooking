@@ -8,13 +8,17 @@ import org.springframework.stereotype.Service;
 
 import Cab.Service.demo.Exception.CustomerNotFoundException;
 import Cab.Service.demo.model.Customer;
+import Cab.Service.demo.model.TripBooking;
 import Cab.Service.demo.repository.CustomerRepositorImpl;
+import Cab.Service.demo.repository.TripBookingRepositoryImpl;
 
 @Service
 public class CustomerServiceImpl implements ICustomerService {
 
 	@Autowired
 	private CustomerRepositorImpl custRepo;
+	@Autowired
+	private TripBookingRepositoryImpl trip;
 
 	@Override
 	public Customer insertCustomer(Customer customer) {
@@ -24,6 +28,8 @@ public class CustomerServiceImpl implements ICustomerService {
 		} else {
 			custRepo.save(customer);
 			return customer;
+			
+			
 		}
 
 	}
@@ -43,12 +49,26 @@ public class CustomerServiceImpl implements ICustomerService {
 	@Override
 	public Customer deleteCustomer(int customerId) {
 		Optional<Customer> cus = custRepo.findById(customerId);
-		if (cus.isPresent()) {
-			custRepo.deleteById(customerId);
-			return cus.get();
-		}else {
+		if(cus.isPresent()) {
+
+		trip.deleteTripByCustomerId(customerId);
+		custRepo.deleteCustomerById(customerId);
+		return cus.get();}
+		else {
 			throw new CustomerNotFoundException("Invalid Id-"+customerId);
+			
 		}
+		
+		//return null;
+//		Optional<Customer> cus = custRepo.findById(customerId);
+//		if (cus.isPresent()) {
+//			custRepo.deleteById(customerId);
+//			return cus.get();
+//		}else {
+//			throw new CustomerNotFoundException("Invalid Id-"+customerId);
+//		}
+		
+		
 	}
 
 	@Override
@@ -63,6 +83,8 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Override
 	public Customer viewCustomer(int customerId) {
+
+		
 		Optional<Customer> cus = custRepo.findById(customerId);
 		if (cus.isPresent()) {
 			return cus.get();

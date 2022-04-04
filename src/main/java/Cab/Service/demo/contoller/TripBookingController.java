@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -58,10 +57,10 @@ public class TripBookingController {
 	}
 	
 	//http://localhost:8088/Trip/bill/{Id}
-	@GetMapping("/bill/{Id}")
-	ResponseEntity<TripBooking> calculateBill(@PathVariable(name="Id") int Id) {
-		LOG.info(Integer.toString(Id)+"Bill");
-		return new ResponseEntity<TripBooking>(trip.calculateBill(Id), HttpStatus.OK);
-	}
+//	@GetMapping("/bill/{Id}")
+//	ResponseEntity<TripBooking> calculateBill(@PathVariable(name="Id") int Id) {
+//		LOG.info(Integer.toString(Id)+"Bill");
+//		return new ResponseEntity<TripBooking>(trip.calculateBill(Id), HttpStatus.OK);
+//	}
 
 }

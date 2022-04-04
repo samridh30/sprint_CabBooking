@@ -12,6 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.context.annotation.ComponentScan;
 
@@ -23,13 +27,17 @@ public class Customer {
 	@Id
 	@GeneratedValue
 	private int customerId;
+	@NotEmpty
+	@Size(min=4, message="UserName should have min 4 characters")
 	private String userName;
+	@NotEmpty
+	@Size(min=5, message="Password should have atleast 8 characters")
 	private String password;
 	private String address;
 	private String mobileNumber;
+	@Email
 	private String email;
-	@JsonIgnore
-	private boolean status=true;
+	
 
 
 
@@ -37,13 +45,7 @@ public class Customer {
 		return customerId;
 	}
 
-	public boolean isStatus() {
-		return status;
-	}
 
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
 
 	public void setCustomerId(int customerId) {
 		this.customerId = customerId;

@@ -40,6 +40,12 @@ public class CabController {
 		LOG.info(cabId);
 		return new ResponseEntity<Cab>(car.deleteCab(cab), HttpStatus.OK);
 	}
+	
+	@GetMapping("/view")
+	ResponseEntity<Cab> viewCabsofType(String carType){
+		LOG.info(carType);
+		return new ResponseEntity<Cab>(car.viewCabsofType(carType), HttpStatus.OK);
+	}
 	}
 
 

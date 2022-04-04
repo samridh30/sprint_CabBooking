@@ -37,7 +37,7 @@ public class CabServiceImpl implements ICabService {
 		}
 	}
 
-	@Overrid
+	@Override
 	public Cab deleteCab(int cabId) {
 		Optional<Cab> car=car_repo.findById(cabId);
 		if(car.isPresent()) {

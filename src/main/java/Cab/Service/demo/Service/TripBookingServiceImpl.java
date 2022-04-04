@@ -22,7 +22,12 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		if(trip.isPresent()) {
 			return null;
 		}else {
-			return tripRepo.save(tripBooking);
+			tripRepo.save(tripBooking);
+
+			int cus_id=tripBooking.getCustomer().getCustomerId();
+			TripBooking book=calculateBill(cus_id);
+			
+			return tripRepo.save(book);
 			
 		}
 	}
@@ -61,7 +66,8 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	@Override
 	public TripBooking calculateBill(int customerId) {
 		float rate=tripRepo.findByPerKmRate(customerId);
-		TripBooking trip= tripRepo.getById(customerId);
+		TripBooking t= tripRepo.findByCustomerId(customerId);
+		TripBooking trip= tripRepo.getById(t.getTripBookingId());
 		trip.setBill(trip.getDistanceInKm()*rate);
 		return trip;
 	}

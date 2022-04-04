@@ -43,8 +43,11 @@ public class Customer {
 		return customerId;
 	}
 
+<<<<<<< HEAD
 	
 	
+=======
+>>>>>>> 9fda9afad16d7283c0a38f013b9f59b851814889
 	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
 	}

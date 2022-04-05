@@ -89,12 +89,7 @@ public class DriverServiceImpl implements IDriverService {
 		} else {
 
 			return null;
-
 		}
-
-		throw new UserNotLoggedInException("Login First");
-	}
-
 	}
 
 	@Override

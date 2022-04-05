@@ -91,14 +91,12 @@ public class DriverServiceImpl implements IDriverService {
 			return driRepo.findByViewBestDrivers();
 		} else {
 
-			return null;
-
-		}
-		
+					
 			throw new UserNotLoggedInException("Login First");
 		}
+}
 
-	}
+	
 
 	@Override
 	public Driver viewDriver(int driverId) {

@@ -35,35 +35,7 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	@Autowired
 	Customerdto customerdto;
 
-	@Autowired
-	TripBooking service;
-	@Autowired
-	CustomerServiceImpl Customer;
 	
-	LocalDateTime now = LocalDateTime.now();
-	
-	/**
-	 * @desc Creates a TripBooking
-	 * @return TripBooked Object will be returned
-	 */
-	@Override
-	public TripBooking insertTripBooking(TripBooking tripBooking) {
-		
-		Optional<TripBooking> trip= tripRepo.findById(tripBooking.getTripBookingId());
-		
-		if(trip.isPresent()) {
-			throw new InvalidTripFoundException("Duplicate Trip Id");
-		}else {
-			boolean check= validateTrip(tripBooking.getCustomer().getCustomerId());
-			if(check==true) {
-			
-			tripRepo.save(tripBooking);
-
-			int cus_id=tripBooking.getCustomer().getCustomerId();
-			TripBooking book=calculateBill(cus_id);
-			return updateTripBooking(book);}
-			else {
-=======
 
 	@Autowired
 	TripBooking service;
@@ -198,64 +170,15 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	 * @desc To Book a cab from fromlocation to Tolocation
 	 * @return Cabservicedto object will be returned
 	 */
+	
 	public Cabservicedto BookCab(String fromLocation, String toLocation) {
-		Optional<Customer> tripCust= custRepo.findById(112);
-		System.out.println(tripCust);
-		List<Driver> driver1=driverRepo.findByStatus();
-		if(driver1.size()==0) {
-			throw new DriverNotFoundException("All drivers are Busy rightNow. Try Again after Some time");
-		}else {
-		System.out.println(driver1.get(0).getDriverId());
-		Optional<Driver> s= driverRepo.findById(driver1.get(0).getDriverId());
-		driver1.get(0).setStatus(true);
-		driver1.get(0).getCab().setStatus(true);	
-		
-		service.setCustomer(tripCust.get());
-		service.setDistanceInKm(50);
-		service.setStatus(true);
-		service.setBill(300);
-		service.setDriver(s.get());
-		service.setFromDateTime(now);
-		service.setToDateTime(now);
-		service.setFromLocation(fromLocation);
-		service.setToLocation(toLocation);
-		
-		TripBooking book=insertTripBooking(service);
-		
-		
-		driverdto.setDriverId(book.getDriver().getDriverId());
-		driverdto.setRating(book.getDriver().getRating());
-		driverdto.setCab(book.getDriver().getCab());
-		
-		customerdto.setCustomerId(book.getCustomer().getCustomerId());
-		customerdto.setUsername(book.getCustomer().getUserName());
-		
-		cabservicedto.setCustomerId(customerdto.getCustomerId());
-		cabservicedto.setCustomername(customerdto.getUsername());
-		cabservicedto.setBill(book.getBill());
-		cabservicedto.setFromDateTime(book.getFromDateTime());
-		cabservicedto.setToLocation(book.getToLocation());
-		cabservicedto.setToDateTime(book.getToDateTime());
-		cabservicedto.setFromLocation(book.getFromLocation());
-		cabservicedto.setDriverId(driverdto.getDriverId());
-		cabservicedto.setRating(driverdto.getRating());
-		cabservicedto.setCabtype(driverdto.getCab().getCarType());}
-		
-
-		TripBooking end2 = updateTripBooking(end1);
-
-		return end2;
-
-	}
-
-	public Cabservicedto BookCab(String fromLocation, String toLocation, int CustId) {
-		Optional<Customer> tripCust = cust.findById(CustId);
-		List<Driver> driver1 = DRepo.findByStatus();
+		Optional<Customer> tripCust = custRepo.findById(111);
+		List<Driver> driver1 = driverRepo.findByStatus();
 		if (driver1.size() == 0) {
 			throw new DriverNotFoundException("All drivers are Busy rightNow. Try Again after Some time");
 		} else {
 			System.out.println(driver1.get(0).getDriverId());
-			Driver s = driver.getById(driver1.get(0).getDriverId());
+			Driver s = driverRepo.getById(driver1.get(0).getDriverId());
 			driver1.get(0).setStatus(true);
 
 			service.setCustomer(tripCust.get());

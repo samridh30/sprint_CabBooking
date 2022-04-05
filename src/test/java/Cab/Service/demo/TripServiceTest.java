@@ -63,11 +63,13 @@ public class TripServiceTest {
 		
 		
 	}
+	@Disabled
 	@Test
 	void viewAllTripsCustomerTest() {
 		List<TripBooking> list= tripservice.ViewAllTripsCustomer(113);
 		assertEquals(1,list.size());
 		
 	}
+	
 
 }

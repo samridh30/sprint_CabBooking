@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import Cab.Service.demo.Exception.DriverAlreadyExistsException;
-import Cab.Service.demo.Exception.DriverNotFoundExceptipn;
+import Cab.Service.demo.Exception.DriverNotFoundException;
 import Cab.Service.demo.model.Customer;
 import Cab.Service.demo.model.Driver;
 import Cab.Service.demo.model.Role;

@@ -25,27 +25,27 @@ public class DriverServiceImplTests {
 	public static void setUp() {
 		driver = new Driver (5,"Pb-101206",4.9f,null,true);
 	}
+	
 	@AfterAll
 	public static void tearDown() {
 		driver = null;
 	}
+		@Test
+	public void testInsertDriver() {
+		LOG.info(driver.toString());
+		Driver expected = driver;
+		Driver actual = driserimp.insertDriver(driver);
+		assertEquals(expected, actual);
+	}
 	
-//	@Test
-//	public void testInsertDriver() {
-//		LOG.info(driver.toString());
-//		Driver expected = driver;
-//		Driver actual = driserimp.insertDriver(driver);
-//		assertEquals(expected, actual);
-//	}
-//	
-//	@Test
-//	public void testInsertDriverFailure() {
-//		LOG.info(driver.toString());
-//		Driver unexpected = driver;
-//		Driver actual = driserimp.insertDriver(new Driver(6,"Pb-101206",4.9f,null,true) );
-//		assertEquals(unexpected, actual);
-//	}
-	
+	@Test
+	public void testInsertDriverFailure() {
+		LOG.info(driver.toString());
+		Driver unexpected = driver;
+		Driver actual = driserimp.insertDriver(new Driver(6,"Pb-101206",4.9f,null,true) );
+		assertEquals(unexpected, actual);
+	}
+
 	@Test
 	public void testUpdateDriver() {
 	LOG.info(driver.toString());

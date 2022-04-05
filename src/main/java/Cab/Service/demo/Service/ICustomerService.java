@@ -14,18 +14,10 @@ public interface ICustomerService {
 
 	public List<Customer> viewCustomers();
 
-	public Customer viewCustomer(int customerId);
-
-	public Customer validateCustomer(String userName, String password);
-
-//	Customer loginUser(String userName, String password);
-
 	String logoutUser();
 
 	Customer loginUser(AppUser user);
 
-//	List<Customer> loginUser(String email);
-
-//	List<Customer> loginUser(String userName, String password);
+	Customer viewCustomer();
 
 }

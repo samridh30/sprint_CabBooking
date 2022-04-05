@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import Cab.Service.demo.Exception.InvalidUserNamePasswordException;
 import Cab.Service.demo.model.Role;
 import Cab.Service.demo.model.TripBooking;
 import Cab.Service.demo.repository.AdminRepositoryImpl;
@@ -27,79 +28,38 @@ public class AdminServiceImpl implements IAdminService {
 	private CabRepositoryImpl car_repo;
 
 	@Autowired
-	private CustomerServiceImpl User;
-
-//	@Override
-//	public List<Admin> getAllAdmin() {
-//		return adminRepo.findAll();
-//	}
-//
-//	@Override
-//	public Admin insertAdmin(Admin admin) {
-//		LOG.info(admin.toString());
-//		Optional<Admin> ad = adminRepo.findById(admin.getAdminId());
-//		if (ad.isPresent())
-//			return null;
-//		else
-//			adminRepo.save(admin);
-//		return admin;
-//	}
-//
-//	@Override
-//	public Admin updateAdmin(Admin admin) {
-//		Optional<Admin> ad = adminRepo.findById(admin.getAdminId());
-//		if (ad.isPresent())
-//			return adminRepo.save(admin);
-//		else
-//			return null;
-//	}
-//
-//	@Override
-//	public Admin deleteAdmin(int adminId) {
-//		Optional<Admin> ad = adminRepo.findById(adminId);
-//		if (ad.isPresent()) {
-//			adminRepo.deleteById(adminId);
-//			return ad.get();
-//		}
-//		return null;
-//	}
-//
-//	@Override
-//	public List<Cab> getCabs() {
-//		return car_repo.findAll();
-//	}
-//
-//	@Override
-//	public List<Cab> getByCarTypes(String carType) {
-//		return car_repo.findByCarType(carType);
-//	}
+	private CustomerServiceImpl AppUser;
 
 	@Override
 	public List<TripBooking> getAllTrips() {
-		if (User.loggedInUser != null) {
-			if (User.loggedInUser.getRole() == Role.ADMIN) {
+		if (AppUser.loggedInUser != null) {
+			if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
 				List<TripBooking> trip = tripRepo.findAll();
 				return trip;
 			}
+			else
+				throw new InvalidUserNamePasswordException("Invalid Username or Password");
 		}
 		return null;
 	}
 
-	@Override
-	public String check() {
-		if (User.loggedInUser != null) {
-			if (User.loggedInUser.getRole() == Role.ADMIN) {
-				return "Works";
-			} else {
-				return "Not logged IN";
-			}
-		}
-		return "Not logged in";
-	}
+//	@Override
+//	public String check() {
+//		if (User.loggedInUser != null) {
+//			if (User.loggedInUser.getRole() == Role.ADMIN) {
+//				return "Works";
+//			} else {
+//				return "Not logged IN";
+//			}
+//		}
+//		return "Not logged in";
+//	}
 
 	@Override
 	public List<TripBooking> getTripsCabwise() {
-		// TODO Auto-generated method stub
+//		if(AppUser.loggedInUser.getRole() == Role.ADMIN) {
+//			List<TripBooking> list = tripRepo.
+//		}
 		return null;
 	}
 

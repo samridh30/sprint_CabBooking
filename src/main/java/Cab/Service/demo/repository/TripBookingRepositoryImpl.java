@@ -36,7 +36,8 @@ public interface TripBookingRepositoryImpl extends JpaRepository<TripBooking, In
 	@Query(value="select t.customer_id from trip_booking t where t.customer_id=:customerId and t.status=true", nativeQuery=true)
 	List<Integer> IsCustomerInTrip(@Param("customerId")  int customerId);
 	
-	
+//	@Query(value = "select * from trip_booking order by")
+//	public List<TripBooking> getByCabs();
 	 
 	
 

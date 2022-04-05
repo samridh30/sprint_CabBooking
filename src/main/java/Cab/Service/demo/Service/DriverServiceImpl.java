@@ -1,7 +1,6 @@
 package Cab.Service.demo.Service;
 
 import java.util.List;
-
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +8,7 @@ import org.springframework.stereotype.Service;
 
 import Cab.Service.demo.Exception.DriverAlreadyExistsException;
 import Cab.Service.demo.Exception.DriverNotFoundException;
-
 import Cab.Service.demo.Exception.UserNotLoggedInException;
-import Cab.Service.demo.model.Customer;
 import Cab.Service.demo.model.Driver;
 import Cab.Service.demo.model.Role;
 import Cab.Service.demo.repository.DriverRepositoryImpl;
@@ -24,13 +21,13 @@ public class DriverServiceImpl implements IDriverService {
 	private DriverRepositoryImpl driRepo;
 
 	@Autowired
-	Customer AppUser;
+	private CustomerServiceImpl AppUser;
 	@Autowired
 	private TripBookingRepositoryImpl TRepo;
 
 	@Override
 	public Driver insertDriver(Driver driver) {
-		if (AppUser.getRole() == Role.ADMIN) {
+		if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
 			Optional<Driver> dri = driRepo.findById(driver.getDriverId());
 			if (dri.isPresent()) {
 				throw new DriverAlreadyExistsException("Driver Already Present");
@@ -46,7 +43,7 @@ public class DriverServiceImpl implements IDriverService {
 
 	@Override
 	public Driver updateDriver(Driver driver) {
-		if (AppUser.getRole() == Role.ADMIN) {
+		if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
 
 			Optional<Driver> dri = driRepo.findById(driver.getDriverId());
 			if (dri.isPresent()) {
@@ -62,28 +59,27 @@ public class DriverServiceImpl implements IDriverService {
 
 	@Override
 	public Driver deleteDriver(int driverId) {
-		if (AppUser.getRole() == Role.ADMIN) {
-	
-		Optional<Driver> dri = driRepo.findById(driverId);
-		if (dri.isPresent()) {
-			TRepo.deleteById(driverId);
-			driRepo.deleteById(driverId);
-			return dri.get();
-		}
-		 else {
+		if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
 
-			throw new DriverNotFoundException("Driver is not present");
+			Optional<Driver> dri = driRepo.findById(driverId);
+			if (dri.isPresent()) {
+				TRepo.deleteById(driverId);
+				driRepo.deleteById(driverId);
+				return dri.get();
+			} else {
+
+				throw new DriverNotFoundException("Driver is not present");
+			}
 		}
-		}
-		
-		 else {
+
+		else {
 			throw new UserNotLoggedInException("Login First");
 		}
 	}
 
 	@Override
 	public List<Driver> ViewBestDrivers() {
-		if (AppUser.getRole() == Role.CUSTOMER) {
+		if (AppUser.loggedInUser.getRole() == Role.CUSTOMER) {
 			return driRepo.findByViewBestDrivers();
 		} else {
 			throw new UserNotLoggedInException("Login First");
@@ -92,7 +88,7 @@ public class DriverServiceImpl implements IDriverService {
 
 	@Override
 	public Driver viewDriver(int driverId) {
-		if (AppUser.getRole() == Role.ADMIN) {
+		if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
 			Optional<Driver> dri = driRepo.findById(driverId);
 			if (dri.isPresent()) {
 				return dri.get();

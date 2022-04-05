@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import Cab.Service.demo.Service.CustomerServiceImpl;
+import Cab.Service.demo.dto.Customerdto;
 import Cab.Service.demo.model.AppUser;
 import Cab.Service.demo.model.Customer;
 
@@ -72,8 +73,8 @@ public class CustomerController {
 
 	// http://localhost:8088/Customer/viewCustomer/{Id}
 	@GetMapping("/viewCustomer")
-	public ResponseEntity<Customer> viewCustomer() {
-		return new ResponseEntity<Customer>(cust.viewCustomer(), HttpStatus.OK);
+	public ResponseEntity<Customerdto> viewCustomer() {
+		return new ResponseEntity<Customerdto>(cust.viewCustomer(), HttpStatus.OK);
 	}
 
 }

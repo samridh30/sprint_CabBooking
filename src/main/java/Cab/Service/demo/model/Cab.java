@@ -1,17 +1,17 @@
 package Cab.Service.demo.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
-
-import lombok.Data;
 
 @Entity
 
 public class Cab {
+
+	public Cab() {
+
+	}
+
 	public Cab(int cabId, String carType, float perKmRate, boolean status) {
 		super();
 		this.cabId = cabId;
@@ -27,7 +27,6 @@ public class Cab {
 	private float perKmRate;
 	private boolean status;
 
-	
 	public boolean isStatus() {
 		return status;
 	}

@@ -48,7 +48,7 @@ public class DriverController {
 
 	// http://localhost:8088/drv/delete-driver/{did}
 	// Deletes an exisiting driver
-	@DeleteMapping("/delete-driver")
+	@DeleteMapping("/delete-driver/{did}")
 	public ResponseEntity<Driver> delDriver(@PathVariable(name = "did") int driverId) {
 		return new ResponseEntity<Driver>(drive.deleteDriver(driverId), HttpStatus.OK);
 

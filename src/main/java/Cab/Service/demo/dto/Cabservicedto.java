@@ -16,8 +16,18 @@ public class Cabservicedto {
 	private String cabtype;
 	float bill;
 
+	Cabservicedto(){
+		
+	}
 	
-	
+	public Cabservicedto(String string, String string2, String string3, int i, double d, String string4, int j) {
+		// TODO Auto-generated constructor stub
+	}
+	public Cabservicedto(String string, String string2, String string3, LocalDateTime now, LocalDateTime now2, int i,
+			double d, String string4, int j) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public float getBill() {
 		return bill;
 	}

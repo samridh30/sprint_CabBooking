@@ -12,6 +12,17 @@ import lombok.Data;
 @Entity
 
 public class Cab {
+	
+	@Id
+	@GeneratedValue
+	private int cabId;
+	private String carType;
+	private float perKmRate;
+	private boolean status;
+	
+	public Cab() {
+		
+	}
 	public Cab(int cabId, String carType, float perKmRate, boolean status) {
 		super();
 		this.cabId = cabId;
@@ -20,12 +31,6 @@ public class Cab {
 		this.status = status;
 	}
 
-	@Id
-	@GeneratedValue
-	private int cabId;
-	private String carType;
-	private float perKmRate;
-	private boolean status;
 
 	
 	public boolean isStatus() {

@@ -23,8 +23,12 @@ public class Driver {
 	@OneToOne(cascade = { CascadeType.MERGE} )
 	private Cab cab;
 	private boolean status = true;
+	
+	Driver(){
+		
+	}
 
-	public Driver() {
+	public Driver(int i, String string, double d, boolean b) {
 	}
 
 	public Driver(int driverId, String licenseNo, float rating, Cab cab, boolean status) {

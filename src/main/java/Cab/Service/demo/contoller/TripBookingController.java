@@ -32,17 +32,17 @@ public class TripBookingController {
 	 * @desc created tripbooking
 	 */
 	//http://localhost:8088/Trip/insert
-	@PostMapping("/insert")
-	ResponseEntity<TripBooking> insertTripBooking(@RequestBody TripBooking tripBooking) {
-		LOG.info(tripBooking.toString());
-		return new ResponseEntity<TripBooking>(trip.insertTripBooking(tripBooking), HttpStatus.OK);
-		
-	}
+//	@PostMapping("/insert")
+//	ResponseEntity<TripBooking> insertTripBooking(@RequestBody TripBooking tripBooking) {
+//		LOG.info(tripBooking.toString());
+//		return new ResponseEntity<TripBooking>(trip.insertTripBooking(tripBooking), HttpStatus.OK);
+//		
+//	}
 	
 	/**
 	 * @desc To update data of bookedtrip
+	 * {@link= http://localhost:8088/Trip/update}
 	 */
-	//http://localhost:8088/Trip/update
 	@PutMapping("/update")
 	ResponseEntity<TripBooking> updateTripBooking(@RequestBody TripBooking tripBooking) {
 		LOG.info(tripBooking.toString());
@@ -51,38 +51,41 @@ public class TripBookingController {
 	
 	/**
 	 * @desc Method Delete Tripbooking by tripbooking Id
+	 * {@link=http://localhost:8088/Trip/delete/{Id}}
 	 */
-	//http://localhost:8088/Trip/delete/{Id}
+
 	@DeleteMapping("/delete/{Id}")
-	ResponseEntity<TripBooking> deleteTripBooking(@PathVariable(name="Id") int Id) {
+	ResponseEntity<TripBooking> deleteTripBookingByTripId(@PathVariable(name="Id") int Id) {
 		LOG.info(Integer.toString(Id)+"Deleted");
 		return new ResponseEntity<TripBooking>(trip.deleteTripBooking(Id), HttpStatus.OK);
 	}
 	
 	/**
 	 * @desc shows all trips of particular customer
+	 * {@link=http://localhost:8088/Trip/view/{Id}
 	 */
-	//http://localhost:8088/Trip/view/9
+	
 	@GetMapping("/view/{Id}")
-	ResponseEntity<List<TripBooking>> viewAllTripsCustomer(@PathVariable(name="Id") int Id){
+	ResponseEntity<List<TripBooking>> viewAllTripsCustomerByCustomerId(@PathVariable(name="Id") int Id){
 		LOG.info(Integer.toString(Id)+"Feteched");
 		return new ResponseEntity<List<TripBooking>>(trip.ViewAllTripsCustomer(Id), HttpStatus.OK);
 	}
 	
-	/**
-	 * @desc calculates a tripbooking bill
-	 */
-	//http://localhost:8088/Trip/bill/{Id}
-	@GetMapping("/bill/{Id}")
-	ResponseEntity<TripBooking> calculateBill(@PathVariable(name="Id") int Id) {
-		LOG.info(Integer.toString(Id)+"Bill");
-		return new ResponseEntity<TripBooking>(trip.calculateBill(Id), HttpStatus.OK);
-	}
+//	/**
+//	 * @desc calculates a tripbooking bill
+//	 */
+//	//http://localhost:8088/Trip/bill/{Id}
+//	@GetMapping("/bill/{Id}")
+//	ResponseEntity<TripBooking> calculateBill(@PathVariable(name="Id") int Id) {
+//		LOG.info(Integer.toString(Id)+"Bill");
+//		return new ResponseEntity<TripBooking>(trip.calculateBill(Id), HttpStatus.OK);
+//	}
+	
 	
 	/**
 	 * @desc Ends the trip
+	 * {@link=http://localhost:8088/Trip/endTrip/68}
 	 */
-	//http://localhost:8088/Trip/endTrip/68
 	@PutMapping("/endTrip/{Id}")
 	ResponseEntity<TripBooking> endTrip(@PathVariable(name="Id") int Id) {
 		LOG.info(Integer.toString(Id)+" "+"Updated");
@@ -92,13 +95,12 @@ public class TripBookingController {
 	
 	/**
 	 * @desc Book a cab
+	 * {@link=//http://localhost:8088/Trip/view/kukatpally/nyz}l
 	 */
-	
-	//http://localhost:8088/Trip/view/kukatpally/nyz
 	@GetMapping("/view/{fromlocation}/{tolocation}")
 	ResponseEntity<Cabservicedto> BookCab(@PathVariable(name="fromlocation") String fromlocation, @PathVariable(name="tolocation") String tolocation){
 		LOG.info(fromlocation+"Feteched");
-		return new ResponseEntity<Cabservicedto>(trip.BookCab(fromlocation, tolocation, 114), HttpStatus.OK);
+		return new ResponseEntity<Cabservicedto>(trip.BookCab(fromlocation, tolocation), HttpStatus.OK);
 	}
 
 	

@@ -25,30 +25,29 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	@Autowired
 	TripBookingRepositoryImpl tripRepo;
 	@Autowired
-	CustomerRepositorImpl cust;
+	CustomerRepositorImpl custRepo;
 	@Autowired
-	DriverRepositoryImpl driver;
+	DriverRepositoryImpl driverRepo;
 	@Autowired
 	Cabservicedto cabservicedto;
 	@Autowired
 	Driverdto driverdto;
 	@Autowired
 	Customerdto customerdto;
-	
 	@Autowired
 	TripBooking service;
 	@Autowired
-	DriverRepositoryImpl DRepo;
-	@Autowired
-	Customer loggedInUser;
+	CustomerServiceImpl Customer;
 	
 	LocalDateTime now = LocalDateTime.now();
 	
 	/**
-	 * @desc Creates a TripBooking and return created tripbooking object
+	 * @desc Creates a TripBooking
+	 * @return TripBooked Object will be returned
 	 */
 	@Override
 	public TripBooking insertTripBooking(TripBooking tripBooking) {
+		
 		Optional<TripBooking> trip= tripRepo.findById(tripBooking.getTripBookingId());
 		
 		if(trip.isPresent()) {
@@ -70,7 +69,8 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	}
 	
 	/**
-	 * @desc Update already tripbooked data and return it.
+	 * @desc Update already tripbooked data
+	 * @return Updated tripBooking Object will be returned
 	 */
 	@Override
 	public TripBooking updateTripBooking(TripBooking tripBooking) {
@@ -85,7 +85,9 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	}
 	
 	/**
-	 * @desc method will Delete trip booking and return it
+	 * @desc method will Delete trip booking
+	 * @return Deleted TripBooking Object will be returned
+	 * @author Srikanth
 	 */
 	@Override
 	public TripBooking deleteTripBooking(int tripBookingId) {
@@ -99,7 +101,8 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	}
 	
 	/**
-	 * @desc Returns all trips of a customer by Id.
+	 * @desc  Fetch trip data based on customerId
+	 * @return all trips of a customer by Id will be returned.
 	 */
 	@Override
 	public List<TripBooking> ViewAllTripsCustomer(int customerId) {
@@ -109,7 +112,8 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	}
 	
 	/**
-	 * @desc Calculate Trip bill based on distance and PerKmRate and return tripbooking object
+	 * @desc Calculate Trip bill based on distance and PerKmRate of cab
+	 * @return tripbooking object will be returned with updated bill
 	 */	
 	@Override
 	public TripBooking calculateBill(int customerId) {
@@ -121,7 +125,8 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	}
 	
 	/**
-	 * @desc Validate Trip and return boolean value(True or False)
+	 * @desc Validate Trip 
+	 * @return boolean value(True or False)
 	 */
 	public boolean validateTrip(int customerId) {
 		List<Integer> Id =tripRepo.IsCustomerInTrip(customerId);
@@ -135,14 +140,15 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	}
 	
 	/**
-	 * @desc End the trip and return Tripbooking object
+	 * @desc To End the trip
+	 * @return Tripbooking object
 	 */
 	public TripBooking endTrip(int Id) {
 		Optional<TripBooking> end= tripRepo.findById(Id);
 		TripBooking end1=end.get();
 		end1.setStatus(false);
 		end1.getDriver().setStatus(false);
-		end1.getDriver().getCab().setStatus("false");
+		end1.getDriver().getCab().setStatus(false);
 		
 		TripBooking end2= updateTripBooking(end1);
 		
@@ -150,29 +156,32 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	
 	/**
 	 * @desc To Book a cab from fromlocation to Tolocation
+	 * @return Cabservicedto object will be returned
 	 */
-	public Cabservicedto BookCab(String fromLocation, String toLocation, int CustId) {
-		Optional<Customer> tripCust= cust.findById(CustId);
-		List<Driver> driver1=DRepo.findByStatus();
+	public Cabservicedto BookCab(String fromLocation, String toLocation) {
+		Optional<Customer> tripCust= custRepo.findById(112);
+		System.out.println(tripCust);
+		List<Driver> driver1=driverRepo.findByStatus();
 		if(driver1.size()==0) {
 			throw new DriverNotFoundException("All drivers are Busy rightNow. Try Again after Some time");
 		}else {
 		System.out.println(driver1.get(0).getDriverId());
-		Driver s= driver.getById(driver1.get(0).getDriverId());
+		Optional<Driver> s= driverRepo.findById(driver1.get(0).getDriverId());
 		driver1.get(0).setStatus(true);
-		driver1.get(0).getCab().setStatus("true");	
+		driver1.get(0).getCab().setStatus(true);	
 		
 		service.setCustomer(tripCust.get());
 		service.setDistanceInKm(50);
 		service.setStatus(true);
 		service.setBill(300);
-		service.setDriver(s);
+		service.setDriver(s.get());
 		service.setFromDateTime(now);
 		service.setToDateTime(now);
 		service.setFromLocation(fromLocation);
 		service.setToLocation(toLocation);
 		
 		TripBooking book=insertTripBooking(service);
+		
 		
 		driverdto.setDriverId(book.getDriver().getDriverId());
 		driverdto.setRating(book.getDriver().getRating());

@@ -39,14 +39,17 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	TripBooking service;
 	@Autowired
 	DriverRepositoryImpl DRepo;
+	@Autowired
+	Customer loggedInUser;
 	
 	LocalDateTime now = LocalDateTime.now();
 	
-
+	/**
+	 * @desc Creates a TripBooking and return created tripbooking object
+	 */
 	@Override
 	public TripBooking insertTripBooking(TripBooking tripBooking) {
 		Optional<TripBooking> trip= tripRepo.findById(tripBooking.getTripBookingId());
-		//int trip= tripBooking.getTripBookingId();
 		
 		if(trip.isPresent()) {
 			throw new InvalidTripFoundException("Duplicate Trip Id");
@@ -58,12 +61,6 @@ public class TripBookingServiceImpl implements ITripBookingService {
 
 			int cus_id=tripBooking.getCustomer().getCustomerId();
 			TripBooking book=calculateBill(cus_id);
-			
-			
-			
-			
-			
-			
 			return updateTripBooking(book);}
 			else {
 				throw new InvalidTripFoundException("Multiple Trips Not Allowed At Same Time");
@@ -71,7 +68,10 @@ public class TripBookingServiceImpl implements ITripBookingService {
 			
 		}
 	}
-
+	
+	/**
+	 * @desc Update already tripbooked data and return it.
+	 */
 	@Override
 	public TripBooking updateTripBooking(TripBooking tripBooking) {
 		Optional<TripBooking> trip=tripRepo.findById(tripBooking.getTripBookingId());
@@ -83,7 +83,10 @@ public class TripBookingServiceImpl implements ITripBookingService {
 
 	
 	}
-
+	
+	/**
+	 * @desc method will Delete trip booking and return it
+	 */
 	@Override
 	public TripBooking deleteTripBooking(int tripBookingId) {
 		Optional<TripBooking> trip=tripRepo.findById(tripBookingId);
@@ -94,15 +97,20 @@ public class TripBookingServiceImpl implements ITripBookingService {
 			throw new TripNotFoundException("Invalid Id-"+tripBookingId);
 		}
 	}
-
+	
+	/**
+	 * @desc Returns all trips of a customer by Id.
+	 */
 	@Override
 	public List<TripBooking> ViewAllTripsCustomer(int customerId) {
 		
 		List<TripBooking> trip= tripRepo.findByCustomer(customerId);
 		return trip;
-		//return null;
 	}
-
+	
+	/**
+	 * @desc Calculate Trip bill based on distance and PerKmRate and return tripbooking object
+	 */	
 	@Override
 	public TripBooking calculateBill(int customerId) {
 		float rate=tripRepo.findByPerKmRate(customerId);
@@ -112,6 +120,9 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		return trip;
 	}
 	
+	/**
+	 * @desc Validate Trip and return boolean value(True or False)
+	 */
 	public boolean validateTrip(int customerId) {
 		List<Integer> Id =tripRepo.IsCustomerInTrip(customerId);
 		if(Id.isEmpty()) {
@@ -123,20 +134,23 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		
 	}
 	
+	/**
+	 * @desc End the trip and return Tripbooking object
+	 */
 	public TripBooking endTrip(int Id) {
 		Optional<TripBooking> end= tripRepo.findById(Id);
 		TripBooking end1=end.get();
 		end1.setStatus(false);
 		end1.getDriver().setStatus(false);
+		end1.getDriver().getCab().setStatus("false");
 		
 		TripBooking end2= updateTripBooking(end1);
 		
-		return end2;
-		
-		
-		
-	}
+		return end2;}
 	
+	/**
+	 * @desc To Book a cab from fromlocation to Tolocation
+	 */
 	public Cabservicedto BookCab(String fromLocation, String toLocation, int CustId) {
 		Optional<Customer> tripCust= cust.findById(CustId);
 		List<Driver> driver1=DRepo.findByStatus();
@@ -146,6 +160,7 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		System.out.println(driver1.get(0).getDriverId());
 		Driver s= driver.getById(driver1.get(0).getDriverId());
 		driver1.get(0).setStatus(true);
+		driver1.get(0).getCab().setStatus("true");	
 		
 		service.setCustomer(tripCust.get());
 		service.setDistanceInKm(50);
@@ -162,7 +177,7 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		driverdto.setDriverId(book.getDriver().getDriverId());
 		driverdto.setRating(book.getDriver().getRating());
 		driverdto.setCab(book.getDriver().getCab());
-		//cabservicedto.setDriver(driverdto);
+		
 		customerdto.setCustomerId(book.getCustomer().getCustomerId());
 		customerdto.setUsername(book.getCustomer().getUserName());
 		
@@ -176,7 +191,6 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		cabservicedto.setDriverId(driverdto.getDriverId());
 		cabservicedto.setRating(driverdto.getRating());
 		cabservicedto.setCabtype(driverdto.getCab().getCarType());}
-		//cabservicedto.setCustomer(customerdto);
 		
 		return cabservicedto;
 		

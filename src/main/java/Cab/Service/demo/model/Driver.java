@@ -3,6 +3,7 @@ package Cab.Service.demo.model;
 import javax.persistence.CascadeType;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 
 import javax.persistence.Id;
@@ -19,7 +20,7 @@ public class Driver {
 	private int driverId;
 	private String licenseNo;
 	private float rating;
-	@OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@OneToOne(cascade = { CascadeType.MERGE} )
 	private Cab cab;
 	private boolean status = true;
 

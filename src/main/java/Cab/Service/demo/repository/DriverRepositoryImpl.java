@@ -18,5 +18,6 @@ public interface DriverRepositoryImpl extends JpaRepository<Driver, Integer> {
 	
 	@Query(value="select * from Driver d where d.status=false ", nativeQuery=true)
 	List<Driver> findByStatus();
+	
 
 }

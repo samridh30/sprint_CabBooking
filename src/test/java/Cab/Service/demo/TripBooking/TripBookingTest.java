@@ -15,10 +15,10 @@ import Cab.Service.demo.model.TripBooking;
 @SpringBootTest
 public class TripBookingTest {
 	Logger LOG = LoggerFactory.getLogger(this.getClass());
-	private TripBooking triptest;
-	private Customer customertest;
-	private Driver drivertest;
-	private Cab cabtest;
+	private TripBooking tripbag;
+	private Customer customerbag;
+	private Driver driverbag;
+	private Cab cabbag;
 	
 	
 	
@@ -27,6 +27,8 @@ public class TripBookingTest {
 
 	@BeforeAll
 	public static void setUp() {
+		customerbag=new Customer(42,"Hyderabad","Sri@gmail.com",894380830,Nav,)
+		tripbag=new TripBooking()
 		
 		
 

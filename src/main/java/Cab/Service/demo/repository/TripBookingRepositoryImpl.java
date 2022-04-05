@@ -36,6 +36,11 @@ public interface TripBookingRepositoryImpl extends JpaRepository<TripBooking, In
 	@Query(value="select t.customer_id from trip_booking t where t.customer_id=:customerId and t.status=true", nativeQuery=true)
 	List<Integer> IsCustomerInTrip(@Param("customerId")  int customerId);
 	
+	@Transactional
+	@Modifying
+	@Query(value=" update trip_booking  set driver_id= null where driver_id=:Id", nativeQuery=true)
+	void deletedriver(@Param("Id") int Id);
+	
 	
 	 
 	

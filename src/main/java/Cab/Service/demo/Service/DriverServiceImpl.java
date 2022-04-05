@@ -42,7 +42,7 @@ public class DriverServiceImpl implements IDriverService {
 			driRepo.save(driver);
 			return driver;
 		} else {
-			throw new DriverNotFoundExceptipn("Driver is not present");
+			throw new DriverNotFoundException("Driver is not present");
 		}
 	}
 
@@ -54,7 +54,7 @@ public class DriverServiceImpl implements IDriverService {
 			return dri.get();
 		} else {
 
-			throw new DriverNotFoundExceptipn("Driver is not present");
+			throw new DriverNotFoundException("Driver is not present");
 		}
 	}
 
@@ -75,7 +75,7 @@ public class DriverServiceImpl implements IDriverService {
 			return dri.get();
 		} else {
 
-			throw new DriverNotFoundExceptipn("Driver is not present");
+			throw new DriverNotFoundException("Driver is not present");
 		}
 	}
 

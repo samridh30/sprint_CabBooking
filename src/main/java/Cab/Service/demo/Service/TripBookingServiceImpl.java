@@ -4,15 +4,15 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import Cab.Service.demo.Exception.DriverNotFoundException;
 import Cab.Service.demo.Exception.InvalidTripFoundException;
 import Cab.Service.demo.Exception.TripNotFoundException;
+import Cab.Service.demo.dto.Cabservicedto;
+import Cab.Service.demo.dto.Customerdto;
+import Cab.Service.demo.dto.Driverdto;
 import Cab.Service.demo.model.Customer;
 import Cab.Service.demo.model.Driver;
 import Cab.Service.demo.model.TripBooking;
@@ -28,18 +28,25 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	CustomerRepositorImpl cust;
 	@Autowired
 	DriverRepositoryImpl driver;
+	@Autowired
+	Cabservicedto cabservicedto;
+	@Autowired
+	Driverdto driverdto;
+	@Autowired
+	Customerdto customerdto;
 	
 	@Autowired
 	TripBooking service;
+	@Autowired
+	DriverRepositoryImpl DRepo;
 	
 	LocalDateTime now = LocalDateTime.now();
-	
-	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 	
 
 	@Override
 	public TripBooking insertTripBooking(TripBooking tripBooking) {
 		Optional<TripBooking> trip= tripRepo.findById(tripBooking.getTripBookingId());
+		//int trip= tripBooking.getTripBookingId();
 		
 		if(trip.isPresent()) {
 			throw new InvalidTripFoundException("Duplicate Trip Id");
@@ -51,6 +58,11 @@ public class TripBookingServiceImpl implements ITripBookingService {
 
 			int cus_id=tripBooking.getCustomer().getCustomerId();
 			TripBooking book=calculateBill(cus_id);
+			
+			
+			
+			
+			
 			
 			return updateTripBooking(book);}
 			else {
@@ -88,6 +100,7 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		
 		List<TripBooking> trip= tripRepo.findByCustomer(customerId);
 		return trip;
+		//return null;
 	}
 
 	@Override
@@ -102,11 +115,9 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	public boolean validateTrip(int customerId) {
 		List<Integer> Id =tripRepo.IsCustomerInTrip(customerId);
 		if(Id.isEmpty()) {
-			LOG.info("U can book cab");
 			return true;
 		}
 		else {
-			LOG.info("U can't book trip while travelling");
 			return false;
 		}
 		
@@ -116,6 +127,8 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		Optional<TripBooking> end= tripRepo.findById(Id);
 		TripBooking end1=end.get();
 		end1.setStatus(false);
+		end1.getDriver().setStatus(false);
+		
 		TripBooking end2= updateTripBooking(end1);
 		
 		return end2;
@@ -124,10 +137,15 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		
 	}
 	
-	public TripBooking BookCab(String fromLocation, String toLocation, int CustId) {
+	public Cabservicedto BookCab(String fromLocation, String toLocation, int CustId) {
 		Optional<Customer> tripCust= cust.findById(CustId);
-		
-		Driver s= driver.getById(66);
+		List<Driver> driver1=DRepo.findByStatus();
+		if(driver1.size()==0) {
+			throw new DriverNotFoundException("All drivers are Busy rightNow. Try Again after Some time");
+		}else {
+		System.out.println(driver1.get(0).getDriverId());
+		Driver s= driver.getById(driver1.get(0).getDriverId());
+		driver1.get(0).setStatus(true);
 		
 		service.setCustomer(tripCust.get());
 		service.setDistanceInKm(50);
@@ -139,9 +157,28 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		service.setFromLocation(fromLocation);
 		service.setToLocation(toLocation);
 		
-		TripBooking trip=insertTripBooking(service);
+		TripBooking book=insertTripBooking(service);
 		
-		return trip;
+		driverdto.setDriverId(book.getDriver().getDriverId());
+		driverdto.setRating(book.getDriver().getRating());
+		driverdto.setCab(book.getDriver().getCab());
+		//cabservicedto.setDriver(driverdto);
+		customerdto.setCustomerId(book.getCustomer().getCustomerId());
+		customerdto.setUsername(book.getCustomer().getUserName());
+		
+		cabservicedto.setCustomerId(customerdto.getCustomerId());
+		cabservicedto.setCustomername(customerdto.getUsername());
+		cabservicedto.setBill(book.getBill());
+		cabservicedto.setFromDateTime(book.getFromDateTime());
+		cabservicedto.setToLocation(book.getToLocation());
+		cabservicedto.setToDateTime(book.getToDateTime());
+		cabservicedto.setFromLocation(book.getFromLocation());
+		cabservicedto.setDriverId(driverdto.getDriverId());
+		cabservicedto.setRating(driverdto.getRating());
+		cabservicedto.setCabtype(driverdto.getCab().getCarType());}
+		//cabservicedto.setCustomer(customerdto);
+		
+		return cabservicedto;
 		
 		
 		

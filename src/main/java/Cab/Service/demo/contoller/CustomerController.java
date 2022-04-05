@@ -2,6 +2,8 @@ package Cab.Service.demo.contoller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +31,14 @@ public class CustomerController {
 
 	// http://localhost:8088/Customer/register
 	@PostMapping("/register")
-	public ResponseEntity<Customer> register(@RequestBody Customer appUser) {
+	public ResponseEntity<Customer> register(@Valid @RequestBody Customer appUser) {
 		LOG.info("Register Customer");
 		return new ResponseEntity<Customer>(cust.insertCustomer(appUser), HttpStatus.OK);
 	}
 
 	// http://localhost:8088/Customer/update
 	@PutMapping("/update")
-	public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer) {
+	public ResponseEntity<Customer> updateCustomer(@Valid @RequestBody Customer customer) {
 		LOG.info(customer.toString());
 		return new ResponseEntity<Customer>(cust.updateCustomer(customer), HttpStatus.OK);
 	}

@@ -19,15 +19,15 @@ public class Customer {
 
 	@NotBlank
 	@Size(min = 4, message = "Username should be between 4-32 charachters")
-//	@Min(4, message = "Username should be between 4-32 charachters")
-//	@Max(32)
+// @Min(4, message = "Username should be between 4-32 charachters")
+// @Max(32)
 	@Size(min = 32, message = "Username should be between 4-32 charachters")
 	private String userName;
 
 	@NotBlank
 	@Size(min = 4, message = "Password should be between 4-32 charachters")
-//	@Min(4, message = "Username should be between 4-32 charachters")
-//	@Max(32)
+// @Min(4, message = "Username should be between 4-32 charachters")
+// @Max(32)
 	@Size(min = 32, message = "Password should be between 4-32 charachters")
 	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$")
 	private String password;
@@ -37,6 +37,23 @@ public class Customer {
 	@Column(unique = true)
 	private String email;
 	private Role role;
+	
+	
+
+	public Customer() {
+		super();
+	}
+
+	public Customer(int customerId, String userName, String password,String address, long mobileNumber, String email, Role role) {
+		super();
+		this.customerId = customerId;
+		this.userName = userName;
+		this.password = password;
+		this.address = address;
+		this.mobileNumber = mobileNumber;
+		this.email = email;
+		this.role = role;
+	}
 
 	public int getCustomerId() {
 		return customerId;
@@ -70,11 +87,11 @@ public class Customer {
 		this.address = address;
 	}
 
-	public String getMobileNumber() {
+	public Long getMobileNumber() {
 		return mobileNumber;
 	}
 
-	public void setMobileNumber(String mobileNumber) {
+	public void setMobileNumber(Long mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
 

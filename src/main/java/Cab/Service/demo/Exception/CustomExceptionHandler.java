@@ -61,14 +61,15 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 		headers.add("message", exceptionMessage);
 		return new ResponseEntity<Object>(null, headers, HttpStatus.NOT_FOUND);
 	}
-//	@ExceptionHandler(TripNotFoundException.class)
-//	public ResponseEntity<Object> handleCustomerNotFoundException(TripNotFoundException e) {
-//		String exceptionMessage = e.getMessage();
-//		LOG.info(exceptionMessage);
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.add("message", exceptionMessage);
-//		return new ResponseEntity<Object>(null, headers, HttpStatus.NOT_FOUND);
-//	}
+	
+	@ExceptionHandler(DriverNotFoundException.class)
+	public ResponseEntity<Object> drivernotfound(DriverNotFoundException e) {
+		String exceptionMessage = e.getMessage();
+		LOG.info(exceptionMessage);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("message", exceptionMessage);
+		return new ResponseEntity<Object>(null, headers, HttpStatus.NOT_FOUND);
+	}
 
 
 

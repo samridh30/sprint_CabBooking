@@ -12,18 +12,27 @@ import lombok.Data;
 @Entity
 
 public class Cab {
+	public Cab(int cabId, String carType, float perKmRate, boolean status) {
+		super();
+		this.cabId = cabId;
+		this.carType = carType;
+		this.perKmRate = perKmRate;
+		this.status = status;
+	}
+
 	@Id
 	@GeneratedValue
 	private int cabId;
 	private String carType;
 	private float perKmRate;
-	private String status;
+	private boolean status;
 
-	public String getStatus() {
+	
+	public boolean isStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(boolean status) {
 		this.status = status;
 	}
 

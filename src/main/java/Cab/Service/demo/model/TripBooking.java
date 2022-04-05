@@ -59,6 +59,10 @@ public class TripBooking {
 		this.bill = bill;
 	}
 
+	public TripBooking(int i, Customer c, Driver d, String string, String string2, boolean b, int j, int k) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getTripBookingId() {
 		return tripBookingId;
 	}

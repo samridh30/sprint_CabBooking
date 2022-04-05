@@ -8,6 +8,13 @@ import javax.persistence.Id;
 
 public class Cab {
 
+	@Id
+	@GeneratedValue
+	private int cabId;
+	private String carType;
+	private float perKmRate;
+	private boolean status;
+
 	public Cab() {
 
 	}
@@ -19,13 +26,6 @@ public class Cab {
 		this.perKmRate = perKmRate;
 		this.status = status;
 	}
-
-	@Id
-	@GeneratedValue
-	private int cabId;
-	private String carType;
-	private float perKmRate;
-	private boolean status;
 
 	public boolean isStatus() {
 		return status;

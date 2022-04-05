@@ -34,157 +34,152 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	Driverdto driverdto;
 	@Autowired
 	Customerdto customerdto;
-	
+
 	@Autowired
 	TripBooking service;
 	@Autowired
 	DriverRepositoryImpl DRepo;
-	
+
+	@Autowired
+	private CustomerServiceImpl appUser;
+
 	LocalDateTime now = LocalDateTime.now();
-	
 
 	@Override
 	public TripBooking insertTripBooking(TripBooking tripBooking) {
-		Optional<TripBooking> trip= tripRepo.findById(tripBooking.getTripBookingId());
-		//int trip= tripBooking.getTripBookingId();
-		
-		if(trip.isPresent()) {
-			throw new InvalidTripFoundException("Duplicate Trip Id");
-		}else {
-			boolean check= validateTrip(tripBooking.getCustomer().getCustomerId());
-			if(check==true) {
-			
-			tripRepo.save(tripBooking);
+		Optional<TripBooking> trip = tripRepo.findById(tripBooking.getTripBookingId());
+		// int trip= tripBooking.getTripBookingId();
 
-			int cus_id=tripBooking.getCustomer().getCustomerId();
-			TripBooking book=calculateBill(cus_id);
-			
-			
-			
-			
-			
-			
-			return updateTripBooking(book);}
-			else {
+		if (trip.isPresent()) {
+			throw new InvalidTripFoundException("Duplicate Trip Id");
+		} else {
+			boolean check = validateTrip(tripBooking.getCustomer().getCustomerId());
+			if (check == true) {
+
+				tripRepo.save(tripBooking);
+
+				int cus_id = tripBooking.getCustomer().getCustomerId();
+				TripBooking book = calculateBill(cus_id);
+
+				return updateTripBooking(book);
+			} else {
 				throw new InvalidTripFoundException("Multiple Trips Not Allowed At Same Time");
 			}
-			
+
 		}
 	}
 
 	@Override
 	public TripBooking updateTripBooking(TripBooking tripBooking) {
-		Optional<TripBooking> trip=tripRepo.findById(tripBooking.getTripBookingId());
-		if(trip.isPresent()) {
+		Optional<TripBooking> trip = tripRepo.findById(tripBooking.getTripBookingId());
+		if (trip.isPresent()) {
 			return tripRepo.save(tripBooking);
-		}else {
+		} else {
 			throw new TripNotFoundException("Invalid Data");
 		}
 
-	
 	}
 
 	@Override
 	public TripBooking deleteTripBooking(int tripBookingId) {
-		Optional<TripBooking> trip=tripRepo.findById(tripBookingId);
-		if(trip.isPresent()) {
+		Optional<TripBooking> trip = tripRepo.findById(tripBookingId);
+		if (trip.isPresent()) {
 			tripRepo.deleteById(tripBookingId);
-			return trip.get();		}
-		else {
-			throw new TripNotFoundException("Invalid Id-"+tripBookingId);
+			return trip.get();
+		} else {
+			throw new TripNotFoundException("Invalid Id-" + tripBookingId);
 		}
 	}
 
 	@Override
 	public List<TripBooking> ViewAllTripsCustomer(int customerId) {
-		
-		List<TripBooking> trip= tripRepo.findByCustomer(customerId);
+
+//		System.out.println(loggedInUser.getUserName());
+
+		List<TripBooking> trip = tripRepo.findByCustomer(customerId);
 		return trip;
-		//return null;
+		// return null;
 	}
 
 	@Override
 	public TripBooking calculateBill(int customerId) {
-		float rate=tripRepo.findByPerKmRate(customerId);
-		TripBooking t= tripRepo.findByCustomerId(customerId);
-		TripBooking trip= tripRepo.getById(t.getTripBookingId());
-		trip.setBill(trip.getDistanceInKm()*rate);
+		float rate = tripRepo.findByPerKmRate(customerId);
+		TripBooking t = tripRepo.findByCustomerId(customerId);
+		TripBooking trip = tripRepo.getById(t.getTripBookingId());
+		trip.setBill(trip.getDistanceInKm() * rate);
 		return trip;
 	}
-	
+
 	public boolean validateTrip(int customerId) {
-		List<Integer> Id =tripRepo.IsCustomerInTrip(customerId);
-		if(Id.isEmpty()) {
+		List<Integer> Id = tripRepo.IsCustomerInTrip(customerId);
+		if (Id.isEmpty()) {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
-		
+
 	}
-	
+
 	public TripBooking endTrip(int Id) {
-		Optional<TripBooking> end= tripRepo.findById(Id);
-		TripBooking end1=end.get();
+		Optional<TripBooking> end = tripRepo.findById(Id);
+		TripBooking end1 = end.get();
 		end1.setStatus(false);
 		end1.getDriver().setStatus(false);
-		
-		TripBooking end2= updateTripBooking(end1);
-		
+
+		TripBooking end2 = updateTripBooking(end1);
+
 		return end2;
-		
-		
-		
+
 	}
-	
+
 	public Cabservicedto BookCab(String fromLocation, String toLocation, int CustId) {
-		Optional<Customer> tripCust= cust.findById(CustId);
-		List<Driver> driver1=DRepo.findByStatus();
-		if(driver1.size()==0) {
+		Optional<Customer> tripCust = cust.findById(CustId);
+		List<Driver> driver1 = DRepo.findByStatus();
+		if (driver1.size() == 0) {
 			throw new DriverNotFoundException("All drivers are Busy rightNow. Try Again after Some time");
-		}else {
-		System.out.println(driver1.get(0).getDriverId());
-		Driver s= driver.getById(driver1.get(0).getDriverId());
-		driver1.get(0).setStatus(true);
-		
-		service.setCustomer(tripCust.get());
-		service.setDistanceInKm(50);
-		service.setStatus(true);
-		service.setBill(300);
-		service.setDriver(s);
-		service.setFromDateTime(now);
-		service.setToDateTime(now);
-		service.setFromLocation(fromLocation);
-		service.setToLocation(toLocation);
-		
-		TripBooking book=insertTripBooking(service);
-		
-		driverdto.setDriverId(book.getDriver().getDriverId());
-		driverdto.setRating(book.getDriver().getRating());
-		driverdto.setCab(book.getDriver().getCab());
-		//cabservicedto.setDriver(driverdto);
-		customerdto.setCustomerId(book.getCustomer().getCustomerId());
-		customerdto.setUsername(book.getCustomer().getUserName());
-		
-		cabservicedto.setCustomerId(customerdto.getCustomerId());
-		cabservicedto.setCustomername(customerdto.getUsername());
-		cabservicedto.setBill(book.getBill());
-		cabservicedto.setFromDateTime(book.getFromDateTime());
-		cabservicedto.setToLocation(book.getToLocation());
-		cabservicedto.setToDateTime(book.getToDateTime());
-		cabservicedto.setFromLocation(book.getFromLocation());
-		cabservicedto.setDriverId(driverdto.getDriverId());
-		cabservicedto.setRating(driverdto.getRating());
-		cabservicedto.setCabtype(driverdto.getCab().getCarType());}
-		//cabservicedto.setCustomer(customerdto);
-		
+		} else {
+			System.out.println(driver1.get(0).getDriverId());
+			Driver s = driver.getById(driver1.get(0).getDriverId());
+			driver1.get(0).setStatus(true);
+
+			service.setCustomer(tripCust.get());
+			service.setDistanceInKm(50);
+			service.setStatus(true);
+			service.setBill(300);
+			service.setDriver(s);
+			service.setFromDateTime(now);
+			service.setToDateTime(now);
+			service.setFromLocation(fromLocation);
+			service.setToLocation(toLocation);
+
+			TripBooking book = insertTripBooking(service);
+
+			driverdto.setDriverId(book.getDriver().getDriverId());
+			driverdto.setRating(book.getDriver().getRating());
+			driverdto.setCab(book.getDriver().getCab());
+			// cabservicedto.setDriver(driverdto);
+			customerdto.setCustomerId(book.getCustomer().getCustomerId());
+			customerdto.setUsername(book.getCustomer().getUserName());
+
+			cabservicedto.setCustomerId(customerdto.getCustomerId());
+			cabservicedto.setCustomername(customerdto.getUsername());
+			cabservicedto.setBill(book.getBill());
+			cabservicedto.setFromDateTime(book.getFromDateTime());
+			cabservicedto.setToLocation(book.getToLocation());
+			cabservicedto.setToDateTime(book.getToDateTime());
+			cabservicedto.setFromLocation(book.getFromLocation());
+			cabservicedto.setDriverId(driverdto.getDriverId());
+			cabservicedto.setRating(driverdto.getRating());
+			cabservicedto.setCabtype(driverdto.getCab().getCarType());
+		}
+		// cabservicedto.setCustomer(customerdto);
+
 		return cabservicedto;
-		
-		
-		
-		
-		
-		
+
+	}
+
+	public String testMethod() {
+		return appUser.loggedInUser.toString();
 	}
 
 }

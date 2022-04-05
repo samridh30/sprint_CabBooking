@@ -1,6 +1,7 @@
 package Cab.Service.demo.Service;
 
 import java.util.List;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +9,13 @@ import org.springframework.stereotype.Service;
 
 import Cab.Service.demo.Exception.DriverAlreadyExistsException;
 import Cab.Service.demo.Exception.DriverNotFoundException;
-import Cab.Service.demo.Exception.InvalidUserNamePasswordException;
+
+import Cab.Service.demo.Exception.UserNotLoggedInException;
 import Cab.Service.demo.model.Customer;
 import Cab.Service.demo.model.Driver;
 import Cab.Service.demo.model.Role;
 import Cab.Service.demo.repository.DriverRepositoryImpl;
+import Cab.Service.demo.repository.TripBookingRepositoryImpl;
 
 @Service
 public class DriverServiceImpl implements IDriverService {
@@ -22,6 +25,8 @@ public class DriverServiceImpl implements IDriverService {
 
 	@Autowired
 	Customer AppUser;
+	@Autowired
+	private TripBookingRepositoryImpl TRepo;
 
 	@Override
 	public Driver insertDriver(Driver driver) {
@@ -34,7 +39,7 @@ public class DriverServiceImpl implements IDriverService {
 				return driver;
 			}
 		} else {
-			throw new InvalidUserNamePasswordException("Login First");
+			throw new UserNotLoggedInException("Login First");
 		}
 
 	}
@@ -51,23 +56,28 @@ public class DriverServiceImpl implements IDriverService {
 				throw new DriverNotFoundException("Driver is not present");
 			}
 		} else {
-			throw new InvalidUserNamePasswordException("Login First");
+			throw new UserNotLoggedInException("Login First");
 		}
 	}
 
 	@Override
 	public Driver deleteDriver(int driverId) {
 		if (AppUser.getRole() == Role.ADMIN) {
-			Optional<Driver> dri = driRepo.findById(driverId);
-			if (dri.isPresent()) {
-				driRepo.deleteById(driverId);
-				return dri.get();
-			} else {
+	
+		Optional<Driver> dri = driRepo.findById(driverId);
+		if (dri.isPresent()) {
+			TRepo.deleteById(driverId);
+			driRepo.deleteById(driverId);
+			return dri.get();
+		}
+		 else {
 
-				throw new DriverNotFoundException("Driver is not present");
-			}
-		} else {
-			throw new InvalidUserNamePasswordException("Login First");
+			throw new DriverNotFoundException("Driver is not present");
+		}
+		}
+		
+		 else {
+			throw new UserNotLoggedInException("Login First");
 		}
 	}
 
@@ -76,7 +86,7 @@ public class DriverServiceImpl implements IDriverService {
 		if (AppUser.getRole() == Role.CUSTOMER) {
 			return driRepo.findByViewBestDrivers();
 		} else {
-			throw new InvalidUserNamePasswordException("Login First");
+			throw new UserNotLoggedInException("Login First");
 		}
 	}
 
@@ -91,7 +101,7 @@ public class DriverServiceImpl implements IDriverService {
 				throw new DriverNotFoundException("Driver is not present");
 			}
 		} else {
-			throw new InvalidUserNamePasswordException("Login First");
+			throw new UserNotLoggedInException("Login First");
 		}
 	}
 

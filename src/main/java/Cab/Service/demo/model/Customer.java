@@ -32,7 +32,7 @@ public class Customer {
 	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$")
 	private String password;
 	private String address;
-	private String mobileNumber;
+	private Long mobileNumber;
 	
 	@Column(unique = true)
 	private String email;

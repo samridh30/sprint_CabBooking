@@ -71,9 +71,9 @@ public class CustomerController {
 	}
 
 	// http://localhost:8088/Customer/viewCustomer/{Id}
-	@GetMapping("/viewCustomer/{Id}")
-	public ResponseEntity<Customer> viewCustomer(@PathVariable(name = "Id") int Id) {
-		return new ResponseEntity<Customer>(cust.viewCustomer(Id), HttpStatus.OK);
+	@GetMapping("/viewCustomer")
+	public ResponseEntity<Customer> viewCustomer() {
+		return new ResponseEntity<Customer>(cust.viewCustomer(), HttpStatus.OK);
 	}
 
 }

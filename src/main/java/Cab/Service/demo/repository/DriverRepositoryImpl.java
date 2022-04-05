@@ -12,8 +12,11 @@ import Cab.Service.demo.model.Driver;
 @Repository
 @EnableJpaRepositories
 public interface DriverRepositoryImpl extends JpaRepository<Driver, Integer> {
-//	
+	
 	@Query("select a from Driver a where a.rating>=4.5")
 	List<Driver> findByViewBestDrivers();
+	
+	@Query(value="select * from Driver d where d.status=false ", nativeQuery=true)
+	List<Driver> findByStatus();
 
 }

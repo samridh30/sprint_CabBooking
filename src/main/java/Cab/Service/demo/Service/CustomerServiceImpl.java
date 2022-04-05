@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import Cab.Service.demo.Exception.CustomerNotFoundException;
 import Cab.Service.demo.Exception.InvalidUserNamePasswordException;
+import Cab.Service.demo.model.AppUser;
 import Cab.Service.demo.model.Customer;
+import Cab.Service.demo.model.Role;
 import Cab.Service.demo.repository.CustomerRepositorImpl;
 import Cab.Service.demo.repository.TripBookingRepositoryImpl;
 
@@ -64,12 +66,15 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Override
 	public List<Customer> viewCustomers() {
-		List<Customer> cus = custRepo.findAll();
-		if (cus.isEmpty()) {
-			throw new CustomerNotFoundException("Empty Table");
-		} else {
-			return cus;
-		}
+		if (loggedInUser.getRole() == Role.ADMIN) {
+			List<Customer> cus = custRepo.findAll();
+			if (cus.isEmpty()) {
+				throw new CustomerNotFoundException("Empty Table");
+			} else {
+				return cus;
+			}
+		} else
+			throw new InvalidUserNamePasswordException("Login First");
 	}
 
 	@Override
@@ -84,27 +89,41 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	@Override
-	public Customer loginUser(String email, String password) {
-//		LOG.info(appUser.toString());
-		Customer customer = custRepo.findByEmail(email);
-		System.out.println(custRepo.findByEmail(email).getCustomerId());
+	public Customer loginUser(AppUser user) {
 
-		System.out.println(customer.toString());
-		if (password.equals(customer.getPassword())) {
-			loggedInUser = customer;
-			return customer;
-		} else {
-			throw new InvalidUserNamePasswordException("Invalid UserName or Password");
-		}
+//		Optional<Customer> cus = custRepo.findByEmailAndPassword(email);
+//		System.out.println(cus.get().getPassword());
+//		Optional<Customer> list = custRepo.findByEmail(email);
+		loggedInUser = custRepo.findByEmail(user.getEmail());
+//		if (user.getPassword() == list.getPassword()) {
+//			return list;
+//		} else
+//			return null;
+		return loggedInUser;
 	}
 
+//		System.out.println(customer.toString());
+//		if (password.equals(customer.getPassword())) {
+//			loggedInUser = customer;
+//			return customer;
+//		} else {
+//			throw new InvalidUserNamePasswordException("Invalid UserName or Password");
+//		}
+
 	@Override
-	public String logoutUser(String userName) {
-		if (loggedInUser.getUserName().equals(userName)) {
+	public String logoutUser() {
+		if (loggedInUser.getRole() != null) {
+			String message = loggedInUser.getUserName();
 			loggedInUser = null;
-			return userName;
-		} else
-			throw new InvalidUserNamePasswordException("Invalid UserName or Password");
+			return message + " is Logged Out";
+		} else {
+			throw new InvalidUserNamePasswordException("Login First");
+		}
+//		if (loggedInUser.getUserName()) {
+//			loggedInUser = null;
+//			return "User LoggedOut";
+//		} else
+//			throw new InvalidUserNamePasswordException("Invalid UserName or Password");
 	}
 
 	@Override

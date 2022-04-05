@@ -1,16 +1,14 @@
 package Cab.Service.demo.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.springframework.stereotype.Component;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Component
@@ -36,7 +34,7 @@ public class Customer {
 	private String address;
 	private String mobileNumber;
 	
-	@Email
+	@Column(unique = true)
 	private String email;
 	private Role role;
 

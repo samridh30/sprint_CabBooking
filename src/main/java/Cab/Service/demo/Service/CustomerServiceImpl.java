@@ -6,8 +6,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import Cab.Service.demo.Exception.AlreadyLoggedInException;
 import Cab.Service.demo.Exception.CustomerNotFoundException;
 import Cab.Service.demo.Exception.InvalidUserNamePasswordException;
+import Cab.Service.demo.Exception.UserNotLoggedInException;
 import Cab.Service.demo.model.AppUser;
 import Cab.Service.demo.model.Customer;
 import Cab.Service.demo.model.Role;
@@ -27,39 +29,48 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Override
 	public Customer insertCustomer(Customer customer) {
-		Optional<Customer> cus = custRepo.findById(customer.getCustomerId());
-		if (cus.isPresent()) {
-			return null;
-		} else {
-			custRepo.save(customer);
-			return customer;
-
-		}
+		if (loggedInUser.getRole() == null) {
+			Optional<Customer> cus = custRepo.findByEmail(customer.getEmail());
+			if (cus.isPresent()) {
+				throw new InvalidUserNamePasswordException("Email Address Already Exists");
+			} else {
+				custRepo.save(customer);
+				return customer;
+			}
+		} else
+			throw new AlreadyLoggedInException("Already Logged in as a User");
 
 	}
 
 	@Override
 	public Customer updateCustomer(Customer customer) {
-		Optional<Customer> cus = custRepo.findById(customer.getCustomerId());
-		if (cus.isPresent()) {
-			custRepo.save(customer);
-			return customer;
-		} else {
-			throw new CustomerNotFoundException("Invalid Customer");
-		}
+		if (loggedInUser.getRole() != null) {
+			Optional<Customer> cus = custRepo.findById(customer.getCustomerId());
+			if (cus.isPresent()) {
+				custRepo.save(customer);
+				return customer;
+			} else {
+				throw new CustomerNotFoundException("Invalid Customer");
+			}
+		} else
+			throw new UserNotLoggedInException("Login First");
 	}
 
 	@Override
 	public Customer deleteCustomer(int customerId) {
-		Optional<Customer> cus = custRepo.findById(customerId);
-		if (cus.isPresent()) {
+		if (loggedInUser.getRole() != null) {
+			Optional<Customer> cus = custRepo.findById(customerId);
+			if (cus.isPresent()) {
 
-			trip.deleteTripByCustomerId(customerId);
-			custRepo.deleteCustomerById(customerId);
-			return cus.get();
+				trip.deleteTripByCustomerId(customerId);
+				custRepo.deleteCustomerById(customerId);
+				return cus.get();
+			} else {
+				throw new CustomerNotFoundException("Invalid Id-" + customerId);
+
+			}
 		} else {
-			throw new CustomerNotFoundException("Invalid Id-" + customerId);
-
+			throw new UserNotLoggedInException("Login First");
 		}
 
 	}
@@ -78,28 +89,28 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	@Override
-	public Customer viewCustomer(int customerId) {
+	public Customer viewCustomer() {
 
-		Optional<Customer> cus = custRepo.findById(customerId);
-		if (cus.isPresent()) {
-			return cus.get();
-		} else {
-			throw new CustomerNotFoundException("Invalid Id");
-		}
+		if (loggedInUser.getRole() != null) {
+			Optional<Customer> cus = custRepo.findById(loggedInUser.getCustomerId());
+			if (cus.isPresent()) {
+				return cus.get();
+			} else {
+				throw new CustomerNotFoundException("Invalid Id");
+			}
+		} else
+			throw new UserNotLoggedInException("Login First");
 	}
 
 	@Override
 	public Customer loginUser(AppUser user) {
 
-//		Optional<Customer> cus = custRepo.findByEmailAndPassword(email);
-//		System.out.println(cus.get().getPassword());
-//		Optional<Customer> list = custRepo.findByEmail(email);
-		loggedInUser = custRepo.findByEmail(user.getEmail());
-//		if (user.getPassword() == list.getPassword()) {
-//			return list;
-//		} else
-//			return null;
-		return loggedInUser;
+		Optional<Customer> cust = custRepo.findByEmail(user.getEmail());
+		if (user.getPassword().equals(cust.get().getPassword())) {
+			loggedInUser = cust.get();
+			return cust.get();
+		} else
+			throw new InvalidUserNamePasswordException("Invalid UserName or Password");
 	}
 
 //		System.out.println(customer.toString());
@@ -117,7 +128,7 @@ public class CustomerServiceImpl implements ICustomerService {
 			loggedInUser = null;
 			return message + " is Logged Out";
 		} else {
-			throw new InvalidUserNamePasswordException("Login First");
+			throw new UserNotLoggedInException("Login First");
 		}
 //		if (loggedInUser.getUserName()) {
 //			loggedInUser = null;
@@ -125,11 +136,4 @@ public class CustomerServiceImpl implements ICustomerService {
 //		} else
 //			throw new InvalidUserNamePasswordException("Invalid UserName or Password");
 	}
-
-	@Override
-	public Customer validateCustomer(String userName, String password) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

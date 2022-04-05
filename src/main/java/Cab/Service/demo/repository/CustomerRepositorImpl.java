@@ -1,6 +1,5 @@
 package Cab.Service.demo.repository;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,7 +17,8 @@ public interface CustomerRepositorImpl extends JpaRepository<Customer, Integer> 
 //	@Query(value = "select * from customer where email = :email", nativeQuery = true)
 //	Optional<Customer> findByEmail(@Param("email") String email);
 
-	public Customer findByEmail(String email);
+//	public Customer findByEmail(String email);
+	public Optional<Customer> findByEmail(String email);
 
 //	List<Customer> findByUserName(String userName);
 

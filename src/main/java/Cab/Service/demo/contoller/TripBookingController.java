@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import Cab.Service.demo.Service.TripBookingServiceImpl;
+import Cab.Service.demo.dto.Cabservicedto;
 import Cab.Service.demo.model.TripBooking;
 
 @RestController
@@ -72,9 +73,9 @@ public class TripBookingController {
 	
 	//http://localhost:8088/Trip/view/kukatpally/nyz
 	@GetMapping("/view/{fromlocation}/{tolocation}")
-	ResponseEntity<TripBooking> BookCab(@PathVariable(name="fromlocation") String fromlocation, @PathVariable(name="tolocation") String tolocation){
+	ResponseEntity<Cabservicedto> BookCab(@PathVariable(name="fromlocation") String fromlocation, @PathVariable(name="tolocation") String tolocation){
 		LOG.info(fromlocation+"Feteched");
-		return new ResponseEntity<TripBooking>(trip.BookCab(fromlocation, tolocation, 69), HttpStatus.OK);
+		return new ResponseEntity<Cabservicedto>(trip.BookCab(fromlocation, tolocation, 46), HttpStatus.OK);
 	}
 
 	

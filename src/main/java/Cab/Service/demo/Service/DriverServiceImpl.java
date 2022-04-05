@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import Cab.Service.demo.Exception.DriverAlreadyExistsException;
-import Cab.Service.demo.Exception.DriverNotFoundExceptipn;
+import Cab.Service.demo.Exception.DriverNotFoundException;
 import Cab.Service.demo.model.Driver;
 import Cab.Service.demo.repository.DriverRepositoryImpl;
 
@@ -35,7 +35,7 @@ public class DriverServiceImpl implements IDriverService {
 			driRepo.save(driver);
 			return driver;
 		} else {
-			throw new DriverNotFoundExceptipn("Driver is not present");
+			throw new DriverNotFoundException("Driver is not present");
 		}
 	}
 
@@ -47,7 +47,7 @@ public class DriverServiceImpl implements IDriverService {
 			return dri.get();
 		} else {
 
-			throw new DriverNotFoundExceptipn("Driver is not present");
+			throw new DriverNotFoundException("Driver is not present");
 		}
 	}
 
@@ -63,7 +63,7 @@ public class DriverServiceImpl implements IDriverService {
 			return dri.get();
 		} else {
 
-			throw new DriverNotFoundExceptipn("Driver is not present");
+			throw new DriverNotFoundException("Driver is not present");
 		}
 	}
 

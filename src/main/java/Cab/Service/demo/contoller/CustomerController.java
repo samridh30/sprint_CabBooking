@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import Cab.Service.demo.Service.CustomerServiceImpl;
+import Cab.Service.demo.model.AppUser;
 import Cab.Service.demo.model.Customer;
 
 @RestController
@@ -51,9 +52,15 @@ public class CustomerController {
 
 	// http://localhost:8088/Customer/AllCustomers
 	@PostMapping("/login")
-	public ResponseEntity<Customer> LoginCustomer(@RequestBody String userName, String password) {
+	public ResponseEntity<Customer> LoginCustomer(@RequestBody AppUser user) {
 //		LOG.info("All Customers Fetched");
-		return new ResponseEntity<Customer>(cust.loginUser(userName, password), HttpStatus.OK);
+		return new ResponseEntity<Customer>(cust.loginUser(user), HttpStatus.OK);
+	}
+
+	@GetMapping("/logout")
+	public ResponseEntity<String> LoginCustomer() {
+//		LOG.info("All Customers Fetched");
+		return new ResponseEntity<String>(cust.logoutUser(), HttpStatus.OK);
 	}
 
 	// http://localhost:8088/Customer/AllCustomers

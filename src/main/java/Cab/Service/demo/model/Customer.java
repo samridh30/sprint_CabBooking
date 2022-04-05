@@ -1,9 +1,9 @@
 package Cab.Service.demo.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -32,8 +32,9 @@ public class Customer {
 	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$")
 	private String password;
 	private String address;
-	private long mobileNumber;
-	@Email
+	private String mobileNumber;
+	
+	@Column(unique = true)
 	private String email;
 	private Role role;
 	

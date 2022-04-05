@@ -2,12 +2,15 @@ package Cab.Service.demo.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import Cab.Service.demo.Exception.DriverAlreadyExistsException;
-import Cab.Service.demo.Exception.DriverNotFoundException;
+import Cab.Service.demo.Exception.DriverNotFoundExceptipn;
+import Cab.Service.demo.model.Customer;
 import Cab.Service.demo.model.Driver;
+import Cab.Service.demo.model.Role;
 import Cab.Service.demo.repository.DriverRepositoryImpl;
 
 @Service
@@ -15,6 +18,9 @@ public class DriverServiceImpl implements IDriverService {
 
 	@Autowired
 	private DriverRepositoryImpl driRepo;
+
+	@Autowired
+	Customer AppUser;
 
 	@Override
 	public Driver insertDriver(Driver driver) {
@@ -30,6 +36,7 @@ public class DriverServiceImpl implements IDriverService {
 
 	@Override
 	public Driver updateDriver(Driver driver) {
+
 		Optional<Driver> dri = driRepo.findById(driver.getDriverId());
 		if (dri.isPresent()) {
 			driRepo.save(driver);
@@ -53,7 +60,12 @@ public class DriverServiceImpl implements IDriverService {
 
 	@Override
 	public List<Driver> ViewBestDrivers() {
-		return driRepo.findByViewBestDrivers();
+		if (AppUser.getRole() == Role.CUSTOMER) {
+			return driRepo.findByViewBestDrivers();
+		} else {
+
+		}
+		return null;
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import Cab.Service.demo.Exception.DriverAlreadyExistsException;
 import Cab.Service.demo.Exception.DriverNotFoundException;
+import Cab.Service.demo.Exception.InvalidUserException;
 import Cab.Service.demo.Exception.UserNotLoggedInException;
 import Cab.Service.demo.model.Driver;
 import Cab.Service.demo.model.Role;
@@ -25,18 +26,21 @@ public class DriverServiceImpl implements IDriverService {
 
 	@Override
 	public Driver insertDriver(Driver driver) {
-		if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
-			Optional<Driver> dri = driRepo.findById(driver.getDriverId());
-			if (dri.isPresent()) {
-				throw new DriverAlreadyExistsException("Driver Already Present");
-			} else {
-				driRepo.save(driver);
-				return driver;
-			}
+		if (AppUser.loggedInUser.toString() == null) {
+			if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
+				Optional<Driver> dri = driRepo.findById(driver.getDriverId());
+				if (dri.isPresent()) {
+					throw new DriverAlreadyExistsException("Driver Already Present");
+				} else {
+					driRepo.save(driver);
+					return driver;
+				}
+			} else
+				throw new InvalidUserException("Not LoggedIn as Admin");
+
 		} else {
 			throw new UserNotLoggedInException("Login First");
 		}
-
 	}
 
 	@Override

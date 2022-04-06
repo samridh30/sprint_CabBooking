@@ -9,12 +9,14 @@ import org.springframework.stereotype.Service;
 
 import Cab.Service.demo.Exception.DriverNotFoundException;
 import Cab.Service.demo.Exception.InvalidTripFoundException;
+import Cab.Service.demo.Exception.InvalidUserNamePasswordException;
 import Cab.Service.demo.Exception.TripNotFoundException;
 import Cab.Service.demo.dto.Cabservicedto;
 import Cab.Service.demo.dto.Customerdto;
 import Cab.Service.demo.dto.Driverdto;
 import Cab.Service.demo.model.Customer;
 import Cab.Service.demo.model.Driver;
+import Cab.Service.demo.model.Role;
 import Cab.Service.demo.model.TripBooking;
 import Cab.Service.demo.repository.CustomerRepositorImpl;
 import Cab.Service.demo.repository.DriverRepositoryImpl;
@@ -37,8 +39,8 @@ public class TripBookingServiceImpl implements ITripBookingService {
 
 	
 
-	@Autowired
-	TripBooking service;
+	//@Autowired
+	//TripBooking service;
 	@Autowired
 	DriverRepositoryImpl DRepo;
 
@@ -72,20 +74,26 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		}
 	}
 	
+	
+	
 	/**
 	 * @desc Update already tripbooked data
 	 * @return Updated tripBooking Object will be returned
 	 */
 	@Override
 	public TripBooking updateTripBooking(TripBooking tripBooking) {
+		if(appUser.loggedInUser.getRole()==Role.CUSTOMER) {
 		Optional<TripBooking> trip = tripRepo.findById(tripBooking.getTripBookingId());
 		if (trip.isPresent()) {
 			return tripRepo.save(tripBooking);
 		} else {
 			throw new TripNotFoundException("Invalid Data");
+		} }else {
+			throw new InvalidUserNamePasswordException("vdd");
 		}
 
 	}
+	
 	
 	/**
 	 * @desc method will Delete trip booking
@@ -94,14 +102,18 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	 */
 	@Override
 	public TripBooking deleteTripBooking(int tripBookingId) {
+		if(appUser.loggedInUser.getRole()==Role.CUSTOMER) {
 		Optional<TripBooking> trip = tripRepo.findById(tripBookingId);
 		if (trip.isPresent()) {
 			tripRepo.deleteById(tripBookingId);
 			return trip.get();
 		} else {
 			throw new TripNotFoundException("Invalid Id-" + tripBookingId);
+		}}{
+			throw new InvalidUserNamePasswordException("vdd");
 		}
 	}
+	
 	
 	/**
 	 * @desc  Fetch trip data based on customerId
@@ -109,13 +121,21 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	 */
 	@Override
 	public List<TripBooking> ViewAllTripsCustomer(int customerId) {
+		if(appUser.loggedInUser!=null) {
 
 //		System.out.println(loggedInUser.getUserName());
 
 		List<TripBooking> trip = tripRepo.findByCustomer(customerId);
-		return trip;
+		if(trip!=null) {
+		return trip;}
+		else {
+			throw new TripNotFoundException("No Trips Found For Customer Id- "+ customerId);
+		}
 
-	}
+	}else {
+		throw new InvalidUserNamePasswordException("vdd");
+	}}
+	
 	
 	/**
 	 * @desc Calculate Trip bill based on distance and PerKmRate of cab
@@ -129,13 +149,13 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		trip.setBill(trip.getDistanceInKm() * rate);
 		return trip;
 	}
+	
 
 	
 	/**
 	 * @desc Validate Trip 
 	 * @return boolean value(True or False)
 	 */
-
 	public boolean validateTrip(int customerId) {
 		List<Integer> Id = tripRepo.IsCustomerInTrip(customerId);
 		if (Id.isEmpty()) {
@@ -151,12 +171,13 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	 * @desc To End the trip
 	 * @return Tripbooking object
 	 */
-
-
-
 	public TripBooking endTrip(int Id) {
-		Optional<TripBooking> end = tripRepo.findById(Id);
-		TripBooking end1 = end.get();
+		
+		if(appUser.loggedInUser.getRole()==Role.CUSTOMER) {
+			
+		TripBooking end1 = tripRepo.findByCustomerId(Id);
+		if(end1!=null) {
+		//TripBooking end1 = end.get();
 		end1.setStatus(false);
 		end1.getDriver().setStatus(false);
 
@@ -165,14 +186,26 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		TripBooking end2= updateTripBooking(end1);
 		
 		return end2;}
+		else {
+			throw new TripNotFoundException("You Not Booked Trip");
+			
+		}
+		}
+		else {
+			throw new InvalidUserNamePasswordException("vdd");
+		}
+			
+		}
+	
+	
 	
 	/**
 	 * @desc To Book a cab from fromlocation to Tolocation
 	 * @return Cabservicedto object will be returned
 	 */
-	
 	public Cabservicedto BookCab(String fromLocation, String toLocation) {
-		Optional<Customer> tripCust = custRepo.findById(111);
+		if(appUser.loggedInUser.getRole()==Role.CUSTOMER) {
+		Optional<Customer> tripCust = custRepo.findById(appUser.loggedInUser.getCustomerId());
 		List<Driver> driver1 = driverRepo.findByStatus();
 		if (driver1.size() == 0) {
 			throw new DriverNotFoundException("All drivers are Busy rightNow. Try Again after Some time");
@@ -180,6 +213,7 @@ public class TripBookingServiceImpl implements ITripBookingService {
 			System.out.println(driver1.get(0).getDriverId());
 			Driver s = driverRepo.getById(driver1.get(0).getDriverId());
 			driver1.get(0).setStatus(true);
+			TripBooking service= new TripBooking();
 
 			service.setCustomer(tripCust.get());
 			service.setDistanceInKm(50);
@@ -196,10 +230,8 @@ public class TripBookingServiceImpl implements ITripBookingService {
 			driverdto.setDriverId(book.getDriver().getDriverId());
 			driverdto.setRating(book.getDriver().getRating());
 			driverdto.setCab(book.getDriver().getCab());
-			// cabservicedto.setDriver(driverdto);
 			customerdto.setCustomerId(book.getCustomer().getCustomerId());
 			customerdto.setUsername(book.getCustomer().getUserName());
-
 			cabservicedto.setCustomerId(customerdto.getCustomerId());
 			cabservicedto.setCustomername(customerdto.getUsername());
 			cabservicedto.setBill(book.getBill());
@@ -209,17 +241,12 @@ public class TripBookingServiceImpl implements ITripBookingService {
 			cabservicedto.setFromLocation(book.getFromLocation());
 			cabservicedto.setDriverId(driverdto.getDriverId());
 			cabservicedto.setRating(driverdto.getRating());
-			cabservicedto.setCabtype(driverdto.getCab().getCarType());
-		}
-		// cabservicedto.setCustomer(customerdto);
-
-
-		return cabservicedto;
-
+			cabservicedto.setCabtype(driverdto.getCab().getCarType());}
+		return cabservicedto;}
+		else {
+			throw new InvalidUserNamePasswordException("vdd");}
 	}
-
-	public String testMethod() {
-		return appUser.loggedInUser.toString();
-	}
-
+	
 }
+
+	

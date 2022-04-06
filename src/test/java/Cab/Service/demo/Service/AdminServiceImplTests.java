@@ -29,4 +29,5 @@ public class AdminServiceImplTests {
 		List<TripBooking> actual = admService.getAllTrips();
 		assertEquals(expected, actual);
 	}
+
 }

@@ -33,11 +33,11 @@ public class AdminController {
 		return new ResponseEntity<List<TripBooking>>(adm.getAllTrips(), HttpStatus.OK);
 	}
 
-	@GetMapping("/check")
-	public ResponseEntity<String> cehckTest() {
-//		LOG.info(carType);
-		return new ResponseEntity<String>(adm.check(), HttpStatus.OK);
-	}
+//	@GetMapping("/check")
+//	public ResponseEntity<String> cehckTest() {
+////		LOG.info(carType);
+//		return new ResponseEntity<String>(adm.check(), HttpStatus.OK);
+//	}
 
 ////	http://localhost:8088/admin/getAll
 ////	Fetches all Admins as a list

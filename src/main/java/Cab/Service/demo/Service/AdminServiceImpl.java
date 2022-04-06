@@ -30,9 +30,10 @@ public class AdminServiceImpl implements IAdminService {
 				List<TripBooking> trip = tripRepo.findAll();
 				return trip;
 			} else
-				throw new InvalidUserNamePasswordException("Invalid Username or Password");
-		}
-		return null;
+				throw new InvalidUserException("Not LoggedIn as Admin");
+		} else
+			throw new InvalidUserNamePasswordException("Login First");
+
 	}
 
 //	@Override
@@ -49,40 +50,52 @@ public class AdminServiceImpl implements IAdminService {
 
 	@Override
 	public List<TripBooking> getTripsCabwise() {
-		if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
-			List<TripBooking> list = tripRepo.findByCabs();
-			return list;
+		if (AppUser.loggedInUser.toString() != null) {
+			if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
+				List<TripBooking> list = tripRepo.findByCabs();
+				return list;
+			} else
+				throw new InvalidUserException("Not Logged In As Admin");
 		} else
-			throw new InvalidUserException("Not Logged In As Admin");
+			throw new InvalidUserNamePasswordException("Login First");
 
 	}
 
 	@Override
 	public List<TripBooking> getTripsCustomerwise() {
-		if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
-			List<TripBooking> list = tripRepo.findByCustomer();
-			return list;
+		if (AppUser.loggedInUser.toString() != null) {
+			if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
+				List<TripBooking> list = tripRepo.findByCustomer();
+				return list;
+			} else
+				throw new InvalidUserException("Not Logged In As Admin");
 		} else
-			throw new InvalidUserException("Not Logged In As Admin");
+			throw new InvalidUserNamePasswordException("Login First");
 	}
 
 	@Override
 	public List<TripBooking> getTripsDatewise() {
-		if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
-			List<TripBooking> list = tripRepo.findByDate();
-			return list;
+		if (AppUser.loggedInUser.toString() != null) {
+			if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
+				List<TripBooking> list = tripRepo.findByDate();
+				return list;
+			} else
+				throw new InvalidUserException("Not Logged In As Admin");
 		} else
-			throw new InvalidUserException("Not Logged In As Admin");
+			throw new InvalidUserNamePasswordException("Login First");
 	}
 
 	@Override
 	public List<TripBooking> getAllTripsForDays(TripDateDto trip) {
-		if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
-			List<TripBooking> list = tripRepo.findByTripForDay(trip.getCustomerId(), trip.getFromLocation(),
-					trip.getToLocation());
-			return list;
+		if (AppUser.loggedInUser.toString() != null) {
+			if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
+				List<TripBooking> list = tripRepo.findByTripForDay(trip.getCustomerId(), trip.getFromLocation(),
+						trip.getToLocation());
+				return list;
+			} else
+				throw new InvalidUserException("Not Logged In As Admin");
 		} else
-			throw new InvalidUserException("Not Logged In As Admin");
+			throw new InvalidUserNamePasswordException("Login First");
 	}
 
 }

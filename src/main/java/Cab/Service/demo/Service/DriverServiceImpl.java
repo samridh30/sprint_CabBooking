@@ -26,7 +26,7 @@ public class DriverServiceImpl implements IDriverService {
 
 	@Override
 	public Driver insertDriver(Driver driver) {
-		if (AppUser.loggedInUser.toString() == null) {
+		if (AppUser.loggedInUser.toString() != null) {
 			if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
 				Optional<Driver> dri = driRepo.findById(driver.getDriverId());
 				if (dri.isPresent()) {

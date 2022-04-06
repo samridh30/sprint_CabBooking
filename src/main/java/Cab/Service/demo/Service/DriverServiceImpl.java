@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import Cab.Service.demo.Exception.DriverAlreadyExistsException;
 import Cab.Service.demo.Exception.DriverNotFoundException;
+import Cab.Service.demo.Exception.InvalidUserException;
 import Cab.Service.demo.Exception.UserNotLoggedInException;
 import Cab.Service.demo.model.Driver;
 import Cab.Service.demo.model.Role;
@@ -25,48 +26,81 @@ public class DriverServiceImpl implements IDriverService {
 
 	@Override
 	public Driver insertDriver(Driver driver) {
-		if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
-			Optional<Driver> dri = driRepo.findById(driver.getDriverId());
-			if (dri.isPresent()) {
-				throw new DriverAlreadyExistsException("Driver Already Present");
-			} else {
-				driRepo.save(driver);
-				return driver;
-			}
+		if (AppUser.loggedInUser.toString() == null) {
+			if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
+				Optional<Driver> dri = driRepo.findById(driver.getDriverId());
+				if (dri.isPresent()) {
+					throw new DriverAlreadyExistsException("Driver Already Present");
+				} else {
+					driRepo.save(driver);
+					return driver;
+				}
+			} else
+				throw new InvalidUserException("Not LoggedIn as Admin");
+
 		} else {
 			throw new UserNotLoggedInException("Login First");
 		}
-
 	}
 
 	@Override
 	public Driver updateDriver(Driver driver) {
-		if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
+		if (AppUser.loggedInUser.toString() == null) {
+			if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
 
-			Optional<Driver> dri = driRepo.findById(driver.getDriverId());
-			if (dri.isPresent()) {
-				driRepo.save(driver);
-				return driver;
+				Optional<Driver> dri = driRepo.findById(driver.getDriverId());
+				if (dri.isPresent()) {
+					driRepo.save(driver);
+					return driver;
+				} else {
+					throw new DriverNotFoundException("Driver is not present");
+				}
 			} else {
-				throw new DriverNotFoundException("Driver is not present");
+				throw new InvalidUserException("Not LoggedIn as Admin");
 			}
+
 		} else {
 			throw new UserNotLoggedInException("Login First");
 		}
+
 	}
 
 	@Override
 	public Driver deleteDriver(int driverId) {
-		if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
 
-			Optional<Driver> dri = driRepo.findById(driverId);
-			if (dri.isPresent()) {
+		if (AppUser.loggedInUser.toString() == null) {
+			if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
 
-				driRepo.deleteById(driverId);
-				return dri.get();
+				Optional<Driver> dri = driRepo.findById(driverId);
+				if (dri.isPresent()) {
+
+					driRepo.deleteById(driverId);
+					return dri.get();
+				} else {
+
+					throw new DriverNotFoundException("Driver is not present");
+				}
+
+			}
+
+			else {
+				throw new InvalidUserException("Not LoggedIn as Admin");
+			}
+		}
+
+		else {
+			throw new UserNotLoggedInException("Login First");
+		}
+
+	}
+
+	@Override
+	public List<Driver> ViewBestDrivers() {
+		if (AppUser.loggedInUser.toString() == null) {
+			if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
+				return driRepo.findByViewBestDrivers();
 			} else {
-
-				throw new DriverNotFoundException("Driver is not present");
+				throw new InvalidUserException("Not LoggedIn as Admin");
 			}
 		}
 
@@ -76,32 +110,41 @@ public class DriverServiceImpl implements IDriverService {
 	}
 
 	@Override
-	public List<Driver> ViewBestDrivers() {
-		return driRepo.findByViewBestDrivers();
-	}
-
-	@Override
 	public Driver viewDriver(int driverId) {
-		if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
-			Optional<Driver> dri = driRepo.findById(driverId);
-			if (dri.isPresent()) {
-				return dri.get();
-			} else {
+		if (AppUser.loggedInUser.toString() == null) {
+			if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
+				Optional<Driver> dri = driRepo.findById(driverId);
+				if (dri.isPresent()) {
+					return dri.get();
+				} else {
 
-				throw new DriverNotFoundException("Driver is not present");
+					throw new DriverNotFoundException("Driver is not present");
+				}
 			}
-		} else {
+
+			else {
+
+				throw new InvalidUserException("Not LoggedIn as Admin");
+			}
+		}
+
+		else {
 			throw new UserNotLoggedInException("Login First");
 		}
+
 	}
 
 	@Override
 	public List<Driver> ViewAllDrivers() {
-		if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
-			return driRepo.findAll();
+		if (AppUser.loggedInUser.toString() == null) {
+			if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
+				return driRepo.findAll();
+			} else {
+				throw new InvalidUserException("Not LoggedIn as Admin");
+			}
 		} else {
 			throw new UserNotLoggedInException("Login First");
 		}
-	}
 
+	}
 }

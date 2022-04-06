@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import Cab.Service.demo.Exception.AlreadyLoggedInException;
 import Cab.Service.demo.Exception.CustomerNotFoundException;
 import Cab.Service.demo.Exception.InvalidUserNamePasswordException;
 import Cab.Service.demo.Exception.UserNotLoggedInException;
@@ -27,21 +26,20 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Autowired
 	Customer loggedInUser;
-	private Customerdto dto;
 
 	@Override
 	public Customer insertCustomer(Customer customer) {
-		if (loggedInUser.getRole() == null) {
-			Optional<Customer> cus = custRepo.findByEmail(customer.getEmail());
-			if (cus.isPresent()) {
-				throw new InvalidUserNamePasswordException("Email Address Already Exists");
-			} else {
-				custRepo.save(customer);
-				return customer;
-			}
-		} else
-			throw new AlreadyLoggedInException("Already Logged in as a User");
-
+//		System.out.println(loggedInUser.toString());
+//		if (loggedInUser.equals(null)) {
+		Optional<Customer> cus = custRepo.findByEmail(customer.getEmail());
+		if (cus.isPresent()) {
+			throw new InvalidUserNamePasswordException("Email Address Already Exists");
+		} else {
+			custRepo.save(customer);
+			return customer;
+		}
+//		} else
+//			throw new AlreadyLoggedInException("Already Logged in as a User");
 	}
 
 	@Override

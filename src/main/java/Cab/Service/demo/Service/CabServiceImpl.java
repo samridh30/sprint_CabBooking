@@ -23,13 +23,14 @@ public class CabServiceImpl implements ICabService {
 	@Override
 	public Cab insertCab(Cab cab) {
 		if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
-			Optional<Cab> car = car_repo.findById(cab.getCabId());
-			if (car.isEmpty()) {
-				throw new CabNotFoundException("Cab not found");
-			} else {
-				car_repo.save(cab);
-				return cab;
-			}
+			return car_repo.save(cab);
+//			Optional<Cab> car = car_repo.findById(cab.getCabId());
+//			if (car.isEmpty()) {
+//				throw new CabNotFoundException("Cab not found");
+//			} else {
+//				car_repo.save(cab);
+//				return cab;
+//			}
 		} else {
 			throw new UserNotLoggedInException("Login First");
 

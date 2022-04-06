@@ -86,7 +86,6 @@ public class CabServiceImpl implements ICabService {
 		} else {
 			throw new UserNotLoggedInException("Login First");
 		}
-
 	}
 
 	@Override
@@ -95,6 +94,7 @@ public class CabServiceImpl implements ICabService {
 			return car_repo.findAll();
 		}
 		return null;
+
 	}
 
 }

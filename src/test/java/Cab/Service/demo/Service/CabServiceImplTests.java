@@ -22,6 +22,9 @@ public class CabServiceImplTests {
 
 	@Autowired
 	private CabServiceImpl cabService;
+	
+	@Autowired
+	CustomerServiceImpl login;
 
 	private static Cab cab;
 
@@ -33,6 +36,7 @@ public class CabServiceImplTests {
 	
 	@Test
 	public void testInsertCab() {
+		login.loggedInUser.getRole();
 		LOG.info(cab.toString());
 		Cab expected = cab;
 		Cab actual = cabService.updateCab(cab);
@@ -41,6 +45,7 @@ public class CabServiceImplTests {
 	
 	@Test
 	public void testInsertCabFailure() {
+		login.loggedInUser.getRole();
 		LOG.info(cab.toString());
 		Cab unexpected = cab;
 		Cab actual = cabService.insertCab(new Cab(456, "sedane", 5, true) );
@@ -49,6 +54,7 @@ public class CabServiceImplTests {
 
 	@Test
 	public void testUpdateCab() {
+		login.loggedInUser.getRole();
 		LOG.info(cab.toString());
 		Cab expected = cab;
 		Cab actual = cabService.updateCab(cab);
@@ -57,6 +63,7 @@ public class CabServiceImplTests {
 	
 	@Test
 	public void testDeleteCab() {
+		login.loggedInUser.getRole();
 		LOG.info(cab.toString());
 		Cab expected = cab;
 		Cab actual = cabService.updateCab(cab);
@@ -65,6 +72,7 @@ public class CabServiceImplTests {
 	
 	@Test
 	public void testviewCabsOfType() {
+		login.loggedInUser.getRole();
 		LOG.info(cab.toString());
 		Cab expected = cab;
 		Cab actual = cabService.updateCab(cab);

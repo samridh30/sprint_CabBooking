@@ -25,19 +25,23 @@ public class CabController {
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private CabServiceImpl car;
-
-	@PostMapping("/insert")
+	
+	// http://localhost:8088/cab/insert-cab
+		// Inserts a new cab
+	@PostMapping("/insert-cab")
 	public ResponseEntity<Cab> insertCab(@RequestBody Cab cab) {
 		LOG.info(cab.toString());
 		return new ResponseEntity<Cab>(car.insertCab(cab), HttpStatus.CREATED);
 	}
-
-	@PutMapping("/update")
+	// http://localhost:8088/cab/update-cab
+		// Updates an existing cab
+	@PutMapping("/update-cab")
 	public ResponseEntity<Cab> updateCab(@RequestBody Cab cab) {
 		LOG.info(cab.toString());
 		return new ResponseEntity<Cab>(car.updateCab(cab), HttpStatus.CREATED);
 	}
-
+	// http://localhost:8088/cab/delete-cab
+		// deletes an existing cab based on cabId
 	@DeleteMapping("/delete/{cabId}")
 	public ResponseEntity<Cab> deleteCab(@PathVariable(name = "cabId") int cabId) {
 		LOG.info(Integer.toString(cabId));

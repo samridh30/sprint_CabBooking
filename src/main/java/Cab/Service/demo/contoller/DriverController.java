@@ -34,7 +34,7 @@ public class DriverController {
 	public ResponseEntity<Driver> intDriver(@RequestBody Driver driver) {
 
 		LOG.info("Insert Driver");
-		return new ResponseEntity<Driver>(drive.insertDriver(driver), HttpStatus.OK);
+		return new ResponseEntity<Driver>(drive.insertDriver(driver), HttpStatus.CREATED);
 
 	}
 

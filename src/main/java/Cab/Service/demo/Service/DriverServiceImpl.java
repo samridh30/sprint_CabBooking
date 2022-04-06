@@ -9,11 +9,9 @@ import org.springframework.stereotype.Service;
 import Cab.Service.demo.Exception.DriverAlreadyExistsException;
 import Cab.Service.demo.Exception.DriverNotFoundException;
 import Cab.Service.demo.Exception.UserNotLoggedInException;
-import Cab.Service.demo.model.Customer;
 import Cab.Service.demo.model.Driver;
 import Cab.Service.demo.model.Role;
 import Cab.Service.demo.repository.DriverRepositoryImpl;
-import Cab.Service.demo.repository.TripBookingRepositoryImpl;
 
 @Service
 public class DriverServiceImpl implements IDriverService {
@@ -24,8 +22,6 @@ public class DriverServiceImpl implements IDriverService {
 	@Autowired
 
 	private CustomerServiceImpl AppUser;
-	@Autowired
-	private TripBookingRepositoryImpl TRepo;
 
 	@Override
 	public Driver insertDriver(Driver driver) {
@@ -79,15 +75,9 @@ public class DriverServiceImpl implements IDriverService {
 		}
 	}
 
-	
 	@Override
 	public List<Driver> ViewBestDrivers() {
-		if (AppUser.loggedInUser.getRole() == Role.CUSTOMER) {
-			return driRepo.findByViewBestDrivers();
-		} else {
-
-			return null;
-		}
+		return driRepo.findByViewBestDrivers();
 	}
 
 	@Override
@@ -100,6 +90,15 @@ public class DriverServiceImpl implements IDriverService {
 
 				throw new DriverNotFoundException("Driver is not present");
 			}
+		} else {
+			throw new UserNotLoggedInException("Login First");
+		}
+	}
+
+	@Override
+	public List<Driver> ViewAllDrivers() {
+		if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
+			return driRepo.findAll();
 		} else {
 			throw new UserNotLoggedInException("Login First");
 		}

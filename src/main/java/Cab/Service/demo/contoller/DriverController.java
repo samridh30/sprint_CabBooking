@@ -63,9 +63,15 @@ public class DriverController {
 
 	// http://localhost:8088/drv/view-drivers/{did}
 	// Fetches a driver based on driver Id
-	@GetMapping("/view-driver")
+	@GetMapping("/view-driver/{did}")
 	public ResponseEntity<Driver> ViewDriver(@PathVariable(name = "did") int driverId) {
 		return new ResponseEntity<Driver>(drive.viewDriver(driverId), HttpStatus.OK);
+
+	}
+
+	@GetMapping("/view-All")
+	public ResponseEntity<List<Driver>> ViewDriver() {
+		return new ResponseEntity<List<Driver>>(drive.ViewAllDrivers(), HttpStatus.OK);
 
 	}
 }

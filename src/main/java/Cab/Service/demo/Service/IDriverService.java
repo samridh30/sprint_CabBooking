@@ -2,7 +2,6 @@ package Cab.Service.demo.Service;
 
 import java.util.List;
 
-
 import Cab.Service.demo.model.Driver;
 
 public interface IDriverService {
@@ -16,5 +15,7 @@ public interface IDriverService {
 	public List<Driver> ViewBestDrivers();
 
 	public Driver viewDriver(int driverId);
+
+	List<Driver> ViewAllDrivers();
 
 }

@@ -92,7 +92,7 @@ public class CabServiceImpl implements ICabService {
 		else {
 			throw new UserNotLoggedInException("Login First");
 		}
-		
+		//test cases
 	}
 
 }

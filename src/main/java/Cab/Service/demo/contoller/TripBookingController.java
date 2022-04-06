@@ -93,7 +93,7 @@ public class TripBookingController {
 	/**
 	 * @desc Book a cab {@link=//http://localhost:8088/Trip/view/kukatpally/nyz}l
 	 */
-	@PostMapping("/view")
+	@PostMapping("/bookCab")
 	ResponseEntity<Cabservicedto> BookCab(@RequestBody TripDto tripdto) {
 //		LOG.info(fromlocation + "Feteched");
 		return new ResponseEntity<Cabservicedto>(trip.BookCab(tripdto), HttpStatus.OK);

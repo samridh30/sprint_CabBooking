@@ -1,5 +1,6 @@
 package Cab.Service.demo.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -41,12 +42,6 @@ public interface TripBookingRepositoryImpl extends JpaRepository<TripBooking, In
 	@Query(value = "select * from trip_booking t where t.customer_id=:Id and t.status=true", nativeQuery = true)
 	TripBooking findByCustomerId(@Param("Id") int customerId);
 
-	public default boolean validateTripInsert(int Id) {
-
-		return true;
-
-	}
-
 	@Query(value = "select t.customer_id from trip_booking t where t.customer_id=:customerId and t.status=true", nativeQuery = true)
 	List<Integer> IsCustomerInTrip(@Param("customerId") int customerId);
 
@@ -54,5 +49,18 @@ public interface TripBookingRepositoryImpl extends JpaRepository<TripBooking, In
 	@Modifying
 	@Query(value = " update trip_booking  set driver_id= null where driver_id=:Id", nativeQuery = true)
 	void deletedriver(@Param("Id") int Id);
+
+	@Query(value = "select * from trip_booking t left join driver d on d.driver_id=t.driver_id left join cab c on d.cab_cab_id=c.cab_id order by car_type", nativeQuery = true)
+	public List<TripBooking> findByCabs();
+
+	@Query(value = "select * from trip_booking order by customer_id", nativeQuery = true)
+	public List<TripBooking> findByCustomer();
+
+	@Query(value = "select * from trip_booking order by from_date_time", nativeQuery = true)
+	public List<TripBooking> findByDate();
+
+	@Query(value = "select * from trip_booking where customer_id = :customerId and from_location = :fromLocation and to_location = :toLocation", nativeQuery = true)
+	public List<TripBooking> findByTripForDay(@Param("customerId") int customerId,
+			@Param("fromLocation") String fromLocation, @Param("toLocation") String toLocation);
 
 }

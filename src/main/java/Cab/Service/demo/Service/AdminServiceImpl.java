@@ -1,12 +1,13 @@
 package Cab.Service.demo.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import Cab.Service.demo.Exception.InvalidUserException;
 import Cab.Service.demo.Exception.InvalidUserNamePasswordException;
+import Cab.Service.demo.dto.TripDateDto;
 import Cab.Service.demo.model.Role;
 import Cab.Service.demo.model.TripBooking;
 import Cab.Service.demo.repository.TripBookingRepositoryImpl;
@@ -48,28 +49,40 @@ public class AdminServiceImpl implements IAdminService {
 
 	@Override
 	public List<TripBooking> getTripsCabwise() {
-//		if(AppUser.loggedInUser.getRole() == Role.ADMIN) {
-//			List<TripBooking> list = tripRepo.
-//		}
-		return null;
+		if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
+			List<TripBooking> list = tripRepo.findByCabs();
+			return list;
+		} else
+			throw new InvalidUserException("Not Logged In As Admin");
+
 	}
 
 	@Override
 	public List<TripBooking> getTripsCustomerwise() {
-		// TODO Auto-generated method stub
-		return null;
+		if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
+			List<TripBooking> list = tripRepo.findByCustomer();
+			return list;
+		} else
+			throw new InvalidUserException("Not Logged In As Admin");
 	}
 
 	@Override
 	public List<TripBooking> getTripsDatewise() {
-		// TODO Auto-generated method stub
-		return null;
+		if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
+			List<TripBooking> list = tripRepo.findByDate();
+			return list;
+		} else
+			throw new InvalidUserException("Not Logged In As Admin");
 	}
 
 	@Override
-	public List<TripBooking> getAllTripsForDays(int customerId, LocalDateTime fromDate, LocalDateTime toDate) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<TripBooking> getAllTripsForDays(TripDateDto trip) {
+		if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
+			List<TripBooking> list = tripRepo.findByTripForDay(trip.getCustomerId(), trip.getFromLocation(),
+					trip.getToLocation());
+			return list;
+		} else
+			throw new InvalidUserException("Not Logged In As Admin");
 	}
 
 }

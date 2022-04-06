@@ -1,6 +1,7 @@
-package Cab.Service.demo.cab;
+package Cab.Service.demo.Service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -15,7 +16,7 @@ import Cab.Service.demo.model.Driver;
 import Cab.Service.demo.Service.CabServiceImpl;
 
 @SpringBootTest
-public class CabControllerTests {
+public class CabServiceImplTests {
 
 	Logger LOG = LoggerFactory.getLogger(this.getClass());
 

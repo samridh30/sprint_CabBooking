@@ -1,4 +1,4 @@
-package Cab.Service.demo;
+package Cab.Service.demo.TripBookingService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -63,6 +63,8 @@ public class TripServiceTest {
 		
 		
 	}
+	
+	
 	@Disabled
 	@Test
 	void viewAllTripsCustomerTest() {
@@ -70,6 +72,8 @@ public class TripServiceTest {
 		assertEquals(1,list.size());
 		
 	}
+	
+	
 	
 
 }

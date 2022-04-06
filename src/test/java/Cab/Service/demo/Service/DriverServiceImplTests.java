@@ -17,13 +17,16 @@ public class DriverServiceImplTests {
 	Logger LOG = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private DriverServiceImpl driserimp;
+	@Autowired
+	CustomerServiceImpl login;
 
 	private static Driver driver;
 
 	@BeforeAll
 	public static void setUp() {
-		driver = new Driver (5,"Pb-101206",4.9f,null,true);
+		driver = new Driver(5, "Pb-101206", 4.9f, null, true);
 	}
+
 	@AfterAll
 	public static void tearDown() {
 		driver = null;
@@ -31,6 +34,7 @@ public class DriverServiceImplTests {
 
 //	@Test
 //	public void testInsertDriver() {
+//	login.loggedInUser.getRole();
 //		LOG.info(driver.toString());
 //		Driver expected = driver;
 //		Driver actual = driserimp.insertDriver(driver);
@@ -39,6 +43,7 @@ public class DriverServiceImplTests {
 //	
 //	@Test
 //	public void testInsertDriverFailure() {
+	// login.loggedInUser.getRole();
 //		LOG.info(driver.toString());
 //		Driver unexpected = driver;
 //		Driver actual = driserimp.insertDriver(new Driver(6,"Pb-101206",4.9f,null,true) );
@@ -47,20 +52,36 @@ public class DriverServiceImplTests {
 
 	@Test
 	public void testUpdateDriver() {
-	LOG.info(driver.toString());
-	Driver expected = driver;
-	Driver actual = driserimp.updateDriver(driver);
-    assertEquals(expected, actual);
+		login.loggedInUser.getRole();
+		LOG.info(driver.toString());
+		Driver expected = driver;
+		Driver actual = driserimp.updateDriver(driver);
+		assertEquals(expected, actual);
 	}
 
 	@Test
 	public void testDeleteDriver() {
-	LOG.info(driver.toString());
-	Driver expected = driver;
-	Driver actual = driserimp.updateDriver(driver);
-    assertEquals(expected, actual);
+		login.loggedInUser.getRole();
+		LOG.info(driver.toString());
+		Driver expected = driver;
+		Driver actual = driserimp.deleteDriver(driver.getDriverId());
+		assertEquals(expected, actual);
 	}
 
+	@Test
+	public void testViewAllDrivers() {
+		login.loggedInUser.getRole();
+		LOG.info("best driver test");
 
+	}
+
+	@Test
+	public void testViewDriversById() {
+		login.loggedInUser.getRole();
+		LOG.info(driver.toString());
+		Driver expected = driver;
+		Driver actual = driserimp.viewDriver(driver.getDriverId());
+		assertEquals(expected, actual);
+	}
 
 }

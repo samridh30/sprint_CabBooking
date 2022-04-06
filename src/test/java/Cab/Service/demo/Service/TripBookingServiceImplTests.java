@@ -1,4 +1,4 @@
-package Cab.Service.demo;
+package Cab.Service.demo.Service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -21,7 +21,7 @@ import Cab.Service.demo.model.Role;
 import Cab.Service.demo.model.TripBooking;
 import Cab.Service.demo.repository.TripBookingRepositoryImpl;
 @SpringBootTest
-public class TripServiceTest {
+public class TripBookingServiceImplTests {
 	
 	LocalDateTime now = LocalDateTime.now();
 	
@@ -63,11 +63,17 @@ public class TripServiceTest {
 		
 		
 	}
+	
+	
+	@Disabled
 	@Test
 	void viewAllTripsCustomerTest() {
 		List<TripBooking> list= tripservice.ViewAllTripsCustomer(113);
 		assertEquals(1,list.size());
 		
 	}
+	
+	
+	
 
 }

@@ -1,4 +1,4 @@
-package Cab.Service.demo.Customer;
+package Cab.Service.demo.Service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ import Cab.Service.demo.repository.TripBookingRepositoryImpl;
 
 
 @ExtendWith(SpringExtension.class)
-public class TripBookingTest {
+public class TripBookingServiceImplMokTests {
 	
 	@InjectMocks
 	TripBookingServiceImpl tripBookingService;

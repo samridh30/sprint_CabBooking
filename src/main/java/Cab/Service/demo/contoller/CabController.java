@@ -1,5 +1,7 @@
 package Cab.Service.demo.contoller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,4 +49,11 @@ public class CabController {
 //		LOG.info(carType);
 //		return new ResponseEntity<Cab>(car.viewCabsofType(carType), HttpStatus.OK);
 //	}
+
+	@GetMapping("/viewAll")
+	public ResponseEntity<List<Cab>> ViewAllCabs() {
+//		LOG.info(carType);
+		return new ResponseEntity<List<Cab>>(car.viewAllCabs(), HttpStatus.OK);
+
+	}
 }

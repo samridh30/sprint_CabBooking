@@ -10,5 +10,6 @@ public interface ICabService {
 	Cab deleteCab(int cabId);
 	List<Cab> viewCabsOfType(String carType);
 	int countCabsOfType(String carType);
+	List<Cab> viewAllCabs();
 
 }

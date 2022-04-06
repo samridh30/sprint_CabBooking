@@ -10,6 +10,7 @@ import Cab.Service.demo.Exception.AlreadyLoggedInException;
 import Cab.Service.demo.Exception.CustomerNotFoundException;
 import Cab.Service.demo.Exception.InvalidUserNamePasswordException;
 import Cab.Service.demo.Exception.UserNotLoggedInException;
+import Cab.Service.demo.dto.Customerdto;
 import Cab.Service.demo.model.AppUser;
 import Cab.Service.demo.model.Customer;
 import Cab.Service.demo.model.Role;
@@ -26,6 +27,7 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Autowired
 	Customer loggedInUser;
+	private Customerdto dto;
 
 	@Override
 	public Customer insertCustomer(Customer customer) {
@@ -79,6 +81,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	public List<Customer> viewCustomers() {
 		if (loggedInUser.getRole() == Role.ADMIN) {
 			List<Customer> cus = custRepo.findAll();
+
 			if (cus.isEmpty()) {
 				throw new CustomerNotFoundException("Empty Table");
 			} else {
@@ -89,12 +92,15 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	@Override
-	public Customer viewCustomer() {
+	public Customerdto viewCustomer() {
 
 		if (loggedInUser.getRole() != null) {
 			Optional<Customer> cus = custRepo.findById(loggedInUser.getCustomerId());
+			Customerdto dto = new Customerdto();
+			dto.setCustomerId(cus.get().getCustomerId());
+			dto.setUsername(cus.get().getUserName());
 			if (cus.isPresent()) {
-				return cus.get();
+				return dto;
 			} else {
 				throw new CustomerNotFoundException("Invalid Id");
 			}

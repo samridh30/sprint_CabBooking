@@ -25,6 +25,6 @@ public interface IAdminService {
 
 	public List<TripBooking> getAllTripsForDays(int customerId, LocalDateTime fromDate, LocalDateTime toDate);
 
-	String check();
+//	String check();
 
 }

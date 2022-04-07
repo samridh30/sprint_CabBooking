@@ -155,7 +155,6 @@ public class CustomerServiceImpl implements ICustomerService {
 	 */
 	@Override
 	public Customer loginUser(AppUser user) {
-		System.out.println(user.getEmail());
 
 		Optional<Customer> cust = custRepo.findByEmail(user.getEmail());
 		if (user.getPassword().equals(cust.get().getPassword())) {

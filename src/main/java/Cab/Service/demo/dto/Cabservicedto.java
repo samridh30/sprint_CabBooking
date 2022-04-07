@@ -2,7 +2,6 @@ package Cab.Service.demo.dto;
 
 import java.time.LocalDateTime;
 
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 @Component
 public class Cabservicedto {

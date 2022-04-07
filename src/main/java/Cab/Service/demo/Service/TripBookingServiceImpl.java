@@ -59,6 +59,7 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		} else {
 			boolean check = validateTrip(tripBooking.getCustomer().getCustomerId());
 			if (check == true) {
+				
 
 				tripRepo.save(tripBooking);
 
@@ -82,6 +83,7 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	 */
 	@Override
 	public TripBooking updateTripBooking(TripBooking tripBooking) {
+	
 		if(appUser.loggedInUser.getRole()==Role.CUSTOMER && tripBooking.getCustomer().getCustomerId()==appUser.loggedInUser.getCustomerId()) {
 		Optional<TripBooking> trip = tripRepo.findById(tripBooking.getTripBookingId());
 		if (trip.isPresent()) {
@@ -159,10 +161,10 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	@Override
 	public TripBooking calculateBill(int customerId) {
 		float rate = tripRepo.findByPerKmRate(customerId);
-		TripBooking t = tripRepo.findByCustomerId(customerId);
-		Optional<TripBooking> trip = tripRepo.findById(t.getTripBookingId());
-		trip.get().setBill(trip.get().getDistanceInKm() * rate);
-		return trip.get();
+		TripBooking trip = tripRepo.findByCustomerId(customerId);
+		//Optional<TripBooking> trip = tripRepo.findById(t.getTripBookingId());
+		trip.setBill(trip.getDistanceInKm() * rate);
+		return trip;
 	}
 
 	/**
@@ -217,7 +219,7 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	@Override
 	public Cabservicedto BookCab(TripDto tripdto) {
 		if(appUser.loggedInUser.getRole()==Role.CUSTOMER) {
-		
+		System.out.println("entered");
 		Optional<Customer> tripCust = custRepo.findById(appUser.loggedInUser.getCustomerId());
 		List<Driver> driver1 = driverRepo.findByStatus();
 		if (driver1.size() == 0) {
@@ -244,5 +246,5 @@ public class TripBookingServiceImpl implements ITripBookingService {
 			throw new InvalidUserException("Not logged in as CUSTOMER");}
 
 	}
-
 }
+

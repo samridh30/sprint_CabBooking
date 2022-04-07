@@ -4,16 +4,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import Cab.Service.demo.Service.CustomerServiceImpl;
-import Cab.Service.demo.Service.TripBookingServiceImpl;
 import Cab.Service.demo.dto.Cabservicedto;
 import Cab.Service.demo.dto.TripDto;
 import Cab.Service.demo.model.AppUser;
@@ -22,24 +24,33 @@ import Cab.Service.demo.model.Customer;
 import Cab.Service.demo.model.Driver;
 import Cab.Service.demo.model.Role;
 import Cab.Service.demo.model.TripBooking;
+import Cab.Service.demo.repository.CustomerRepositorImpl;
 import Cab.Service.demo.repository.TripBookingRepositoryImpl;
-@SpringBootTest
-public class TripBookingImplTest {
+@ExtendWith(SpringExtension.class)
+public class TripBookingImplMockitoTest {
 	
 	LocalDateTime now = LocalDateTime.now();
 	
-	@Autowired
+	@InjectMocks
 	TripBookingServiceImpl tripservice;
-	@Autowired
+	@InjectMocks
 	CustomerServiceImpl cusService;
-	@Autowired
-	TripBooking TripBook;
+	
+//	@Mock
+//	CustomerServiceImpl custService;
+	@Mock
+	TripBookingRepositoryImpl tripRepo;
+	@Mock
+	CustomerRepositorImpl cusRepo;
 	
 	@BeforeEach
 	void start() {
 		AppUser app = new AppUser();
-		app.setEmail("Sri@gmail.com");
+		app.setEmail("Srikanth@gmail.com");
 		app.setPassword("Srikanth@");
+		Customer c= new Customer(205,"Srikanth","Srikanth@","Punjab",1234567890L, "Srikanth@gmail.com",Role.CUSTOMER);
+
+		Mockito.when(cusRepo.findByEmail("Srikanth@gmail.com")).thenReturn(Optional.of(c));
 		cusService.loginUser(app);
 		}
 	
@@ -49,12 +60,18 @@ public class TripBookingImplTest {
 	}
 
 	
-	@Disabled
+	//@Disabled
 	@Test
 	void deleteTripTest() {
-		TripBooking deletetest= tripservice.deleteTripBooking(145);
-		assertEquals(145,deletetest.getTripBookingId());
-		assertEquals(2000,deletetest.getBill());
+		Customer c= new Customer("Sajal","Sajal@","Punjab",1234567890, "Sajal@gmail.com",Role.CUSTOMER);
+		Cab cab= new Cab(115,"Mini",20,true);
+		Driver d= new Driver(131,"Id1",4.7f,cab,true);
+		TripBooking trip= new TripBooking(8,c,d,"nyz","kukatpally",now,now,false,56,34);
+		Mockito.when(tripRepo.findById(8)).thenReturn(Optional.of(trip));
+		Mockito.when(tripRepo.save(trip)).thenReturn(trip);
+		TripBooking deletetest= tripservice.deleteTripBooking(8);
+		assertEquals(8,deletetest.getTripBookingId());
+		assertEquals(34,deletetest.getBill());
 		}
 	
 	@Disabled

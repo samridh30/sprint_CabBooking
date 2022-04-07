@@ -2,8 +2,6 @@ package Cab.Service.demo.Service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -12,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import Cab.Service.demo.model.Cab;
-import Cab.Service.demo.model.Driver;
-import Cab.Service.demo.Service.CabServiceImpl;
 
 @SpringBootTest
 public class CabServiceImplTests {

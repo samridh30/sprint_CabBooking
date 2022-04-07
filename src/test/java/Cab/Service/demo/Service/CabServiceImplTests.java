@@ -1,6 +1,7 @@
-package Cab.Service.demo.cab;
+package Cab.Service.demo.Service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -15,12 +16,15 @@ import Cab.Service.demo.model.Driver;
 import Cab.Service.demo.Service.CabServiceImpl;
 
 @SpringBootTest
-public class CabControllerTests {
+public class CabServiceImplTests {
 
 	Logger LOG = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private CabServiceImpl cabService;
+	
+	@Autowired
+	CustomerServiceImpl login;
 
 	private static Cab cab;
 
@@ -32,6 +36,7 @@ public class CabControllerTests {
 	
 	@Test
 	public void testInsertCab() {
+		login.loggedInUser.getRole();
 		LOG.info(cab.toString());
 		Cab expected = cab;
 		Cab actual = cabService.updateCab(cab);
@@ -40,6 +45,7 @@ public class CabControllerTests {
 	
 	@Test
 	public void testInsertCabFailure() {
+		login.loggedInUser.getRole();
 		LOG.info(cab.toString());
 		Cab unexpected = cab;
 		Cab actual = cabService.insertCab(new Cab(456, "sedane", 5, true) );
@@ -48,6 +54,7 @@ public class CabControllerTests {
 
 	@Test
 	public void testUpdateCab() {
+		login.loggedInUser.getRole();
 		LOG.info(cab.toString());
 		Cab expected = cab;
 		Cab actual = cabService.updateCab(cab);
@@ -56,6 +63,7 @@ public class CabControllerTests {
 	
 	@Test
 	public void testDeleteCab() {
+		login.loggedInUser.getRole();
 		LOG.info(cab.toString());
 		Cab expected = cab;
 		Cab actual = cabService.updateCab(cab);
@@ -64,6 +72,7 @@ public class CabControllerTests {
 	
 	@Test
 	public void testviewCabsOfType() {
+		login.loggedInUser.getRole();
 		LOG.info(cab.toString());
 		Cab expected = cab;
 		Cab actual = cabService.updateCab(cab);

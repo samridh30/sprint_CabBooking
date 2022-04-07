@@ -1,4 +1,4 @@
-package Service;
+package Cab.Service.demo.Service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import Cab.Service.demo.Service.CustomerServiceImpl;
 import Cab.Service.demo.Service.TripBookingServiceImpl;
 import Cab.Service.demo.dto.Cabservicedto;
+import Cab.Service.demo.dto.TripDto;
 import Cab.Service.demo.model.AppUser;
 import Cab.Service.demo.model.Cab;
 import Cab.Service.demo.model.Customer;
@@ -85,7 +86,8 @@ public class TripBookingImplTest {
 	@Disabled
 	@Test
 	void BookCabTest() {
-		Cabservicedto cabbooktest=tripservice.BookCab("Hyd", "Andhra");
+		TripDto tripdto=new TripDto("Hyd","Andhra");
+		Cabservicedto cabbooktest=tripservice.BookCab(tripdto);
 		assertEquals(114,cabbooktest.getCustomerId());
 		cusService.logoutUser();
 		}

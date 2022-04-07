@@ -34,7 +34,7 @@ public class DriverController {
 	public ResponseEntity<Driver> intDriver(@RequestBody Driver driver) {
 
 		LOG.info("Insert Driver");
-		return new ResponseEntity<Driver>(drive.insertDriver(driver), HttpStatus.OK);
+		return new ResponseEntity<Driver>(drive.insertDriver(driver), HttpStatus.CREATED);
 
 	}
 
@@ -42,14 +42,17 @@ public class DriverController {
 	// Updates an existing driver
 	@PutMapping("/update-driver")
 	public ResponseEntity<Driver> updtDriver(@RequestBody Driver driver) {
+		LOG.info(driver.toString());
+
 		return new ResponseEntity<Driver>(drive.updateDriver(driver), HttpStatus.OK);
 
 	}
 
 	// http://localhost:8088/drv/delete-driver/{did}
-	// Deletes an exisiting driver
+	// Deletes an existing driver
 	@DeleteMapping("/delete-driver/{did}")
 	public ResponseEntity<Driver> delDriver(@PathVariable(name = "did") int driverId) {
+		LOG.info(Integer.toString(driverId));
 		return new ResponseEntity<Driver>(drive.deleteDriver(driverId), HttpStatus.OK);
 
 	}
@@ -58,14 +61,23 @@ public class DriverController {
 	// Fetches all the best drivers as a List
 	@GetMapping("/best-drivers")
 	public ResponseEntity<List<Driver>> topDrivers() {
+		LOG.info("Best Drivers Fetched");
 		return new ResponseEntity<List<Driver>>(drive.ViewBestDrivers(), HttpStatus.OK);
 	}
 
 	// http://localhost:8088/drv/view-drivers/{did}
 	// Fetches a driver based on driver Id
-	@GetMapping("/view-driver")
+	@GetMapping("/view-driver/{did}")
 	public ResponseEntity<Driver> ViewDriver(@PathVariable(name = "did") int driverId) {
+		LOG.info(Integer.toString(driverId));
 		return new ResponseEntity<Driver>(drive.viewDriver(driverId), HttpStatus.OK);
+
+	}
+
+	@GetMapping("/view-All")
+	public ResponseEntity<List<Driver>> ViewDriver() {
+		LOG.info("All Drivers Fetched");
+		return new ResponseEntity<List<Driver>>(drive.ViewAllDrivers(), HttpStatus.OK);
 
 	}
 }

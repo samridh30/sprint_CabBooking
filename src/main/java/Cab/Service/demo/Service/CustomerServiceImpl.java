@@ -6,11 +6,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import Cab.Service.demo.Exception.AlreadyLoggedInException;
 import Cab.Service.demo.Exception.CustomerNotFoundException;
 import Cab.Service.demo.Exception.InvalidAccessException;
 import Cab.Service.demo.Exception.InvalidUserNamePasswordException;
 import Cab.Service.demo.Exception.UserNotLoggedInException;
+import Cab.Service.demo.dto.Customerdto;
 import Cab.Service.demo.model.AppUser;
 import Cab.Service.demo.model.Customer;
 import Cab.Service.demo.model.Role;
@@ -42,7 +42,6 @@ public class CustomerServiceImpl implements ICustomerService {
 	@Override
 	public Customer insertCustomer(Customer customer) {
 			Optional<Customer> cus = custRepo.findByEmail(customer.getEmail());
-			System.out.println(cus);
 			if (cus.isPresent()) {
 				throw new InvalidUserNamePasswordException("Email Address Already Exists");
 			} else {
@@ -50,6 +49,7 @@ public class CustomerServiceImpl implements ICustomerService {
 				return customer;
 			}
 		
+
 
 	}
 
@@ -117,6 +117,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	public List<Customer> viewCustomers() {
 		if (loggedInUser.getRole() == Role.ADMIN) {
 			List<Customer> cus = custRepo.findAll();
+
 			if (cus.isEmpty()) {
 				throw new CustomerNotFoundException("Empty Table");
 			} else {
@@ -132,12 +133,15 @@ public class CustomerServiceImpl implements ICustomerService {
 	 * 
 	 */
 	@Override
-	public Customer viewCustomer() {
+	public Customerdto viewCustomer() {
 
 		if (loggedInUser.getRole() != null) {
 			Optional<Customer> cus = custRepo.findById(loggedInUser.getCustomerId());
+			Customerdto dto = new Customerdto();
+			dto.setCustomerId(cus.get().getCustomerId());
+			dto.setUsername(cus.get().getUserName());
 			if (cus.isPresent()) {
-				return cus.get();
+				return dto;
 			} else {
 				throw new CustomerNotFoundException("Invalid Id");
 			}
@@ -162,13 +166,7 @@ public class CustomerServiceImpl implements ICustomerService {
 			throw new InvalidUserNamePasswordException("Invalid UserName or Password");}
 	}
 
-//		System.out.println(customer.toString());
-//		if (password.equals(customer.getPassword())) {
-//			loggedInUser = customer;
-//			return customer;
-//		} else {
-//			throw new InvalidUserNamePasswordException("Invalid UserName or Password");
-//		}
+
 	
 
 	/**
@@ -186,10 +184,6 @@ public class CustomerServiceImpl implements ICustomerService {
 			throw new UserNotLoggedInException("Login First");
 		}
 		
-//		if (loggedInUser.getUserName()) {
-//			loggedInUser = null;
-//			return "User LoggedOut";
-//		} else
-//			throw new InvalidUserNamePasswordException("Invalid UserName or Password");
+
 	}
 }

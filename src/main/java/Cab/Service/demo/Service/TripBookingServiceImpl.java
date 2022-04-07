@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 import Cab.Service.demo.Exception.DriverNotFoundException;
 import Cab.Service.demo.Exception.InvalidAccessException;
 import Cab.Service.demo.Exception.InvalidTripFoundException;
-import Cab.Service.demo.Exception.InvalidUserNamePasswordException;
 import Cab.Service.demo.Exception.TripNotFoundException;
 import Cab.Service.demo.dto.Cabservicedto;
 import Cab.Service.demo.dto.Customerdto;
 import Cab.Service.demo.dto.Driverdto;
+import Cab.Service.demo.dto.TripDto;
 import Cab.Service.demo.model.Customer;
 import Cab.Service.demo.model.Driver;
 import Cab.Service.demo.model.Role;
@@ -39,6 +39,7 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	@Autowired
 	DriverRepositoryImpl driverRepo;
 	@Autowired
+
 	DriverRepositoryImpl DRepo;
 
 	@Autowired
@@ -49,6 +50,7 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	@Override
 	public TripBooking insertTripBooking(TripBooking tripBooking) {
 		Optional<TripBooking> trip = tripRepo.findById(tripBooking.getTripBookingId());
+
 
 		if (trip.isPresent()) {
 			throw new InvalidTripFoundException("Duplicate Trip Id");
@@ -70,9 +72,7 @@ public class TripBookingServiceImpl implements ITripBookingService {
 
 		}
 	}
-	
-	
-	
+
 	/**
 	 * @desc Update already tripbooked data
 	 * @return Updated tripBooking Object will be returned
@@ -88,11 +88,11 @@ public class TripBookingServiceImpl implements ITripBookingService {
 			throw new TripNotFoundException("Invalid Data");
 		} }else {
 			throw new InvalidAccessException("Access Denied");
+
 		}
 
 	}
-	
-	
+
 	/**
 	 * @desc method will Delete trip booking
 	 * @return Deleted TripBooking Object will be returned
@@ -110,12 +110,12 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		}}
 		else{
 			throw new InvalidAccessException("Access Denied");
+
 		}
 	}
-	
-	
+
 	/**
-	 * @desc  Fetch trip data based on customerId
+	 * @desc Fetch trip data based on customerId
 	 * @return all trips of a customer by Id will be returned.
 	 */
 	@Override
@@ -131,8 +131,8 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		return trip;}
 		else {
 			throw new TripNotFoundException("No Trips Found For Customer Id- "+ customerId);
-		}
-
+		
+		} 
 	}else {
 		throw new InvalidAccessException("Invalid Access");
 		
@@ -144,10 +144,11 @@ public class TripBookingServiceImpl implements ITripBookingService {
 }
 	
 	
+
 	/**
 	 * @desc Calculate Trip bill based on distance and PerKmRate of cab
 	 * @return tripbooking object will be returned with updated bill
-	 */	
+	 */
 	@Override
 	public TripBooking calculateBill(int customerId) {
 		float rate = tripRepo.findByPerKmRate(customerId);
@@ -156,11 +157,9 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		trip.get().setBill(trip.get().getDistanceInKm() * rate);
 		return trip.get();
 	}
-	
 
-	
 	/**
-	 * @desc Validate Trip 
+	 * @desc Validate Trip
 	 * @return boolean value(True or False)
 	 */
 	@Override
@@ -174,13 +173,13 @@ public class TripBookingServiceImpl implements ITripBookingService {
 
 	}
 
-	
 	/**
 	 * @desc To End the trip
 	 * @return Tripbooking object
 	 */
 	@Override
 	public TripBooking endTrip(int Id) {
+
 		
 		if(appUser.loggedInUser.getRole()==Role.CUSTOMER && appUser.loggedInUser.getCustomerId()==Id) {
 			
@@ -201,18 +200,15 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		}
 		else {
 			throw new InvalidAccessException("Access Denied");
-		}
-			
-		}
-	
-	
-	
+}
+	}
+
 	/**
 	 * @desc To Book a cab from fromlocation to Tolocation
 	 * @return Cabservicedto object will be returned
 	 */
 	@Override
-	public Cabservicedto BookCab(String fromLocation, String toLocation) {
+	public Cabservicedto BookCab(TripDto tripdto) {
 		if(appUser.loggedInUser.getRole()==Role.CUSTOMER) {
 		
 		Optional<Customer> tripCust = custRepo.findById(appUser.loggedInUser.getCustomerId());
@@ -224,7 +220,7 @@ public class TripBookingServiceImpl implements ITripBookingService {
 			Driver s = driverRepo.getById(driver1.get(0).getDriverId());
 			driver1.get(0).setStatus(true);
 								
-			TripBooking tripbooking= new TripBooking(tripCust.get(),s,fromLocation,toLocation,now,now,true,50,300);
+			TripBooking tripbooking= new TripBooking(tripCust.get(),s,tripdto.getFromLocation(),tripdto.getToLocation(),now,now,true,50,300);
 			TripBooking book = insertTripBooking(tripbooking);
 			System.out.println(book.getCustomer().getCustomerId());
 			Driverdto driverdto = new Driverdto(book.getDriver().getDriverId(),book.getDriver().getRating(),book.getDriver().getCab());
@@ -238,8 +234,7 @@ public class TripBookingServiceImpl implements ITripBookingService {
 			}
 			else {
 			throw new InvalidAccessException("Access Denied");}
-	}
-	
-}
 
-	
+	}
+
+}

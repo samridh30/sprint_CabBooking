@@ -1,4 +1,4 @@
-package Service;
+package Cab.Service.demo.Service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

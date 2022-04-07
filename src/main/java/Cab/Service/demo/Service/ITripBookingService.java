@@ -10,10 +10,10 @@ public interface ITripBookingService {
 	TripBooking insertTripBooking(TripBooking tripBooking);
 	TripBooking updateTripBooking(TripBooking tripBooking);
 	TripBooking deleteTripBooking(int tripBookingId);
-	List<TripBooking> ViewAllTripsCustomer(int customerId);
+	List<TripBooking> ViewAllTripsCustomer();
 	TripBooking calculateBill(int customerId);
 	boolean validateTrip(int customerId);
-	TripBooking endTrip(int Id);
+	TripBooking endTrip();
 	Cabservicedto BookCab(TripDto tripdto);
 	
 

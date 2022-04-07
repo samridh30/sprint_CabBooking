@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import Cab.Service.demo.Exception.CustomerNotFoundException;
 import Cab.Service.demo.Exception.InvalidAccessException;
+import Cab.Service.demo.Exception.InvalidUserException;
 import Cab.Service.demo.Exception.InvalidUserNamePasswordException;
 import Cab.Service.demo.Exception.UserNotLoggedInException;
 import Cab.Service.demo.dto.Customerdto;
@@ -84,9 +85,9 @@ public class CustomerServiceImpl implements ICustomerService {
 	 * 
 	 */
 	@Override
-	public Customer deleteCustomer(int customerId) {
+	public Customer deleteCustomer() {
 		if (loggedInUser.getRole() != null) {
-			if(loggedInUser.getCustomerId()==customerId) {
+			int customerId=loggedInUser.getCustomerId();
 			Optional<Customer> cus = custRepo.findById(customerId);
 			if (cus.isPresent()) {
 
@@ -98,11 +99,9 @@ public class CustomerServiceImpl implements ICustomerService {
 
 			}
 			
-			}else {
-				throw new InvalidAccessException("Access Denied");
-				}
+			}
 			
-		} else {
+		 else {
 			throw new UserNotLoggedInException("User Not Login");
 		}
 
@@ -124,7 +123,7 @@ public class CustomerServiceImpl implements ICustomerService {
 				return cus;
 			}
 		} else
-			throw new InvalidUserNamePasswordException("User Not Login");
+			throw new InvalidUserException("Login As ADMIN");
 	}
 
 	/**

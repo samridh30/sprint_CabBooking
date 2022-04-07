@@ -11,7 +11,7 @@ public interface ICustomerService {
 
 	public Customer updateCustomer(Customer customer);
 
-	public Customer deleteCustomer(int customerId);
+	public Customer deleteCustomer();
 
 	public List<Customer> viewCustomers();
 

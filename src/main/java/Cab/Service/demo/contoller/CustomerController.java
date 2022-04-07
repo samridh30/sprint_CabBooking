@@ -31,7 +31,7 @@ public class CustomerController {
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
 	// http://localhost:8088/Customer/register
-	@PostMapping("/insert")
+	@PostMapping("/register")
 	public ResponseEntity<Customer> register(@Valid @RequestBody Customer appUser) {
 		LOG.info("Register Customer");
 		return new ResponseEntity<Customer>(cust.insertCustomer(appUser), HttpStatus.OK);
@@ -45,13 +45,11 @@ public class CustomerController {
 	}
 
 	// http://localhost:8088/Customer/delete/{Id}
-	@DeleteMapping("/delete/{Id}")
-	public ResponseEntity<Customer> deleteCustomer(@PathVariable(name = "Id") int Id) {
-		LOG.info(Integer.toString(Id));
-		return new ResponseEntity<Customer>(cust.deleteCustomer(Id), HttpStatus.OK);
+	@DeleteMapping("/delete")
+	public ResponseEntity<Customer> deleteCustomer() {
+		return new ResponseEntity<Customer>(cust.deleteCustomer(), HttpStatus.OK);
 	}
 
-	// http://localhost:8088/Customer/AllCustomers
 	@PostMapping("/login")
 	public ResponseEntity<Customer> LoginCustomer(@RequestBody AppUser user) {
 //		LOG.info("All Customers Fetched");
@@ -64,7 +62,7 @@ public class CustomerController {
 		return new ResponseEntity<String>(cust.logoutUser(), HttpStatus.OK);
 	}
 
-	// http://localhost:8088/Customer/AllCustomers
+	// http://localhost:8088/Customer/viewAllCustomers
 	@GetMapping("/viewAllCustomers")
 	public ResponseEntity<List<Customer>> viewCustomers() {
 		LOG.info("All Customers Fetched");

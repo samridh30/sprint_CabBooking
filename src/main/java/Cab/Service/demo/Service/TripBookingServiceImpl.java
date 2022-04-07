@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import Cab.Service.demo.Exception.DriverNotFoundException;
 import Cab.Service.demo.Exception.InvalidAccessException;
 import Cab.Service.demo.Exception.InvalidTripFoundException;
+import Cab.Service.demo.Exception.InvalidUserException;
 import Cab.Service.demo.Exception.TripNotFoundException;
+import Cab.Service.demo.Exception.UserNotLoggedInException;
 import Cab.Service.demo.dto.Cabservicedto;
 import Cab.Service.demo.dto.Customerdto;
 import Cab.Service.demo.dto.Driverdto;
@@ -85,7 +87,7 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		if (trip.isPresent()) {
 			return tripRepo.save(tripBooking);
 		} else {
-			throw new TripNotFoundException("Invalid Data");
+			throw new TripNotFoundException("Invalid TripData");
 		} }else {
 			throw new InvalidAccessException("Access Denied");
 
@@ -100,7 +102,7 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	 */
 	@Override
 	public TripBooking deleteTripBooking(int tripBookingId) {
-		if(appUser.loggedInUser.getRole()==Role.CUSTOMER && appUser.loggedInUser.getCustomerId()==tripBookingId) {
+		if(appUser.loggedInUser.getRole()==Role.CUSTOMER) {
 		Optional<TripBooking> trip = tripRepo.findById(tripBookingId);
 		if (trip.isPresent()) {
 			tripRepo.deleteById(tripBookingId);
@@ -119,9 +121,10 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	 * @return all trips of a customer by Id will be returned.
 	 */
 	@Override
-	public List<TripBooking> ViewAllTripsCustomer(int customerId) {
-		System.out.println(appUser.loggedInUser);
-		if(appUser.loggedInUser.equals(null) ) {
+	public List<TripBooking> ViewAllTripsCustomer() {
+		if(appUser.loggedInUser!=null ) {
+			if(appUser.loggedInUser.getRole()==Role.CUSTOMER) {
+			int customerId=appUser.loggedInUser.getCustomerId();
 			if(appUser.loggedInUser.getCustomerId()==customerId) {
 
 
@@ -137,9 +140,13 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		throw new InvalidAccessException("Invalid Access");
 		
 	}
-		}
+			}else {
+				throw new InvalidUserException("Not Logged in as Customer");
+			}
+			
+			}
 	else {
-		throw new InvalidAccessException("Login");
+		throw new UserNotLoggedInException ("Login");
 	}
 }
 	
@@ -178,11 +185,11 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	 * @return Tripbooking object
 	 */
 	@Override
-	public TripBooking endTrip(int Id) {
+	public TripBooking endTrip() {
 
 		
-		if(appUser.loggedInUser.getRole()==Role.CUSTOMER && appUser.loggedInUser.getCustomerId()==Id) {
-			
+		if(appUser.loggedInUser.getRole()==Role.CUSTOMER) {
+		int Id=appUser.loggedInUser.getCustomerId();
 		TripBooking end1 = tripRepo.findByCustomerId(Id);
 		if(end1!=null) {
 		end1.setStatus(false);
@@ -199,7 +206,7 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		}
 		}
 		else {
-			throw new InvalidAccessException("Access Denied");
+			throw new InvalidUserException("Not logged in as CUSTOMER");
 }
 	}
 
@@ -219,7 +226,8 @@ public class TripBookingServiceImpl implements ITripBookingService {
 			System.out.println(driver1.get(0).getDriverId());
 			Driver s = driverRepo.getById(driver1.get(0).getDriverId());
 			driver1.get(0).setStatus(true);
-								
+			driver1.get(0).getCab().setStatus(true);
+							
 			TripBooking tripbooking= new TripBooking(tripCust.get(),s,tripdto.getFromLocation(),tripdto.getToLocation(),now,now,true,50,300);
 			TripBooking book = insertTripBooking(tripbooking);
 			System.out.println(book.getCustomer().getCustomerId());
@@ -233,7 +241,7 @@ public class TripBookingServiceImpl implements ITripBookingService {
 
 			}
 			else {
-			throw new InvalidAccessException("Access Denied");}
+			throw new InvalidUserException("Not logged in as CUSTOMER");}
 
 	}
 

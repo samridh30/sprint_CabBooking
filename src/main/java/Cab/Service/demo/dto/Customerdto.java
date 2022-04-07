@@ -1,5 +1,6 @@
 package Cab.Service.demo.dto;
 
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -8,6 +9,14 @@ public class Customerdto {
 	private String username;
 	
 	
+	public Customerdto() {
+		super();
+	}
+	public Customerdto(int customerId, String username) {
+		super();
+		this.customerId = customerId;
+		this.username = username;
+	}
 	public int getCustomerId() {
 		return customerId;
 	}

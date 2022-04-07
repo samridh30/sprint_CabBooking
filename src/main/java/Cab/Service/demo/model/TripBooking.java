@@ -15,7 +15,11 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
+/**
+ * @desc TripBooking Entity Class
+ * @author  Srikanth
+ * 
+ */
 
 @Entity
 //@Data
@@ -39,11 +43,14 @@ public class TripBooking {
 	private boolean status=true;
 	private float distanceInKm;
 	private float bill;
-
-	public TripBooking() {
-
+	
+	public TripBooking(){
+		
 	}
-
+	
+	/**
+	 * @desc TripBooking Constructor  
+	 */
 	public TripBooking(int tripBookingId, Customer customer, Driver driver, String fromLocation, String toLocation,
 			LocalDateTime fromDateTime, LocalDateTime toDateTime, boolean status, float distanceInKm, float bill) {
 		super();
@@ -58,10 +65,27 @@ public class TripBooking {
 		this.distanceInKm = distanceInKm;
 		this.bill = bill;
 	}
-
-	public TripBooking(int i, Customer c, Driver d, String string, String string2, boolean b, int j, int k) {
-		// TODO Auto-generated constructor stub
+	
+	/**
+	 * @desc TripBooking Constructor
+	 */
+	public TripBooking(Customer customer, Driver driver, String fromLocation, String toLocation,
+			LocalDateTime fromDateTime, LocalDateTime toDateTime, boolean status, float distanceInKm, float bill) {
+		super();
+		this.customer = customer;
+		this.driver = driver;
+		this.fromLocation = fromLocation;
+		this.toLocation = toLocation;
+		this.fromDateTime = fromDateTime;
+		this.toDateTime = toDateTime;
+		this.status = status;
+		this.distanceInKm = distanceInKm;
+		this.bill = bill;
 	}
+
+	/**
+	 * @desc Getters and Setters
+	 */
 
 	public int getTripBookingId() {
 		return tripBookingId;

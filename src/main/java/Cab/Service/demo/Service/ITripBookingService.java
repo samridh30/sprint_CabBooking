@@ -2,6 +2,7 @@ package Cab.Service.demo.Service;
 
 import java.util.List;
 
+import Cab.Service.demo.dto.Cabservicedto;
 import Cab.Service.demo.model.TripBooking;
 
 public interface ITripBookingService {
@@ -10,6 +11,9 @@ public interface ITripBookingService {
 	TripBooking deleteTripBooking(int tripBookingId);
 	List<TripBooking> ViewAllTripsCustomer(int customerId);
 	TripBooking calculateBill(int customerId);
+	boolean validateTrip(int customerId);
+	TripBooking endTrip(int Id);
+	Cabservicedto BookCab(String fromLocation, String toLocation);
 	
 
 }

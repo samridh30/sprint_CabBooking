@@ -1,6 +1,7 @@
 package Cab.Service.demo.Service;
 
 import java.time.LocalDateTime;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import Cab.Service.demo.Exception.DriverNotFoundException;
+import Cab.Service.demo.Exception.InvalidAccessException;
 import Cab.Service.demo.Exception.InvalidTripFoundException;
 import Cab.Service.demo.Exception.InvalidUserNamePasswordException;
 import Cab.Service.demo.Exception.TripNotFoundException;
@@ -22,6 +24,12 @@ import Cab.Service.demo.repository.CustomerRepositorImpl;
 import Cab.Service.demo.repository.DriverRepositoryImpl;
 import Cab.Service.demo.repository.TripBookingRepositoryImpl;
 
+/**
+ * @desc Class for TripBooking Services
+ * @author  Srikanth
+ * 
+ */
+
 @Service
 public class TripBookingServiceImpl implements ITripBookingService {
 	@Autowired
@@ -30,17 +38,6 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	CustomerRepositorImpl custRepo;
 	@Autowired
 	DriverRepositoryImpl driverRepo;
-	@Autowired
-	Cabservicedto cabservicedto;
-	@Autowired
-	Driverdto driverdto;
-	@Autowired
-	Customerdto customerdto;
-
-	
-
-	//@Autowired
-	//TripBooking service;
 	@Autowired
 	DriverRepositoryImpl DRepo;
 
@@ -52,7 +49,6 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	@Override
 	public TripBooking insertTripBooking(TripBooking tripBooking) {
 		Optional<TripBooking> trip = tripRepo.findById(tripBooking.getTripBookingId());
-		// int trip= tripBooking.getTripBookingId();
 
 		if (trip.isPresent()) {
 			throw new InvalidTripFoundException("Duplicate Trip Id");
@@ -64,6 +60,7 @@ public class TripBookingServiceImpl implements ITripBookingService {
 
 				int cus_id = tripBooking.getCustomer().getCustomerId();
 				TripBooking book = calculateBill(cus_id);
+				System.out.println(book);
 
 				return updateTripBooking(book);
 			} else {
@@ -79,17 +76,18 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	/**
 	 * @desc Update already tripbooked data
 	 * @return Updated tripBooking Object will be returned
+	 * 
 	 */
 	@Override
 	public TripBooking updateTripBooking(TripBooking tripBooking) {
-		if(appUser.loggedInUser.getRole()==Role.CUSTOMER) {
+		if(appUser.loggedInUser.getRole()==Role.CUSTOMER && tripBooking.getCustomer().getCustomerId()==appUser.loggedInUser.getCustomerId()) {
 		Optional<TripBooking> trip = tripRepo.findById(tripBooking.getTripBookingId());
 		if (trip.isPresent()) {
 			return tripRepo.save(tripBooking);
 		} else {
 			throw new TripNotFoundException("Invalid Data");
 		} }else {
-			throw new InvalidUserNamePasswordException("vdd");
+			throw new InvalidAccessException("Access Denied");
 		}
 
 	}
@@ -98,19 +96,20 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	/**
 	 * @desc method will Delete trip booking
 	 * @return Deleted TripBooking Object will be returned
-	 * @author Srikanth
+	 * 
 	 */
 	@Override
 	public TripBooking deleteTripBooking(int tripBookingId) {
-		if(appUser.loggedInUser.getRole()==Role.CUSTOMER) {
+		if(appUser.loggedInUser.getRole()==Role.CUSTOMER && appUser.loggedInUser.getCustomerId()==tripBookingId) {
 		Optional<TripBooking> trip = tripRepo.findById(tripBookingId);
 		if (trip.isPresent()) {
 			tripRepo.deleteById(tripBookingId);
 			return trip.get();
 		} else {
 			throw new TripNotFoundException("Invalid Id-" + tripBookingId);
-		}}{
-			throw new InvalidUserNamePasswordException("vdd");
+		}}
+		else{
+			throw new InvalidAccessException("Access Denied");
 		}
 	}
 	
@@ -121,11 +120,13 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	 */
 	@Override
 	public List<TripBooking> ViewAllTripsCustomer(int customerId) {
-		if(appUser.loggedInUser!=null) {
+		System.out.println(appUser.loggedInUser);
+		if(appUser.loggedInUser.equals(null) ) {
+			if(appUser.loggedInUser.getCustomerId()==customerId) {
 
-//		System.out.println(loggedInUser.getUserName());
 
 		List<TripBooking> trip = tripRepo.findByCustomer(customerId);
+		
 		if(trip!=null) {
 		return trip;}
 		else {
@@ -133,8 +134,14 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		}
 
 	}else {
-		throw new InvalidUserNamePasswordException("vdd");
-	}}
+		throw new InvalidAccessException("Invalid Access");
+		
+	}
+		}
+	else {
+		throw new InvalidAccessException("Login");
+	}
+}
 	
 	
 	/**
@@ -145,9 +152,9 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	public TripBooking calculateBill(int customerId) {
 		float rate = tripRepo.findByPerKmRate(customerId);
 		TripBooking t = tripRepo.findByCustomerId(customerId);
-		TripBooking trip = tripRepo.getById(t.getTripBookingId());
-		trip.setBill(trip.getDistanceInKm() * rate);
-		return trip;
+		Optional<TripBooking> trip = tripRepo.findById(t.getTripBookingId());
+		trip.get().setBill(trip.get().getDistanceInKm() * rate);
+		return trip.get();
 	}
 	
 
@@ -156,6 +163,7 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	 * @desc Validate Trip 
 	 * @return boolean value(True or False)
 	 */
+	@Override
 	public boolean validateTrip(int customerId) {
 		List<Integer> Id = tripRepo.IsCustomerInTrip(customerId);
 		if (Id.isEmpty()) {
@@ -171,13 +179,13 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	 * @desc To End the trip
 	 * @return Tripbooking object
 	 */
+	@Override
 	public TripBooking endTrip(int Id) {
 		
-		if(appUser.loggedInUser.getRole()==Role.CUSTOMER) {
+		if(appUser.loggedInUser.getRole()==Role.CUSTOMER && appUser.loggedInUser.getCustomerId()==Id) {
 			
 		TripBooking end1 = tripRepo.findByCustomerId(Id);
 		if(end1!=null) {
-		//TripBooking end1 = end.get();
 		end1.setStatus(false);
 		end1.getDriver().setStatus(false);
 
@@ -187,12 +195,12 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		
 		return end2;}
 		else {
-			throw new TripNotFoundException("You Not Booked Trip");
+			throw new TripNotFoundException("No Trip Found");
 			
 		}
 		}
 		else {
-			throw new InvalidUserNamePasswordException("vdd");
+			throw new InvalidAccessException("Access Denied");
 		}
 			
 		}
@@ -203,8 +211,10 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	 * @desc To Book a cab from fromlocation to Tolocation
 	 * @return Cabservicedto object will be returned
 	 */
+	@Override
 	public Cabservicedto BookCab(String fromLocation, String toLocation) {
 		if(appUser.loggedInUser.getRole()==Role.CUSTOMER) {
+		
 		Optional<Customer> tripCust = custRepo.findById(appUser.loggedInUser.getCustomerId());
 		List<Driver> driver1 = driverRepo.findByStatus();
 		if (driver1.size() == 0) {
@@ -213,38 +223,21 @@ public class TripBookingServiceImpl implements ITripBookingService {
 			System.out.println(driver1.get(0).getDriverId());
 			Driver s = driverRepo.getById(driver1.get(0).getDriverId());
 			driver1.get(0).setStatus(true);
-			TripBooking service= new TripBooking();
+								
+			TripBooking tripbooking= new TripBooking(tripCust.get(),s,fromLocation,toLocation,now,now,true,50,300);
+			TripBooking book = insertTripBooking(tripbooking);
+			System.out.println(book.getCustomer().getCustomerId());
+			Driverdto driverdto = new Driverdto(book.getDriver().getDriverId(),book.getDriver().getRating(),book.getDriver().getCab());
+			Customerdto customerdto=new Customerdto(book.getCustomer().getCustomerId(),book.getCustomer().getUserName());
+			System.out.println(customerdto);
+			Cabservicedto cabservicedto=  new Cabservicedto(customerdto.getCustomerId(),customerdto.getUsername(),book.getFromLocation(),book.getToLocation(),book.getFromDateTime(),
+					book.getToDateTime(),driverdto.getDriverId(),driverdto.getRating(),driverdto.getCab().getCarType(),book.getBill());
+			System.out.println(cabservicedto);
+			return cabservicedto;}
 
-			service.setCustomer(tripCust.get());
-			service.setDistanceInKm(50);
-			service.setStatus(true);
-			service.setBill(300);
-			service.setDriver(s);
-			service.setFromDateTime(now);
-			service.setToDateTime(now);
-			service.setFromLocation(fromLocation);
-			service.setToLocation(toLocation);
-
-			TripBooking book = insertTripBooking(service);
-
-			driverdto.setDriverId(book.getDriver().getDriverId());
-			driverdto.setRating(book.getDriver().getRating());
-			driverdto.setCab(book.getDriver().getCab());
-			customerdto.setCustomerId(book.getCustomer().getCustomerId());
-			customerdto.setUsername(book.getCustomer().getUserName());
-			cabservicedto.setCustomerId(customerdto.getCustomerId());
-			cabservicedto.setCustomername(customerdto.getUsername());
-			cabservicedto.setBill(book.getBill());
-			cabservicedto.setFromDateTime(book.getFromDateTime());
-			cabservicedto.setToLocation(book.getToLocation());
-			cabservicedto.setToDateTime(book.getToDateTime());
-			cabservicedto.setFromLocation(book.getFromLocation());
-			cabservicedto.setDriverId(driverdto.getDriverId());
-			cabservicedto.setRating(driverdto.getRating());
-			cabservicedto.setCabtype(driverdto.getCab().getCarType());}
-		return cabservicedto;}
-		else {
-			throw new InvalidUserNamePasswordException("vdd");}
+			}
+			else {
+			throw new InvalidAccessException("Access Denied");}
 	}
 	
 }

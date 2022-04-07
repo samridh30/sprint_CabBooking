@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import Cab.Service.demo.Service.CustomerServiceImpl;
 import Cab.Service.demo.model.AppUser;
 import Cab.Service.demo.model.Customer;
 import Cab.Service.demo.model.Role;
@@ -21,11 +20,12 @@ import Cab.Service.demo.model.Role;
 public class CustomerServiceImplTest {
 	@Autowired
 	CustomerServiceImpl cusService;
+	
 	@BeforeEach
 	void start() {
 		AppUser app = new AppUser();
-		app.setEmail("Sri@gmail.com");
-		app.setPassword("Srikanth@");
+		app.setEmail("Mahesh@gmail.com");
+		app.setPassword("mahesh@");
 		cusService.loginUser(app);
 				}
 	
@@ -34,30 +34,32 @@ public class CustomerServiceImplTest {
 		cusService.logoutUser();
 	}
 	
+
 	@Disabled
 	@Test
 	void insertCustomerTest() {
-		Customer c= new Customer(1000,"xxxx","xxxx@","xxxx",1234567890L, "xxx@gmail.com",Role.CUSTOMER);
+		Customer c= new Customer(1000,"mahesh","mahesh@","Hyderabad",1234567890L, "Mahesh@gmail.com",Role.CUSTOMER);
 		Customer insertTest=cusService.insertCustomer(c);
-		assertEquals(1000,insertTest.getCustomerId());
+		assertEquals("Mahesh@gmail.com",insertTest.getEmail());
+		assertEquals("mahesh@", insertTest.getPassword());
 		}
 	
 	@Disabled
 	@Test
 	void updateCustomerTest() {
 		
-		Customer update= new Customer(174,"xxxx","xxxxx@","xxxz",1234567890L, "xxx@gmail.com",Role.CUSTOMER);
+		Customer update= new Customer(214,"srikanth","mahesh@","Hyderabad",1234567890L, "Mahesh@gmail.com",Role.CUSTOMER);
 
 		Customer updateTest= cusService.updateCustomer(update);
-		assertEquals("xxxz",updateTest.getAddress());
+		assertEquals("Hyderabad",updateTest.getAddress());
 		}
 	
 	@Disabled
 	@Test
 	void deleteCustomerTest() {
 		Customer deleteTest= cusService.deleteCustomer();
-		assertEquals(174, deleteTest.getCustomerId());
-		assertEquals("xxxx", deleteTest.getUserName());
+		assertEquals(207, deleteTest.getCustomerId());
+		assertEquals("Hyderabad", deleteTest.getUserName());
 	}
 	
 	@Disabled

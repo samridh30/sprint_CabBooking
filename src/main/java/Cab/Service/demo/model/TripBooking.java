@@ -8,21 +8,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @desc TripBooking Entity Class
- * @author  Srikanth
+ * @author Srikanth
  * 
  */
 
 @Entity
-//@Data
 @Component
 public class TripBooking {
 	@Id
@@ -31,7 +25,7 @@ public class TripBooking {
 	@ManyToOne(cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "customer_Id")
 	private Customer customer;
-	@ManyToOne(cascade = {  CascadeType.MERGE })
+	@ManyToOne(cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "driver_Id")
 	private Driver driver;
 	private String fromLocation;
@@ -39,17 +33,17 @@ public class TripBooking {
 	private LocalDateTime fromDateTime;
 	private LocalDateTime toDateTime;
 
-	//@JsonIgnore
-	private boolean status=true;
+	
+	private boolean status = true;
 	private float distanceInKm;
 	private float bill;
-	
-	public TripBooking(){
-		
+
+	public TripBooking() {
+
 	}
-	
+
 	/**
-	 * @desc TripBooking Constructor  
+	 * @desc TripBooking Constructor
 	 */
 	public TripBooking(int tripBookingId, Customer customer, Driver driver, String fromLocation, String toLocation,
 			LocalDateTime fromDateTime, LocalDateTime toDateTime, boolean status, float distanceInKm, float bill) {
@@ -65,7 +59,7 @@ public class TripBooking {
 		this.distanceInKm = distanceInKm;
 		this.bill = bill;
 	}
-	
+
 	/**
 	 * @desc TripBooking Constructor
 	 */

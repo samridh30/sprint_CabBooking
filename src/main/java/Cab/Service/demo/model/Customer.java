@@ -8,10 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import org.springframework.stereotype.Component;
-
 @Entity
-@Component
 public class Customer {
 	@Id
 	@GeneratedValue
@@ -21,14 +18,14 @@ public class Customer {
 	@Size(min = 4, message = "Username should be between 4-32 charachters")
 // @Min(4, message = "Username should be between 4-32 charachters")
 // @Max(32)
-	@Size(min = 32, message = "Username should be between 4-32 charachters")
+	@Size(max = 32, message = "Username should be between 4-32 charachters")
 	private String userName;
 
 	@NotBlank
 	@Size(min = 4, message = "Password should be between 4-32 charachters")
 // @Min(4, message = "Username should be between 4-32 charachters")
 // @Max(32)
-	@Size(min = 32, message = "Password should be between 4-32 charachters")
+	@Size(max = 32, message = "Password should be between 4-32 charachters")
 	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$")
 	private String password;
 	private String address;
@@ -62,6 +59,11 @@ public class Customer {
 
 
 		
+
+		public Customer(String string, String string2, String string3, long l, String string4, Role customer) {
+		// TODO Auto-generated constructor stub
+	}
+
 
 		public int getCustomerId() {
 		return customerId;

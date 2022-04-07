@@ -26,7 +26,7 @@ public class DriverServiceImpl implements IDriverService {
 
 	@Override
 	public Driver insertDriver(Driver driver) {
-		if (AppUser.loggedInUser.toString() == null) {
+		if (AppUser.loggedInUser.toString() != null) {
 			if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
 				Optional<Driver> dri = driRepo.findById(driver.getDriverId());
 				if (dri.isPresent()) {
@@ -45,7 +45,7 @@ public class DriverServiceImpl implements IDriverService {
 
 	@Override
 	public Driver updateDriver(Driver driver) {
-		if (AppUser.loggedInUser.toString() == null) {
+		if (AppUser.loggedInUser.toString() != null) {
 			if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
 
 				Optional<Driver> dri = driRepo.findById(driver.getDriverId());
@@ -68,7 +68,7 @@ public class DriverServiceImpl implements IDriverService {
 	@Override
 	public Driver deleteDriver(int driverId) {
 
-		if (AppUser.loggedInUser.toString() == null) {
+		if (AppUser.loggedInUser.toString() != null) {
 			if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
 
 				Optional<Driver> dri = driRepo.findById(driverId);
@@ -96,7 +96,7 @@ public class DriverServiceImpl implements IDriverService {
 
 	@Override
 	public List<Driver> ViewBestDrivers() {
-		if (AppUser.loggedInUser.toString() == null) {
+		if (AppUser.loggedInUser.toString() != null) {
 			if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
 				return driRepo.findByViewBestDrivers();
 			} else {
@@ -111,7 +111,7 @@ public class DriverServiceImpl implements IDriverService {
 
 	@Override
 	public Driver viewDriver(int driverId) {
-		if (AppUser.loggedInUser.toString() == null) {
+		if (AppUser.loggedInUser.toString() != null) {
 			if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
 				Optional<Driver> dri = driRepo.findById(driverId);
 				if (dri.isPresent()) {
@@ -136,7 +136,7 @@ public class DriverServiceImpl implements IDriverService {
 
 	@Override
 	public List<Driver> ViewAllDrivers() {
-		if (AppUser.loggedInUser.toString() == null) {
+		if (AppUser.loggedInUser.toString() != null) {
 			if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
 				return driRepo.findAll();
 			} else {

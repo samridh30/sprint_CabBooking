@@ -29,19 +29,11 @@ public class TripBookingController {
 	TripBookingServiceImpl trip;
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
-	/**
-	 * @desc created tripbooking
-	 */
-	// http://localhost:8088/Trip/insert
-//	@PostMapping("/insert")
-//	ResponseEntity<TripBooking> insertTripBooking(@RequestBody TripBooking tripBooking) {
-//		LOG.info(tripBooking.toString());
-//		return new ResponseEntity<TripBooking>(trip.insertTripBooking(tripBooking), HttpStatus.OK);
-//		
-//	}
+
 
 	/**
 	 * @desc To update data of bookedtrip {@link= http://localhost:8088/Trip/update}
+>>>>>>> fc5f53caa490238a2707e658eeffb16736aae824
 	 */
 	@PutMapping("/update")
 	ResponseEntity<TripBooking> updateTripBooking(@RequestBody TripBooking tripBooking) {
@@ -70,16 +62,6 @@ public class TripBookingController {
 		LOG.info(Integer.toString(Id) + "Feteched");
 		return new ResponseEntity<List<TripBooking>>(trip.ViewAllTripsCustomer(Id), HttpStatus.OK);
 	}
-
-//	/**
-//	 * @desc calculates a tripbooking bill
-//	 */
-//	//http://localhost:8088/Trip/bill/{Id}
-//	@GetMapping("/bill/{Id}")
-//	ResponseEntity<TripBooking> calculateBill(@PathVariable(name="Id") int Id) {
-//		LOG.info(Integer.toString(Id)+"Bill");
-//		return new ResponseEntity<TripBooking>(trip.calculateBill(Id), HttpStatus.OK);
-//	}
 
 	/**
 	 * @desc Ends the trip {@link=http://localhost:8088/Trip/endTrip/68}

@@ -2,6 +2,7 @@ package Cab.Service.demo.dto;
 
 import java.time.LocalDateTime;
 
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 @Component
 public class Cabservicedto {
@@ -20,13 +21,29 @@ public class Cabservicedto {
 		
 	}
 	
-	public Cabservicedto(String string, String string2, String string3, int i, double d, String string4, int j) {
-		// TODO Auto-generated constructor stub
+	/**
+	 * @desc Cabservicedto
+	 */
+	
+	public Cabservicedto(int customerId, String customername, String fromLocation, String toLocation,
+			LocalDateTime fromDateTime, LocalDateTime toDateTime, int driverId, float rating, String cabtype,
+			float bill) {
+		super();
+		this.customerId = customerId;
+		this.customername = customername;
+		this.fromLocation = fromLocation;
+		this.toLocation = toLocation;
+		this.fromDateTime = fromDateTime;
+		this.toDateTime = toDateTime;
+		this.driverId = driverId;
+		this.rating = rating;
+		this.cabtype = cabtype;
+		this.bill = bill;
 	}
-	public Cabservicedto(String string, String string2, String string3, LocalDateTime now, LocalDateTime now2, int i,
-			double d, String string4, int j) {
-		// TODO Auto-generated constructor stub
-	}
+
+	/**
+	 * @desc Getters and Setters
+	 */
 
 	public float getBill() {
 		return bill;

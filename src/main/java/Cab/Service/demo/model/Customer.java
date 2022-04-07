@@ -43,8 +43,12 @@ public class Customer {
 	public Customer() {
 		super();
 	}
-
-	public Customer(int customerId, String userName, String password,String address, long mobileNumber, String email, Role role) {
+	
+	
+	public Customer(int customerId,
+			@NotBlank @Size(min = 4, message = "Username should be between 4-32 charachters") @Size(min = 32, message = "Username should be between 4-32 charachters") String userName,
+			@NotBlank @Size(min = 4, message = "Password should be between 4-32 charachters") @Size(min = 32, message = "Password should be between 4-32 charachters") @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$") String password,
+			String address, Long mobileNumber, String email, Role role) {
 		super();
 		this.customerId = customerId;
 		this.userName = userName;
@@ -55,7 +59,11 @@ public class Customer {
 		this.role = role;
 	}
 
-	public int getCustomerId() {
+
+
+		
+
+		public int getCustomerId() {
 		return customerId;
 	}
 

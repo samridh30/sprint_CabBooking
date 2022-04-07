@@ -10,6 +10,15 @@ public class Driverdto {
 	Cab cab;
 	
 	
+	public Driverdto() {
+		super();
+	}
+	public Driverdto(int driverId, float rating, Cab cab) {
+		super();
+		this.driverId = driverId;
+		this.rating = rating;
+		this.cab = cab;
+	}
 	public int getDriverId() {
 		return driverId;
 	}

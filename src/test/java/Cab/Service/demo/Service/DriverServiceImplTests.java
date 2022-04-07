@@ -32,23 +32,23 @@ public class DriverServiceImplTests {
 		driver = null;
 	}
 
-//	@Test
-//	public void testInsertDriver() {
-//	login.loggedInUser.getRole();
-//		LOG.info(driver.toString());
-//		Driver expected = driver;
-//		Driver actual = driserimp.insertDriver(driver);
-//		assertEquals(expected, actual);
-//	}
-//	
-//	@Test
-//	public void testInsertDriverFailure() {
-	// login.loggedInUser.getRole();
-//		LOG.info(driver.toString());
-//		Driver unexpected = driver;
-//		Driver actual = driserimp.insertDriver(new Driver(6,"Pb-101206",4.9f,null,true) );
-//		assertEquals(unexpected, actual);
-//	}
+	@Test
+	public void testInsertDriver() {
+	login.loggedInUser.getRole();
+		LOG.info(driver.toString());
+		Driver expected = driver;
+		Driver actual = driserimp.insertDriver(driver);
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void testInsertDriverFailure() {
+	 login.loggedInUser.getRole();
+		LOG.info(driver.toString());
+		Driver unexpected = driver;
+		Driver actual = driserimp.insertDriver(new Driver(6,"Pb-101206",4.9f,null,true) );
+		assertEquals(unexpected, actual);
+	}
 
 	@Test
 	public void testUpdateDriver() {

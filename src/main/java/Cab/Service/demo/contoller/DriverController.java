@@ -28,9 +28,9 @@ public class DriverController {
 	@Autowired
 	private DriverServiceImpl drive;
 
-	// http://localhost:8088/drv/insert-driver
+	// http://localhost:8088/driver/insert-driver
 	// Inserts a new driver
-	@PostMapping("/insert")
+	@PostMapping("/insert-driver")
 	public ResponseEntity<Driver> intDriver(@RequestBody Driver driver) {
 
 		LOG.info("Insert Driver");
@@ -38,9 +38,9 @@ public class DriverController {
 
 	}
 
-	// http://localhost:8088/drv/update-driver
+	// http://localhost:8088/driver/update-driver
 	// Updates an existing driver
-	@PutMapping("/update")
+	@PutMapping("/update-driver")
 	public ResponseEntity<Driver> updtDriver(@RequestBody Driver driver) {
 		LOG.info(driver.toString());
 
@@ -48,34 +48,36 @@ public class DriverController {
 
 	}
 
-	// http://localhost:8088/drv/delete-driver/{did}
+	// http://localhost:8088/driver/delete-driver/{did}
 	// Deletes an existing driver
-	@DeleteMapping("/delete/{did}")
+	@DeleteMapping("/delete-driver/{did}")
 	public ResponseEntity<Driver> delDriver(@PathVariable(name = "did") int driverId) {
 		LOG.info(Integer.toString(driverId));
 		return new ResponseEntity<Driver>(drive.deleteDriver(driverId), HttpStatus.OK);
 
 	}
 
-	// http://localhost:8088/drv/best-drivers
+	// http://localhost:8088/driver/best-drivers
 	// Fetches all the best drivers as a List
-	@GetMapping("/bestDrivers")
+	@GetMapping("/best-drivers")
 	public ResponseEntity<List<Driver>> topDrivers() {
 		LOG.info("Best Drivers Fetched");
 		return new ResponseEntity<List<Driver>>(drive.ViewBestDrivers(), HttpStatus.OK);
 	}
 
-	// http://localhost:8088/drv/view-drivers/{did}
+	// http://localhost:8088/driver/view-drivers/{did}
 	// Fetches a driver based on driver Id
-	@GetMapping("/viewDrivers/{did}")
-	public ResponseEntity<Driver> ViewDriver(@PathVariable(name = "did") int driverId) {
+	@GetMapping("/view-drivers/{did}")
+	public ResponseEntity<Driver> ViewDriverById(@PathVariable(name = "did") int driverId) {
 		LOG.info(Integer.toString(driverId));
 		return new ResponseEntity<Driver>(drive.viewDriver(driverId), HttpStatus.OK);
 
 	}
 
-	@GetMapping("/viewAllDrivers")
-	public ResponseEntity<List<Driver>> ViewDriver() {
+	// http://localhost:8088/driver/view-all-drivers
+	// Fetches all the drivers as a List
+	@GetMapping("/view-all-drivers")
+	public ResponseEntity<List<Driver>> ViewALlDrivers() {
 		LOG.info("All Drivers Fetched");
 		return new ResponseEntity<List<Driver>>(drive.ViewAllDrivers(), HttpStatus.OK);
 

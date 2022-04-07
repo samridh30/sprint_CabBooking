@@ -55,7 +55,7 @@ public class CustomerServiceImplTest {
 	@Disabled
 	@Test
 	void deleteCustomerTest() {
-		Customer deleteTest= cusService.deleteCustomer(174);
+		Customer deleteTest= cusService.deleteCustomer();
 		assertEquals(174, deleteTest.getCustomerId());
 		assertEquals("xxxx", deleteTest.getUserName());
 	}

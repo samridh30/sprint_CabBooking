@@ -15,8 +15,6 @@ import Cab.Service.demo.repository.TripBookingRepositoryImpl;
 @Service
 public class AdminServiceImpl implements IAdminService {
 
-//	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
-
 	@Autowired
 	private TripBookingRepositoryImpl tripRepo;
 
@@ -36,17 +34,6 @@ public class AdminServiceImpl implements IAdminService {
 
 	}
 
-//	@Override
-//	public String check() {
-//		if (User.loggedInUser != null) {
-//			if (User.loggedInUser.getRole() == Role.ADMIN) {
-//				return "Works";
-//			} else {
-//				return "Not logged IN";
-//			}
-//		}
-//		return "Not logged in";
-//	}
 
 	@Override
 	public List<TripBooking> getTripsCabwise() {

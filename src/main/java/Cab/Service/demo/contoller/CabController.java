@@ -40,6 +40,7 @@ public class CabController {
 		LOG.info(cab.toString());
 		return new ResponseEntity<Cab>(car.updateCab(cab), HttpStatus.CREATED);
 	}
+	
 	// http://localhost:8088/cab/delete-cab
 		// deletes an existing cab based on cabId
 	@DeleteMapping("/delete/{cabId}")
@@ -48,16 +49,24 @@ public class CabController {
 		return new ResponseEntity<Cab>(car.deleteCab(cabId), HttpStatus.OK);
 	}
 
-//	@GetMapping("/view")
-//	ResponseEntity<Cab> ViewAllCabs(@PathVariable(name = "carType") String carType) {
-//		LOG.info(carType);
-//		return new ResponseEntity<Cab>(car.viewCabsofType(carType), HttpStatus.OK);
-//	}
-
+	// http://localhost:8088/cab/viewAll
 	@GetMapping("/viewAll")
 	public ResponseEntity<List<Cab>> ViewAllCabs() {
-//		LOG.info(carType);
 		return new ResponseEntity<List<Cab>>(car.viewAllCabs(), HttpStatus.OK);
 
+	}
+	// http://localhost:8088/cab/viewCabsOfType/{Type}
+	@GetMapping("/viewCabsOfType/{Type}")
+	public ResponseEntity<List<Cab>> viewCabsOfType(@PathVariable(name="Type") String Type){
+		return new ResponseEntity<List<Cab>>(car.viewCabsOfType(Type),HttpStatus.OK);
+		
+	}
+	
+	// http://localhost:8088/cab/countCabsOfType/{Type}
+	@GetMapping("/countCabsOfType/{Type}")
+	public ResponseEntity<Integer> countCabsOfType(@PathVariable(name="Type") String Type) {
+		return new ResponseEntity<Integer>(car.countCabsOfType(Type),HttpStatus.OK);
+
+		
 	}
 }

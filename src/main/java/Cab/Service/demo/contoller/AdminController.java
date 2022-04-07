@@ -28,7 +28,7 @@ public class AdminController {
 	@Autowired
 	private AdminServiceImpl adm;
 
-//	http://localhost:8088/admin/getCabs
+//	http://localhost:8088/admin/getAllTrips
 	@GetMapping("/getAllTrips")
 	public ResponseEntity<List<TripBooking>> getAllTrips() {
 //		LOG.info(carType);

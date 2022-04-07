@@ -78,7 +78,7 @@ public class TripBookingImplTest {
 	@Disabled
 	@Test
 	void viewAllTripsCustomerTest() {
-		List<TripBooking> list= tripservice.ViewAllTripsCustomer(157);
+		List<TripBooking> list= tripservice.ViewAllTripsCustomer();
 		assertEquals(3,list.size());
 		
 	}

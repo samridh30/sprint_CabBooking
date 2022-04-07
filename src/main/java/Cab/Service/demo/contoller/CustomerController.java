@@ -31,7 +31,7 @@ public class CustomerController {
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
 	// http://localhost:8088/Customer/register
-	@PostMapping("/register")
+	@PostMapping("/insert")
 	public ResponseEntity<Customer> register(@Valid @RequestBody Customer appUser) {
 		LOG.info("Register Customer");
 		return new ResponseEntity<Customer>(cust.insertCustomer(appUser), HttpStatus.OK);
@@ -65,7 +65,7 @@ public class CustomerController {
 	}
 
 	// http://localhost:8088/Customer/AllCustomers
-	@GetMapping("/AllCustomers")
+	@GetMapping("/viewAllCustomers")
 	public ResponseEntity<List<Customer>> viewCustomers() {
 		LOG.info("All Customers Fetched");
 		return new ResponseEntity<List<Customer>>(cust.viewCustomers(), HttpStatus.OK);

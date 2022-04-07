@@ -10,6 +10,7 @@ import Cab.Service.demo.model.Cab;
 @Repository
 public interface CabRepositoryImpl extends JpaRepository<Cab, Integer> {
 	List<Cab> findByCarType(String carType);
+
 	int countByCarType(String carType);
 
 }

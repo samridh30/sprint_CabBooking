@@ -6,15 +6,15 @@ import Cab.Service.demo.model.Driver;
 
 public interface IDriverService {
 
-	public Driver insertDriver(Driver driver);
+	Driver insertDriver(Driver driver);
 
-	public Driver updateDriver(Driver driver);
+	Driver updateDriver(Driver driver);
 
-	public Driver deleteDriver(int driverId);
+	Driver deleteDriver(int driverId);
 
-	public List<Driver> ViewBestDrivers();
+	List<Driver> ViewBestDrivers();
 
-	public Driver viewDriver(int driverId);
+	Driver viewDriver(int driverId);
 
 	List<Driver> ViewAllDrivers();
 

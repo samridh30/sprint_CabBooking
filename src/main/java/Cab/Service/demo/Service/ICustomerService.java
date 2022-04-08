@@ -7,13 +7,13 @@ import Cab.Service.demo.model.AppUser;
 import Cab.Service.demo.model.Customer;
 
 public interface ICustomerService {
-	public Customer insertCustomer(Customer customer);
+	Customer insertCustomer(Customer customer);
 
-	public Customer updateCustomer(Customer customer);
+	Customer updateCustomer(Customer customer);
 
-	public Customer deleteCustomer();
+	Customer deleteCustomer();
 
-	public List<Customer> viewCustomers();
+	List<Customer> viewCustomers();
 
 	String logoutUser();
 

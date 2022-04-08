@@ -1,6 +1,8 @@
 package Cab.Service.demo.Service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -29,10 +31,8 @@ public class CustomerServiceImplMockitoTest {
 	CustomerServiceImpl cusService;
 	@InjectMocks
 	TripBookingServiceImpl tripService;
-	
 	@Mock
 	CustomerServiceImpl CustRepo;
-
 	@Mock
 	CustomerRepositorImpl custRepo;
 	@Mock
@@ -85,9 +85,27 @@ public class CustomerServiceImplMockitoTest {
 		Customer insertTest=cusService.insertCustomer(c.get());
 		assertEquals(11,insertTest.getCustomerId());
 		}
+	
+	@Disabled
+	@Test
+	void insertCustomerNegativeTest() {
+		AppUser app = new AppUser();
+		app.setEmail("Sajal@gmail.com");
+		app.setPassword("Sajal@");
+		cusService.loginUser(app);
+		
+		Optional<Customer> c= Optional.of(new Customer(205,"Srikanth","Srikanth@","Hyderabad",1234567890L, "Srikanth@gmail.com",Role.CUSTOMER));
+		Mockito.when(custRepo.findByEmail(c.get().getEmail())).thenReturn(null);
+		Mockito.when(custRepo.save(c.get())).thenReturn(c.get());
+		
+		Customer insertTest=cusService.insertCustomer(c.get());
+		assertNotEquals(12,insertTest.getCustomerId());
+		}
+
 	/**
 	 * @desc Testing Update Customer Method using Mockito
 	 */
+	
 	@Test
 	void updateCustomerTest() {
 		AppUser app = new AppUser();
@@ -95,17 +113,35 @@ public class CustomerServiceImplMockitoTest {
 		app.setPassword("Srikanth@");
 		Customer c= new Customer(205,"Srikanth","Srikanth@","Hyderabad",1234567890L, "Srikanth@gmail.com",Role.CUSTOMER);
 		Mockito.when(custRepo.findByEmail("Srikanth@gmail.com")).thenReturn(Optional.of(c));
-		cusService.loginUser(app);
-		
-		
 		Mockito.when(custRepo.findById(205)).thenReturn(Optional.of(c));
 		Mockito.when(custRepo.save(c)).thenReturn(c);
+		Customer updatedCustomer=cusService.updateCustomer(c);
+		
+		assertEquals(205,updatedCustomer.getCustomerId());
 		
 	}
+
+	@Test
+	void updateCustomerNegativeTest() {
+		AppUser app = new AppUser();
+		app.setEmail("Srikanth@gmail.com");
+		app.setPassword("Srikanth@");
+		Customer c= new Customer(205,"Srikanth","Srikanth@","Hyderabad",1234567890L, "Srikanth@gmail.com",Role.CUSTOMER);
+		Mockito.when(custRepo.findByEmail("Srikanth@gmail.com")).thenReturn(Optional.of(c));
+		Mockito.when(custRepo.findById(205)).thenReturn(Optional.of(c));
+		Mockito.when(custRepo.save(c)).thenReturn(c);
+		Customer updatedCustomer=cusService.updateCustomer(c);
+		
+		assertNotEquals(206,updatedCustomer.getCustomerId());
+		
+	}
+
+			
 	
 	/**
 	 * @desc Testing Delete Customer Method using Mockito
 	 */
+
 	@Test
 	void deleteCustomerTest() {
 		AppUser app = new AppUser();
@@ -120,6 +156,23 @@ public class CustomerServiceImplMockitoTest {
 		Mockito.doNothing().when(custRepo).deleteCustomerById(205);
 		Customer deleteTest=cusService.deleteCustomer();
 		assertEquals(205, deleteTest.getCustomerId());
+		
+	}
+	
+	@Test
+	void deleteCustomerNegativeTest() {
+		AppUser app = new AppUser();
+		app.setEmail("Srikanth@gmail.com");
+		app.setPassword("Srikanth@");
+		Customer c= new Customer(205,"Srikanth","Srikanth@","Hyderabad",1234567890L, "Srikanth@gmail.com",Role.CUSTOMER);
+		Mockito.when(custRepo.findByEmail("Srikanth@gmail.com")).thenReturn(Optional.of(c));
+		cusService.loginUser(app);
+		Optional<Customer> c1= Optional.of(new Customer(205,"Srikanth","Srikanth@","Hyderabad",1234567890L, "Srikanth@gmail.com",Role.CUSTOMER));
+		Mockito.when(custRepo.findById(c1.get().getCustomerId())).thenReturn(c1);
+		Mockito.doNothing().when(tripRepo).deleteTripByCustomerId(205);
+		Mockito.doNothing().when(custRepo).deleteCustomerById(205);
+		Customer deleteTest=cusService.deleteCustomer();
+		assertNotEquals(207, deleteTest.getCustomerId());
 		
 	}
 	
@@ -139,6 +192,22 @@ public class CustomerServiceImplMockitoTest {
 		Mockito.when(custRepo.findById(205)).thenReturn(Optional.of(c1));
 		Customerdto viewTest= cusService.viewCustomer();
 		assertEquals(205, viewTest.getCustomerId());
+		
+	}
+	
+	@Test
+	void viewCustomerNegativeTest() {
+		AppUser app = new AppUser();
+		app.setEmail("Srikanth@gmail.com");
+		app.setPassword("Srikanth@");
+		Customer c= new Customer(205,"Srikanth","Srikanth@","Hyderabad",1234567890L, "Srikanth@gmail.com",Role.CUSTOMER);
+		Mockito.when(custRepo.findByEmail("Srikanth@gmail.com")).thenReturn(Optional.of(c));
+		cusService.loginUser(app);
+		
+		Customer c1= new Customer(205,"Srikanth","Srikanth@","Hyderabad",1234567890L, "Srikanth@gmail.com",Role.CUSTOMER);
+		Mockito.when(custRepo.findById(205)).thenReturn(Optional.of(c1));
+		Customerdto viewTest= cusService.viewCustomer();
+		assertNotEquals(209, viewTest.getCustomerId());
 		
 	}
 	

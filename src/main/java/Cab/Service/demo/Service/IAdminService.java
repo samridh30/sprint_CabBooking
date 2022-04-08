@@ -8,13 +8,13 @@ import Cab.Service.demo.model.TripBooking;
 public interface IAdminService {
 
 
-	public List<TripBooking> getAllTrips();
+	List<TripBooking> getAllTrips();
 
-	public List<TripBooking> getTripsCabwise();
+	List<TripBooking> getTripsCabwise();
 
-	public List<TripBooking> getTripsCustomerwise();
+	List<TripBooking> getTripsCustomerwise();
 
-	public List<TripBooking> getTripsDatewise();
+	List<TripBooking> getTripsDatewise();
 
 
 

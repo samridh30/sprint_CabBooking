@@ -1,6 +1,7 @@
 package Cab.Service.demo.Service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.List;
 
@@ -41,11 +42,12 @@ public class CustomerServiceImplTest {
 	@Disabled
 	@Test
 	void insertCustomerTest() {
-		Customer c= new Customer(1000,"mahesh","mahesh@","Hyderabad",1234567890L, "Mahesh@gmail.com",Role.CUSTOMER);
+		Customer c= new Customer(230,"Testing","Testing@","Hyderabad",1234567890L, "Testing@gmail.com",Role.CUSTOMER);
 		Customer insertTest=cusService.insertCustomer(c);
-		assertEquals("Mahesh@gmail.com",insertTest.getEmail());
-		assertEquals("mahesh@", insertTest.getPassword());
+		assertEquals("Testing@gmail.com",insertTest.getEmail());
+		assertEquals("Testing@", insertTest.getPassword());
 		}
+	
 	/**
 	 * @desc Testing Update Customer Method 
 	 */
@@ -53,11 +55,22 @@ public class CustomerServiceImplTest {
 	@Test
 	void updateCustomerTest() {
 		
-		Customer update= new Customer(230,"Testing","Testing@","NYZ",1234567890L, "Testing@gmail.com",Role.CUSTOMER);
+		Customer expected= new Customer(230,"Testing","Testing@","Hyderabad",1234567890L, "Testing@gmail.com",Role.CUSTOMER);
 
-		Customer updateTest= cusService.updateCustomer(update);
-		assertEquals("NYZ",updateTest.getAddress());
+		Customer actual= cusService.updateCustomer(expected);
+		assertEquals(expected,actual);
 		}
+	
+	@Disabled
+	@Test
+	void updateCustomerNegativeTest() {
+		
+		Customer unexcepted= new Customer(9,"Testing","Testing@","NYZ",1234567890L, "dnhuuo@gmail.com",Role.CUSTOMER);
+
+		Customer actual= cusService.updateCustomer(new Customer(230,"Testing","Testing@","NYZ",1234567890L, "Testing@gmail.com",Role.CUSTOMER));
+		assertNotEquals(unexcepted.getCustomerId(),actual.getCustomerId());
+		}
+
 	/**
 	 * @desc Testing Delete Customer Method 
 	 */
@@ -67,6 +80,14 @@ public class CustomerServiceImplTest {
 		Customer deleteTest= cusService.deleteCustomer();
 		assertEquals(230, deleteTest.getCustomerId());
 		assertEquals("Hyderabad", deleteTest.getUserName());
+	}
+	
+	@Disabled
+	@Test
+	void deleteCustomerNegativeTest() {
+		Customer deleteTest= cusService.deleteCustomer();
+		assertNotEquals(9, deleteTest.getCustomerId());
+		assertNotEquals("Hyderabad", deleteTest.getUserName());
 	}
 	
 	/**
@@ -81,7 +102,22 @@ public class CustomerServiceImplTest {
 		cusService.loginUser(app);
 		
 		List<Customer> viewCustomerTest= cusService.viewCustomers();
-		assertEquals(5, viewCustomerTest.size());
+		assertEquals(6, viewCustomerTest.size());
+		
+	}
+	
+
+	
+	@Disabled
+	@Test
+	void viewCustomersNegativeTest() {
+		AppUser app = new AppUser();
+		app.setEmail("Sajal@gmail.com");
+		app.setPassword("Sajal@");
+		cusService.loginUser(app);
+		
+		List<Customer> viewCustomerTest= cusService.viewCustomers();
+		assertNotEquals(5, viewCustomerTest.size());
 		
 	}
 	

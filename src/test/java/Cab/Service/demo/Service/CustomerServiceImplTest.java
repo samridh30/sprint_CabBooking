@@ -24,8 +24,8 @@ public class CustomerServiceImplTest {
 	@BeforeEach
 	void start() {
 		AppUser app = new AppUser();
-		app.setEmail("Mahesh@gmail.com");
-		app.setPassword("mahesh@");
+		app.setEmail("Testing@gmail.com");
+		app.setPassword("Testing@");
 		cusService.loginUser(app);
 				}
 	
@@ -34,6 +34,9 @@ public class CustomerServiceImplTest {
 		cusService.logoutUser();
 	}
 	
+	/**
+	 * @desc Testing Insert Customer Method 
+	 */
 
 	@Disabled
 	@Test
@@ -43,28 +46,39 @@ public class CustomerServiceImplTest {
 		assertEquals("Mahesh@gmail.com",insertTest.getEmail());
 		assertEquals("mahesh@", insertTest.getPassword());
 		}
-	
+	/**
+	 * @desc Testing Update Customer Method 
+	 */
 	@Disabled
 	@Test
 	void updateCustomerTest() {
 		
-		Customer update= new Customer(214,"srikanth","mahesh@","Hyderabad",1234567890L, "Mahesh@gmail.com",Role.CUSTOMER);
+		Customer update= new Customer(230,"Testing","Testing@","NYZ",1234567890L, "Testing@gmail.com",Role.CUSTOMER);
 
 		Customer updateTest= cusService.updateCustomer(update);
-		assertEquals("Hyderabad",updateTest.getAddress());
+		assertEquals("NYZ",updateTest.getAddress());
 		}
-	
+	/**
+	 * @desc Testing Delete Customer Method 
+	 */
 	@Disabled
 	@Test
 	void deleteCustomerTest() {
 		Customer deleteTest= cusService.deleteCustomer();
-		assertEquals(207, deleteTest.getCustomerId());
+		assertEquals(230, deleteTest.getCustomerId());
 		assertEquals("Hyderabad", deleteTest.getUserName());
 	}
 	
+	/**
+	 * @desc Testing view Customer Method 
+	 */
 	@Disabled
 	@Test
 	void viewCustomersTest() {
+		AppUser app = new AppUser();
+		app.setEmail("Sajal@gmail.com");
+		app.setPassword("Sajal@");
+		cusService.loginUser(app);
 		
 		List<Customer> viewCustomerTest= cusService.viewCustomers();
 		assertEquals(5, viewCustomerTest.size());

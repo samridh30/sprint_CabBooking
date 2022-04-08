@@ -1,13 +1,18 @@
 package Cab.Service.demo.model;
 
 import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.springframework.stereotype.Component;
+
+@Component
 @Entity
 public class Customer {
 	@Id
@@ -15,23 +20,15 @@ public class Customer {
 	private int customerId;
 
 	@NotBlank
-	@Size(min = 4, message = "Username should be between 4-32 charachters")
-// @Min(4, message = "Username should be between 4-32 charachters")
-// @Max(32)
-	@Size(max = 32, message = "Username should be between 4-32 charachters")
 	private String userName;
 
 	@NotBlank
-	@Size(min = 4, message = "Password should be between 4-32 charachters")
-// @Min(4, message = "Username should be between 4-32 charachters")
-// @Max(32)
-	@Size(max = 32, message = "Password should be between 4-32 charachters")
-	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$")
 	private String password;
 	private String address;
 	private Long mobileNumber;
 	
 	@Column(unique = true)
+	@Email
 	private String email;
 	private Role role;
 	
@@ -42,10 +39,7 @@ public class Customer {
 	}
 	
 	
-	public Customer(int customerId,
-			@NotBlank @Size(min = 4, message = "Username should be between 4-32 charachters") @Size(min = 32, message = "Username should be between 4-32 charachters") String userName,
-			@NotBlank @Size(min = 4, message = "Password should be between 4-32 charachters") @Size(min = 32, message = "Password should be between 4-32 charachters") @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$") String password,
-			String address, Long mobileNumber, String email, Role role) {
+	public Customer(int customerId,String userName,String password,String address, Long mobileNumber, String email, Role role) {
 		super();
 		this.customerId = customerId;
 		this.userName = userName;
@@ -55,14 +49,8 @@ public class Customer {
 		this.email = email;
 		this.role = role;
 	}
-
-
-
-		
-
-		public Customer(String string, String string2, String string3, long l, String string4, Role customer) {
-		// TODO Auto-generated constructor stub
-	}
+	
+	
 
 
 		public int getCustomerId() {

@@ -44,6 +44,10 @@ public class CustomerServiceImplMockitoTest {
 	
 	LocalDateTime now = LocalDateTime.now();
 	
+	/**
+	 * @desc UserLogin method Called before Every TestCase
+	 */
+	
 	@BeforeEach
 	void start() {
 		AppUser app = new AppUser();
@@ -54,11 +58,17 @@ public class CustomerServiceImplMockitoTest {
 		cusService.loginUser(app);
 		
 				}
-	
+	/**
+	 * @desc User Logout Method called after Every Test Case
+	 */
 	@AfterEach
 	void end() {
 		cusService.logoutUser();
 	}
+	
+	/**
+	 * @desc Testing Insert Customer Method using Mockito
+	 */
 	
 	@Disabled
 	@Test
@@ -75,7 +85,9 @@ public class CustomerServiceImplMockitoTest {
 		Customer insertTest=cusService.insertCustomer(c.get());
 		assertEquals(11,insertTest.getCustomerId());
 		}
-	
+	/**
+	 * @desc Testing Update Customer Method using Mockito
+	 */
 	@Test
 	void updateCustomerTest() {
 		AppUser app = new AppUser();
@@ -90,6 +102,10 @@ public class CustomerServiceImplMockitoTest {
 		Mockito.when(custRepo.save(c)).thenReturn(c);
 		
 	}
+	
+	/**
+	 * @desc Testing Delete Customer Method using Mockito
+	 */
 	@Test
 	void deleteCustomerTest() {
 		AppUser app = new AppUser();
@@ -107,6 +123,9 @@ public class CustomerServiceImplMockitoTest {
 		
 	}
 	
+	/**
+	 * @desc Testing view Customer Method Using Mockito
+	 */
 	@Test
 	void viewCustomerTest() {
 		AppUser app = new AppUser();
@@ -123,31 +142,5 @@ public class CustomerServiceImplMockitoTest {
 		
 	}
 	
-	
-	
-//	@Test
-//	void bookCab() {
-//		Optional<Customer> c= Optional.of(new Customer(205,"Srikanth","Srikanth@","Hyderabad",1234567890L, "Srihari9@gmail.com",Role.CUSTOMER));
-//		Cab cab= new Cab(3,"Mini",20,false);
-//		System.out.println("ukgukyg");
-//		Driver d= new Driver(131,"Id1",4.7f,cab,false);
-//		Optional<TripBooking> trip= Optional.of(new TripBooking(209,c.get(),d,"nyz","kukatpally",now,now,false,5,34));
-//		List<Driver> d1= new ArrayList();
-//		d1.add(d);
-//		TripDto tripdto=new TripDto("hyd","andhra");
-//		Mockito.when(custRepo.findById(205)).thenReturn(c);
-//		Mockito.when(driverRepo.findByStatus()).thenReturn(d1);
-//		Mockito.when(driverRepo.getById(131)).thenReturn(d);
-//		Mockito.when(tripRepo.findById(209)).thenReturn(trip);
-//		Mockito.when(tripRepo.IsCustomerInTrip(205)).thenReturn(new ArrayList<Integer>());
-//		Mockito.when(tripRepo.save(trip.get())).thenReturn(trip.get());
-//		Mockito.when(tripRepo.findByPerKmRate(11)).thenReturn(10f);
-//		Mockito.when(tripRepo.findByCustomerId(11)).thenReturn(trip.get());
-//		
-//		Cabservicedto cab1 = tripService.BookCab(tripdto);
-//		
-//		
-//		assertEquals("Mini",cab1.getCabtype());
-//	}
-//
+
 }

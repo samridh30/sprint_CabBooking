@@ -18,13 +18,17 @@ public class AdminServiceImplTests {
 
 	@Autowired
 	private AdminServiceImpl admService;
+	
+	
 
 	@Autowired
 	private TripBookingRepositoryImpl tripRepo;
+	
+
 
 	@Test
 	public void testGetAllTrips() {
-//		LOG.info(null);
+		
 		List<TripBooking> expected = tripRepo.findAll();
 		List<TripBooking> actual = admService.getAllTrips();
 		assertEquals(expected, actual);

@@ -70,8 +70,7 @@ public class CustomerServiceImpl implements ICustomerService {
 			} else {
 				throw new CustomerNotFoundException("Invalid Customer");
 			}
-		}
-			else{
+		}else{
 				throw new InvalidAccessException("Access Denied");
 			}
 		}

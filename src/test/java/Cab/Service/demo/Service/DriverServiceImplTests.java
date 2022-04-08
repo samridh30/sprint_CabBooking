@@ -22,6 +22,7 @@ public class DriverServiceImplTests {
 	private DriverServiceImpl driserimp;
 	@Autowired
 	CustomerServiceImpl login;
+	
 	private static Driver driver;
 
 	
@@ -30,10 +31,8 @@ public class DriverServiceImplTests {
 		AppUser app = new AppUser();
 		app.setEmail("Sajal@gmail.com");
 		app.setPassword("Sajal@");
-		//Customer c= new Customer(205,"Srikanth","Srikanth@","Hyderabad",1234567890L, "Srikanth@gmail.com",Role.CUSTOMER);
-		//Mockito.when(custRepo.findByEmail("Srikanth@gmail.com")).thenReturn(Optional.of(c));
 		login.loginUser(app);
-		driver = new Driver(217, "Pb-101206", 4.9f, null, true);
+		driver = new Driver(229, "Id6", 4.9f, null, true);
 		
 				}
 	
@@ -71,7 +70,6 @@ public class DriverServiceImplTests {
 	@Disabled
 	@Test
 	public void testDeleteDriver() {
-		//login.loggedInUser.getRole();
 		LOG.info(driver.toString());
 		Driver expected = driver;
 		Driver actual = driserimp.deleteDriver(driver.getDriverId());
@@ -87,7 +85,6 @@ public class DriverServiceImplTests {
 
 	@Test
 	public void testViewDriversById() {
-		//login.loggedInUser.getRole();
 		LOG.info(driver.toString());
 		Driver expected = driver;
 		Driver actual = driserimp.viewDriver(driver.getDriverId());

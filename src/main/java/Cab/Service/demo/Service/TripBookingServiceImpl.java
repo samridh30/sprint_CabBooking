@@ -40,9 +40,7 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	CustomerRepositorImpl custRepo;
 	@Autowired
 	DriverRepositoryImpl driverRepo;
-	@Autowired
 
-	DriverRepositoryImpl DRepo;
 
 	@Autowired
 	private CustomerServiceImpl appUser;
@@ -162,7 +160,6 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	public TripBooking calculateBill(int customerId) {
 		float rate = tripRepo.findByPerKmRate(customerId);
 		TripBooking trip = tripRepo.findByCustomerId(customerId);
-		//Optional<TripBooking> trip = tripRepo.findById(t.getTripBookingId());
 		trip.setBill(trip.getDistanceInKm() * rate);
 		return trip;
 	}
@@ -219,26 +216,22 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	@Override
 	public Cabservicedto BookCab(TripDto tripdto) {
 		if(appUser.loggedInUser.getRole()==Role.CUSTOMER) {
-		System.out.println("entered");
 		Optional<Customer> tripCust = custRepo.findById(appUser.loggedInUser.getCustomerId());
 		List<Driver> driver1 = driverRepo.findByStatus();
 		if (driver1.size() == 0) {
 			throw new DriverNotFoundException("All drivers are Busy rightNow. Try Again after Some time");
 		} else {
-			System.out.println(driver1.get(0).getDriverId());
 			Driver s = driverRepo.getById(driver1.get(0).getDriverId());
 			driver1.get(0).setStatus(true);
 			driver1.get(0).getCab().setStatus(true);
 							
 			TripBooking tripbooking= new TripBooking(tripCust.get(),s,tripdto.getFromLocation(),tripdto.getToLocation(),now,now,true,50,300);
 			TripBooking book = insertTripBooking(tripbooking);
-			System.out.println(book.getCustomer().getCustomerId());
 			Driverdto driverdto = new Driverdto(book.getDriver().getDriverId(),book.getDriver().getRating(),book.getDriver().getCab());
 			Customerdto customerdto=new Customerdto(book.getCustomer().getCustomerId(),book.getCustomer().getUserName());
-			System.out.println(customerdto);
+
 			Cabservicedto cabservicedto=  new Cabservicedto(customerdto.getCustomerId(),customerdto.getUsername(),book.getFromLocation(),book.getToLocation(),book.getFromDateTime(),
 					book.getToDateTime(),driverdto.getDriverId(),driverdto.getRating(),driverdto.getCab().getCarType(),book.getBill());
-			System.out.println(cabservicedto);
 			return cabservicedto;}
 
 			}

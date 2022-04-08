@@ -15,20 +15,13 @@ import Cab.Service.demo.model.Customer;
 
 @Repository
 public interface CustomerRepositorImpl extends JpaRepository<Customer, Integer> {
-//
-//	@Query(value = "select * from customer where email = :email", nativeQuery = true)
-//	Optional<Customer> findByEmail(@Param("email") String email);
 
-//	public Customer findByEmail(String email);
 	public Optional<Customer> findByEmail(String email);
 
 	@Query(value = "select customer_id, user_name from customer", nativeQuery = true)
 	public List<Customerdto> findCustomerdto();
 
-//	List<Customer> findByUserName(String userName);
 
-//	@Query(value = "select email from customer where email=:email", nativeQuery = true)
-//	Optional<Customer> findByEmail(String email);
 
 	@Transactional
 	@Modifying

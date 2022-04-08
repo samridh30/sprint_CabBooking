@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import org.springframework.stereotype.Component;
 
 /**
  * @desc TripBooking Entity Class
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Component;
  */
 
 @Entity
-@Component
 public class TripBooking {
 	@Id
 	@GeneratedValue

@@ -217,9 +217,9 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	public Cabservicedto BookCab(TripDto tripdto) {
 		if(appUser.loggedInUser.getRole()==Role.CUSTOMER) {
 		Optional<Customer> tripCust = custRepo.findById(appUser.loggedInUser.getCustomerId());
-		List<Driver> driver1 = driverRepo.findByStatus();
+		List<Driver> driver1 = driverRepo.findByCarType(tripdto.getCabType());;
 		if (driver1.size() == 0) {
-			throw new DriverNotFoundException("All drivers are Busy rightNow. Try Again after Some time");
+			throw new DriverNotFoundException(tripdto.getCabType()+" Cab Not Available Right Now Please Try Again after Some time");
 		} else {
 			Driver s = driverRepo.getById(driver1.get(0).getDriverId());
 			driver1.get(0).setStatus(true);

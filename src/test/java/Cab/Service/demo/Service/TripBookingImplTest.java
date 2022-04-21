@@ -90,7 +90,7 @@ public class TripBookingImplTest {
 	@Disabled
 	@Test
 	void BookCabTest() {
-		TripDto tripdto=new TripDto("Hyd","Andhra");
+		TripDto tripdto=new TripDto("Hyd","Andhra","Mini");
 		Cabservicedto cabbooktest=tripservice.BookCab(tripdto);
 		assertEquals(220,cabbooktest.getCustomerId());
 		

@@ -115,7 +115,6 @@ public class CustomerServiceImplTest {
 		app.setEmail("Sajal@gmail.com");
 		app.setPassword("Sajal@");
 		cusService.loginUser(app);
-		
 		List<Customer> viewCustomerTest= cusService.viewCustomers();
 		assertNotEquals(5, viewCustomerTest.size());
 		

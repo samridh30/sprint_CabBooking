@@ -4,12 +4,25 @@ public class TripDto {
 
 	private String fromLocation;
 	private String toLocation;
+	private String cabType;
 
-	public TripDto(String fromLocation, String toLocation) {
+	public TripDto(String fromLocation, String toLocation, String cabType) {
 		super();
 		this.fromLocation = fromLocation;
 		this.toLocation = toLocation;
+		this.cabType=cabType;
 	}
+	
+
+	public String getCabType() {
+		return cabType;
+	}
+
+
+	public void setCabType(String cabType) {
+		this.cabType = cabType;
+	}
+
 
 	public String getFromLocation() {
 		return fromLocation;

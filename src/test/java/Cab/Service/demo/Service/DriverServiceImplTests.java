@@ -32,7 +32,7 @@ public class DriverServiceImplTests {
 		app.setEmail("Sajal@gmail.com");
 		app.setPassword("Sajal@");
 		login.loginUser(app);
-		driver = new Driver(229, "Id6", 4.9f, null, true);
+		driver = new Driver(229, "Rohan", "Id6", 4.9f, null, true);
 		
 				}
 	
@@ -55,7 +55,7 @@ public class DriverServiceImplTests {
 	public void testInsertDriverFailure() {
 	 
 		Driver unexpected = driver;
-		Driver actual = driserimp.insertDriver(new Driver(6,"Pb-101206",4.9f,null,true) );
+		Driver actual = driserimp.insertDriver(new Driver(6,"Pb-101206","Sharma", 4.9f,null,true) );
 		assertNotEquals(unexpected, actual);
 	}
 

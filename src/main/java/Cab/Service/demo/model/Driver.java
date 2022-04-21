@@ -17,22 +17,21 @@ public class Driver {
 	@GeneratedValue
 
 	private int driverId;
+	private String driverName;
 	private String licenseNo;
 	private float rating;
-	@OneToOne(cascade = { CascadeType.MERGE} )
+	@OneToOne(cascade = { CascadeType.MERGE })
 	private Cab cab;
 	private boolean status = true;
-	
-	Driver(){
-		
+
+	Driver() {
+
 	}
 
-	public Driver(int i, String string, double d, boolean b) {
-	}
-
-	public Driver(int driverId, String licenseNo, float rating, Cab cab, boolean status) {
+	public Driver(int driverId, String driverName, String licenseNo, float rating, Cab cab, boolean status) {
 		super();
 		this.driverId = driverId;
+		this.driverName = driverName;
 		this.licenseNo = licenseNo;
 		this.rating = rating;
 		this.cab = cab;
@@ -45,6 +44,14 @@ public class Driver {
 
 	public void setDriverId(int driverId) {
 		this.driverId = driverId;
+	}
+
+	public String getDriverName() {
+		return driverName;
+	}
+
+	public void setDriverName(String driverName) {
+		this.driverName = driverName;
 	}
 
 	public String getLicenseNo() {
@@ -81,8 +88,67 @@ public class Driver {
 
 	@Override
 	public String toString() {
-		return "Driver [driverId=" + driverId + ", licenseNo=" + licenseNo + ", rating=" + rating + ", cab=" + cab
-				+ ", status=" + status + "]";
+		return "Driver [driverId=" + driverId + ", driverName=" + driverName + ", licenseNo=" + licenseNo + ", rating="
+				+ rating + ", cab=" + cab + ", status=" + status + "]";
 	}
+
+//
+//	public Driver(int i,String string, String string, double d, boolean b) {
+//	}
+//
+//	public Driver(int driverId,String driverName, String licenseNo, float rating, Cab cab, boolean status) {
+//		super();
+//		this.driverId = driverId;
+//		this.licenseNo = licenseNo;
+//		this.rating = rating;
+//		this.cab = cab;
+//		this.status = status;
+//	}
+//
+//	public int getDriverId() {
+//		return driverId;
+//	}
+//
+//	public void setDriverId(int driverId) {
+//		this.driverId = driverId;
+//	}
+//
+//	public String getLicenseNo() {
+//		return licenseNo;
+//	}
+//
+//	public void setLicenseNo(String licenseNo) {
+//		this.licenseNo = licenseNo;
+//	}
+//
+//	public float getRating() {
+//		return rating;
+//	}
+//
+//	public void setRating(float rating) {
+//		this.rating = rating;
+//	}
+//
+//	public Cab getCab() {
+//		return cab;
+//	}
+//
+//	public void setCab(Cab cab) {
+//		this.cab = cab;
+//	}
+//
+//	public boolean isStatus() {
+//		return status;
+//	}
+//
+//	public void setStatus(boolean status) {
+//		this.status = status;
+//	}
+//
+//	@Override
+//	public String toString() {
+//		return "Driver [driverId=" + driverId + ", licenseNo=" + licenseNo + ", rating=" + rating + ", cab=" + cab
+//				+ ", status=" + status + "]";
+//	}
 
 }

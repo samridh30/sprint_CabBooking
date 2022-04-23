@@ -91,8 +91,8 @@ public class TripBookingImplTest {
 	@Test
 	void BookCabTest() {
 		TripDto tripdto=new TripDto("Hyd","Andhra","Mini");
-		Cabservicedto cabbooktest=tripservice.BookCab(tripdto);
-		assertEquals(220,cabbooktest.getCustomerId());
+		TripBooking cabbooktest=tripservice.BookCab(tripdto);
+		assertEquals(220,cabbooktest.getCustomer().getCustomerId());
 		
 		}
 	

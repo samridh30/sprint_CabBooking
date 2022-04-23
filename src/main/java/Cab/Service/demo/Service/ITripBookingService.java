@@ -14,7 +14,7 @@ public interface ITripBookingService {
 	TripBooking calculateBill(int customerId);
 	boolean validateTrip(int customerId);
 	TripBooking endTrip();
-	Cabservicedto BookCab(TripDto tripdto);
+	TripBooking BookCab(TripDto tripdto);
 	
 
 }

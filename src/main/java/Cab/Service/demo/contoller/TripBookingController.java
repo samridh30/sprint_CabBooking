@@ -79,9 +79,9 @@ public class TripBookingController {
 	 * @link={http://localhost:8088/Trip/bookCab}l
 	 */
 	@PostMapping("/bookCab")
-	ResponseEntity<Cabservicedto> BookCab(@RequestBody TripDto tripdto) {
+	ResponseEntity<TripBooking> BookCab(@RequestBody TripDto tripdto) {
 //		LOG.info(fromlocation + "Feteched");
-		return new ResponseEntity<Cabservicedto>(trip.BookCab(tripdto), HttpStatus.OK);
+		return new ResponseEntity<TripBooking>(trip.BookCab(tripdto), HttpStatus.OK);
 	}
 
 }

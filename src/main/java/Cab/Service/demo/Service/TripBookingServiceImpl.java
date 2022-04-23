@@ -214,7 +214,7 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	 * @return Cabservicedto object will be returned
 	 */
 	@Override
-	public Cabservicedto BookCab(TripDto tripdto) {
+	public TripBooking BookCab(TripDto tripdto) {
 		if(appUser.loggedInUser.getRole()==Role.CUSTOMER) {
 		Optional<Customer> tripCust = custRepo.findById(appUser.loggedInUser.getCustomerId());
 		List<Driver> driver1 = driverRepo.findByCarType(tripdto.getCabType());;
@@ -232,7 +232,7 @@ public class TripBookingServiceImpl implements ITripBookingService {
 
 			Cabservicedto cabservicedto=  new Cabservicedto(customerdto.getCustomerId(),customerdto.getUsername(),book.getFromLocation(),book.getToLocation(),book.getFromDateTime(),
 					book.getToDateTime(),driverdto.getDriverId(),driverdto.getRating(),driverdto.getCab().getCarType(),book.getBill());
-			return cabservicedto;}
+			return book;}
 
 			}
 			else {

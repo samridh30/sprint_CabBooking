@@ -66,7 +66,7 @@ public class TripBookingImplTest {
 
 		Customer c= new Customer(220, "Srikanth","Srikanth@","Punjab",1234567890L, "Srikanth@gmail.com",Role.CUSTOMER);
 		Cab cab= new Cab(1,"Mini",20,true);
-		Driver d= new Driver(224,"Id1",4.7f,cab,true);
+		Driver d= new Driver(224,"Rohan","Id1",4.7f,cab,true);
 		TripBooking trip= new TripBooking(231,c,d,"hyd","kukatpally",now,now,false,56,79);
 		TripBooking updatetest=tripservice.updateTripBooking(trip);
 		assertEquals(79,updatetest.getBill());

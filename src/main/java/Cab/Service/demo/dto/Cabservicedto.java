@@ -1,6 +1,8 @@
 package Cab.Service.demo.dto;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import org.springframework.stereotype.Component;
 @Component
@@ -9,8 +11,8 @@ public class Cabservicedto {
 	private String customername;
 	private String fromLocation;
 	private String toLocation;
-	private LocalDateTime fromDateTime;
-	private LocalDateTime toDateTime;
+	private Instant fromDateTime;
+	private Instant toDateTime;
 	private int driverId;
 	private float rating;
 	private String cabtype;
@@ -25,7 +27,7 @@ public class Cabservicedto {
 	 */
 	
 	public Cabservicedto(int customerId, String customername, String fromLocation, String toLocation,
-			LocalDateTime fromDateTime, LocalDateTime toDateTime, int driverId, float rating, String cabtype,
+			Instant fromDateTime, Instant toDateTime, int driverId, float rating, String cabtype,
 			float bill) {
 		super();
 		this.customerId = customerId;
@@ -62,16 +64,16 @@ public class Cabservicedto {
 	public void setToLocation(String toLocation) {
 		this.toLocation = toLocation;
 	}
-	public LocalDateTime getFromDateTime() {
+	public Instant getFromDateTime() {
 		return fromDateTime;
 	}
-	public void setFromDateTime(LocalDateTime fromDateTime) {
+	public void setFromDateTime(Instant fromDateTime) {
 		this.fromDateTime = fromDateTime;
 	}
-	public LocalDateTime getToDateTime() {
+	public Instant getToDateTime() {
 		return toDateTime;
 	}
-	public void setToDateTime(LocalDateTime toDateTime) {
+	public void setToDateTime(Instant toDateTime) {
 		this.toDateTime = toDateTime;
 	}
 	public int getCustomerId() {

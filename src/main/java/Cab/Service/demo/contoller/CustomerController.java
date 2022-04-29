@@ -58,7 +58,7 @@ public class CustomerController {
 	}
 
 	@GetMapping("/logout")
-	public ResponseEntity<String> LoginCustomer() {
+	public ResponseEntity<String> LogoutCustomer() {
 //		LOG.info("All Customers Fetched");
 		return new ResponseEntity<String>(cust.logoutUser(), HttpStatus.OK);
 	}

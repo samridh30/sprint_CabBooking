@@ -85,7 +85,7 @@ public class CabServiceImpl implements ICabService {
 	@Override
 	public List<Cab> viewCabsOfType(String carType) {
 		if (AppUser.loggedInUser.toString() != null) {
-			if (AppUser.loggedInUser.getRole() == Role.CUSTOMER) {
+			if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
 				List<Cab> car = car_repo.findByCarType(carType);
 				return car;
 			} else {

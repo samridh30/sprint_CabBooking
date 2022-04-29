@@ -69,6 +69,11 @@ public class TripBookingController {
 	ResponseEntity<List<TripBooking>> ViewAllTripsCustomerById(@PathVariable(name = "Id") int Id) {
 		return new ResponseEntity<List<TripBooking>>(trip.ViewAllTripsCustomerById(Id), HttpStatus.OK);
 	}
+	
+	@GetMapping("/viewAllTripData")
+	ResponseEntity<List<TripBooking>> ViewAllTipData() {
+		return new ResponseEntity<List<TripBooking>>(trip.AllTripData(), HttpStatus.OK);
+	}
 
 	/**
 	 * @desc Ends the trip
@@ -85,7 +90,6 @@ public class TripBookingController {
 	 */
 	@PostMapping("/bookCab")
 	ResponseEntity<TripBooking> BookCab(@RequestBody TripDto tripdto) {
-//		LOG.info(fromlocation + "Feteched");
 		return new ResponseEntity<TripBooking>(trip.BookCab(tripdto), HttpStatus.OK);
 	}
 

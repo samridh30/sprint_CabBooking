@@ -218,6 +218,25 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		}
 
 	}
+	
+	public List<TripBooking> AllTripData() {
+		if(appUser.loggedInUser!=null ) {
+			if(appUser.loggedInUser.getRole()==Role.ADMIN) {
+				
+				return tripRepo.GetTripData();
+	
+			}else {
+				throw new InvalidUserException("Not Logged in as ADMIN");
+			}
+			
+			}
+	else {
+		throw new UserNotLoggedInException ("Login");
+	
+
+	}
+		
+	}
 
 	/**
 	 * @desc To End the trip

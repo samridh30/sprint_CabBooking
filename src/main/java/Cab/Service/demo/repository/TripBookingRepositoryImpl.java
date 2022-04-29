@@ -57,6 +57,9 @@ public interface TripBookingRepositoryImpl extends JpaRepository<TripBooking, In
 
 	@Query(value = "select * from trip_booking order by from_date_time", nativeQuery = true)
 	public List<TripBooking> findByDate();
+	
+	@Query(value = "select * from trip_booking", nativeQuery = true)
+	public List<TripBooking> GetTripData();
 
 	@Query(value = "select * from trip_booking where customer_id = :customerId and from_location = :fromLocation and to_location = :toLocation", nativeQuery = true)
 	public List<TripBooking> findByTripForDay(@Param("customerId") int customerId,

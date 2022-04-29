@@ -61,8 +61,13 @@ public class TripBookingController {
 	 */
 
 	@GetMapping("/view")
-	ResponseEntity<List<TripBooking>> viewAllTripsCustomerByCustomerId() {
+	ResponseEntity<List<TripBooking>> viewAllTripsCustomer() {
 		return new ResponseEntity<List<TripBooking>>(trip.ViewAllTripsCustomer(), HttpStatus.OK);
+	}
+	
+	@GetMapping("/viewAll/{Id}")
+	ResponseEntity<List<TripBooking>> ViewAllTripsCustomerById(@PathVariable(name = "Id") int Id) {
+		return new ResponseEntity<List<TripBooking>>(trip.ViewAllTripsCustomerById(Id), HttpStatus.OK);
 	}
 
 	/**

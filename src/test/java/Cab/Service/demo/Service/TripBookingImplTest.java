@@ -2,7 +2,9 @@ package Cab.Service.demo.Service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +24,8 @@ import Cab.Service.demo.model.TripBooking;
 @SpringBootTest
 public class TripBookingImplTest {
 	
-	LocalDateTime now = LocalDateTime.now();
+	Date in = new Date();
+	Instant now = Instant.ofEpochMilli(in.getTime());
 	
 	@Autowired
 	TripBookingServiceImpl tripservice;

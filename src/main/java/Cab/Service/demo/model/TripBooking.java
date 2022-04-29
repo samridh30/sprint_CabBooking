@@ -1,6 +1,8 @@
 package Cab.Service.demo.model;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -28,8 +30,8 @@ public class TripBooking {
 	private Driver driver;
 	private String fromLocation;
 	private String toLocation;
-	private LocalDateTime fromDateTime;
-	private LocalDateTime toDateTime;
+	private Instant fromDateTime;
+	private Instant toDateTime;
 
 	
 	private boolean status = true;
@@ -44,7 +46,7 @@ public class TripBooking {
 	 * @desc TripBooking Constructor
 	 */
 	public TripBooking(int tripBookingId, Customer customer, Driver driver, String fromLocation, String toLocation,
-			LocalDateTime fromDateTime, LocalDateTime toDateTime, boolean status, float distanceInKm, float bill) {
+			Instant fromDateTime, Instant toDateTime, boolean status, float distanceInKm, float bill) {
 		super();
 		this.tripBookingId = tripBookingId;
 		this.customer = customer;
@@ -62,7 +64,7 @@ public class TripBooking {
 	 * @desc TripBooking Constructor
 	 */
 	public TripBooking(Customer customer, Driver driver, String fromLocation, String toLocation,
-			LocalDateTime fromDateTime, LocalDateTime toDateTime, boolean status, float distanceInKm, float bill) {
+			Instant fromDateTime, Instant toDateTime, boolean status, float distanceInKm, float bill) {
 		super();
 		this.customer = customer;
 		this.driver = driver;
@@ -119,19 +121,19 @@ public class TripBooking {
 		this.toLocation = toLocation;
 	}
 
-	public LocalDateTime getFromDateTime() {
+	public Instant getFromDateTime() {
 		return fromDateTime;
 	}
 
-	public void setFromDateTime(LocalDateTime fromDateTime) {
+	public void setFromDateTime(Instant fromDateTime) {
 		this.fromDateTime = fromDateTime;
 	}
 
-	public LocalDateTime getToDateTime() {
+	public Instant getToDateTime() {
 		return toDateTime;
 	}
 
-	public void setToDateTime(LocalDateTime toDateTime) {
+	public void setToDateTime(Instant toDateTime) {
 		this.toDateTime = toDateTime;
 	}
 

@@ -1,7 +1,10 @@
 package Cab.Service.demo.Service;
-
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,8 +47,16 @@ public class TripBookingServiceImpl implements ITripBookingService {
 
 	@Autowired
 	private CustomerServiceImpl appUser;
+	
+	Date in = new Date();
+	Instant now = Instant.ofEpochMilli(in.getTime());
+//	LocalDateTime ldt = LocalDateTime.ofInstant(in.toInstant(), ZoneId.systemDefault());
+//	Date now = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
 
-	LocalDateTime now = LocalDateTime.now();
+//	LocalDateTime local = LocalDateTime.now();
+//	ZonedDateTime zonedDateTime = local.atZone(ZoneId.systemDefault());
+//    Date now = (Date) Date.from(zonedDateTime.toInstant());
+	
 
 	@Override
 	public TripBooking insertTripBooking(TripBooking tripBooking) {
@@ -152,6 +163,33 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	}
 }
 	
+	public List<TripBooking> ViewAllTripsCustomerById(int Id) {
+		System.out.println("Called");
+		/////////////////////////
+		if(appUser.loggedInUser!=null ) {
+			if(appUser.loggedInUser.getRole()==Role.ADMIN) {
+
+
+		List<TripBooking> trip = tripRepo.findByCustomer(Id);
+		
+		if(trip!=null) {
+
+		return trip;}
+		else {
+			throw new TripNotFoundException("No Trips Found For Customer Id- "+ Id);
+		
+		} 
+	
+			}else {
+				throw new InvalidUserException("Not Logged in as ADMIN");
+			}
+			
+			}
+	else {
+		throw new UserNotLoggedInException ("Login");
+	}
+}
+	
 	
 
 	/**
@@ -241,5 +279,8 @@ public class TripBookingServiceImpl implements ITripBookingService {
 			throw new InvalidUserException("Not logged in as CUSTOMER");}
 
 	}
-}
+
+	
+
+	}
 

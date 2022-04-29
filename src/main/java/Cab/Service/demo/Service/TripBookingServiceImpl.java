@@ -1,7 +1,7 @@
 package Cab.Service.demo.Service;
 
 import java.time.LocalDateTime;
-
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -122,6 +122,7 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	 */
 	@Override
 	public List<TripBooking> ViewAllTripsCustomer() {
+		/////////////////////////
 		if(appUser.loggedInUser!=null ) {
 			if(appUser.loggedInUser.getRole()==Role.CUSTOMER) {
 			int customerId=appUser.loggedInUser.getCustomerId();
@@ -131,6 +132,7 @@ public class TripBookingServiceImpl implements ITripBookingService {
 		List<TripBooking> trip = tripRepo.findByCustomer(customerId);
 		
 		if(trip!=null) {
+
 		return trip;}
 		else {
 			throw new TripNotFoundException("No Trips Found For Customer Id- "+ customerId);

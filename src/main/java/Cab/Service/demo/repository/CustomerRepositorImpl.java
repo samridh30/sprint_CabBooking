@@ -39,7 +39,7 @@ public interface CustomerRepositorImpl extends JpaRepository<Customer, Integer> 
 	 */
 	@Transactional
 	@Modifying
-	@Query(value = "delete from customer c where c.customer_id=:Id", nativeQuery = true)
+	@Query(value = "update customer set status='Disabled' where customer_id=:Id", nativeQuery = true)
 	void deleteCustomerById(@Param("Id") int Id);
 	
 	

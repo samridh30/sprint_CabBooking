@@ -42,7 +42,7 @@ public class CustomerServiceImplTest {
 	@Disabled
 	@Test
 	void insertCustomerTest() {
-		Customer c= new Customer(230,"Testing","Testing@","Hyderabad",1234567890L, "Testing@gmail.com",Role.CUSTOMER);
+		Customer c= new Customer(230,"Testing","Testing@","Hyderabad",1234567890L, "Testing@gmail.com",Role.CUSTOMER,"Active");
 		Customer insertTest=cusService.insertCustomer(c);
 		assertEquals("Testing@gmail.com",insertTest.getEmail());
 		assertEquals("Testing@", insertTest.getPassword());
@@ -55,7 +55,7 @@ public class CustomerServiceImplTest {
 	@Test
 	void updateCustomerTest() {
 		
-		Customer expected= new Customer(230,"Testing","Testing@","Hyderabad",1234567890L, "Testing@gmail.com",Role.CUSTOMER);
+		Customer expected= new Customer(230,"Testing","Testing@","Hyderabad",1234567890L, "Testing@gmail.com",Role.CUSTOMER,"Active");
 
 		Customer actual= cusService.updateCustomer(expected);
 		assertEquals(expected,actual);
@@ -65,9 +65,9 @@ public class CustomerServiceImplTest {
 	@Test
 	void updateCustomerNegativeTest() {
 		
-		Customer unexcepted= new Customer(9,"Testing","Testing@","NYZ",1234567890L, "dnhuuo@gmail.com",Role.CUSTOMER);
+		Customer unexcepted= new Customer(9,"Testing","Testing@","NYZ",1234567890L, "dnhuuo@gmail.com",Role.CUSTOMER,"Active");
 
-		Customer actual= cusService.updateCustomer(new Customer(230,"Testing","Testing@","NYZ",1234567890L, "Testing@gmail.com",Role.CUSTOMER));
+		Customer actual= cusService.updateCustomer(new Customer(230,"Testing","Testing@","NYZ",1234567890L, "Testing@gmail.com",Role.CUSTOMER,"Active"));
 		assertNotEquals(unexcepted.getCustomerId(),actual.getCustomerId());
 		}
 

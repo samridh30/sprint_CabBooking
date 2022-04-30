@@ -46,6 +46,7 @@ public class CustomerServiceImpl implements ICustomerService {
 			if (cus.isPresent()) {
 				throw new InvalidUserNamePasswordException("Email Address Already Exists");
 			} else {
+				customer.setStatus("Active");
 				custRepo.save(customer);
 				return customer;
 			}
@@ -90,7 +91,7 @@ public class CustomerServiceImpl implements ICustomerService {
 			Optional<Customer> cus = custRepo.findById(customerId);
 			if (cus.isPresent()) {
 
-				trip.deleteTripByCustomerId(customerId);
+//				trip.deleteTripByCustomerId(customerId);
 				custRepo.deleteCustomerById(customerId);
 				return cus.get();
 			} else {
@@ -156,7 +157,8 @@ public class CustomerServiceImpl implements ICustomerService {
 	public Customer loginUser(AppUser user) {
 
 		Optional<Customer> cust = custRepo.findByEmail(user.getEmail());
-		if (user.getPassword().equals(cust.get().getPassword())) {
+		System.out.println(cust.get());
+		if (user.getPassword().equals(cust.get().getPassword()) && cust.get().getStatus().equals("Active")) {
 			loggedInUser = cust.get();
 			return cust.get();
 		} else {

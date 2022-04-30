@@ -29,6 +29,7 @@ public class Customer {
 	private String email;
 	private Role role;
 	
+	private String status;
 	
 
 	public Customer() {
@@ -36,7 +37,24 @@ public class Customer {
 	}
 	
 	
-	public Customer(int customerId,String userName,String password,String address, Long mobileNumber, String email, Role role) {
+//	public Customer(int customerId,String userName,String password,String address, Long mobileNumber, String email, Role role) {
+//		super();
+//		this.customerId = customerId;
+//		this.userName = userName;
+//		this.password = password;
+//		this.address = address;
+//		this.mobileNumber = mobileNumber;
+//		this.email = email;
+//		this.role = role;
+//	}
+	
+	
+	
+	
+
+
+		public Customer(int customerId, String userName, String password, String address,
+			Long mobileNumber, String email, Role role, String status) {
 		super();
 		this.customerId = customerId;
 		this.userName = userName;
@@ -45,9 +63,8 @@ public class Customer {
 		this.mobileNumber = mobileNumber;
 		this.email = email;
 		this.role = role;
+		this.status = status;
 	}
-	
-	
 
 
 		public int getCustomerId() {
@@ -105,6 +122,18 @@ public class Customer {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+	
+	
+
+	public String getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 
 	@Override
 	public int hashCode() {
@@ -140,10 +169,14 @@ public class Customer {
 		return true;
 	}
 
+
 	@Override
 	public String toString() {
 		return "Customer [customerId=" + customerId + ", userName=" + userName + ", password=" + password + ", address="
-				+ address + ", mobileNumber=" + mobileNumber + ", email=" + email + ", role=" + role + "]";
+				+ address + ", mobileNumber=" + mobileNumber + ", email=" + email + ", role=" + role + ", status="
+				+ status + "]";
 	}
+
+	
 
 }

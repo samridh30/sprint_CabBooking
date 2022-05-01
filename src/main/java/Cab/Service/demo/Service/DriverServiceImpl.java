@@ -10,6 +10,7 @@ import Cab.Service.demo.Exception.DriverAlreadyExistsException;
 import Cab.Service.demo.Exception.DriverNotFoundException;
 import Cab.Service.demo.Exception.InvalidUserException;
 import Cab.Service.demo.Exception.UserNotLoggedInException;
+import Cab.Service.demo.dto.Ratedto;
 import Cab.Service.demo.model.Driver;
 import Cab.Service.demo.model.Role;
 import Cab.Service.demo.repository.DriverRepositoryImpl;
@@ -57,6 +58,29 @@ public class DriverServiceImpl implements IDriverService {
 				}
 			} else {
 				throw new InvalidUserException("Not LoggedIn as Admin");
+			}
+
+		} else {
+			throw new UserNotLoggedInException("Login First");
+		}
+
+	}
+	
+	public Driver rateDriver(Ratedto driver) {
+		if (AppUser.loggedInUser.toString() != null) {
+			if (AppUser.loggedInUser.getRole() == Role.CUSTOMER) {
+
+				Optional<Driver> dri = driRepo.findById(driver.getDriverId());
+				if (dri.isPresent()) {
+					float rating= (dri.get().getRating()+driver.getRating())/2;
+					dri.get().setRating(rating);
+					driRepo.save(dri.get());
+					return dri.get();
+				} else {
+					throw new DriverNotFoundException("Driver is not present");
+				}
+			} else {
+				throw new InvalidUserException("Not LoggedIn as CUSTOMER");
 			}
 
 		} else {

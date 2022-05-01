@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import Cab.Service.demo.Service.DriverServiceImpl;
+import Cab.Service.demo.dto.Ratedto;
 import Cab.Service.demo.model.Driver;
 
 @RestController
@@ -48,6 +49,14 @@ public class DriverController {
 		LOG.info(driver.toString());
 
 		return new ResponseEntity<Driver>(drive.updateDriver(driver), HttpStatus.OK);
+
+	}
+	
+	@PutMapping("/rate-driver")
+	public ResponseEntity<Driver> rateDriverById(@RequestBody Ratedto driver) {
+		LOG.info(driver.toString());
+
+		return new ResponseEntity<Driver>(drive.rateDriver(driver), HttpStatus.OK);
 
 	}
 

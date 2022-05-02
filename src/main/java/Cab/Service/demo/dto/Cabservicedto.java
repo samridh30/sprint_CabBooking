@@ -11,8 +11,8 @@ public class Cabservicedto {
 	private String customername;
 	private String fromLocation;
 	private String toLocation;
-	private Instant fromDateTime;
-	private Instant toDateTime;
+	private String fromDateTime;
+	private String toDateTime;
 	private int driverId;
 	private float rating;
 	private String cabtype;
@@ -27,7 +27,7 @@ public class Cabservicedto {
 	 */
 	
 	public Cabservicedto(int customerId, String customername, String fromLocation, String toLocation,
-			Instant fromDateTime, Instant toDateTime, int driverId, float rating, String cabtype,
+			String fromDateTime, String toDateTime, int driverId, float rating, String cabtype,
 			float bill) {
 		super();
 		this.customerId = customerId;
@@ -64,16 +64,16 @@ public class Cabservicedto {
 	public void setToLocation(String toLocation) {
 		this.toLocation = toLocation;
 	}
-	public Instant getFromDateTime() {
+	public String getFromDateTime() {
 		return fromDateTime;
 	}
-	public void setFromDateTime(Instant fromDateTime) {
+	public void setFromDateTime(String fromDateTime) {
 		this.fromDateTime = fromDateTime;
 	}
-	public Instant getToDateTime() {
+	public String getToDateTime() {
 		return toDateTime;
 	}
-	public void setToDateTime(Instant toDateTime) {
+	public void setToDateTime(String toDateTime) {
 		this.toDateTime = toDateTime;
 	}
 	public int getCustomerId() {

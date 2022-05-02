@@ -66,6 +66,13 @@ public class CabController {
 
 	}
 
+	// http://localhost:8088/cab/viewCabsOfType/{Type}
+	@GetMapping("/availableCabs")
+	public ResponseEntity<List<Integer>> getAvailableCabs() {
+		return new ResponseEntity<List<Integer>>(car.getAvailableCabs(), HttpStatus.OK);
+
+	}
+
 	// http://localhost:8088/cab/countCabsOfType/{Type}
 	@GetMapping("/countCabsOfType/{Type}")
 	public ResponseEntity<Integer> countCabsOfType(@PathVariable(name = "Type") String Type) {

@@ -3,6 +3,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -48,8 +49,13 @@ public class TripBookingServiceImpl implements ITripBookingService {
 	@Autowired
 	private CustomerServiceImpl appUser;
 	
-	Date in = new Date();
-	Instant now = Instant.ofEpochMilli(in.getTime());
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern(
+        "dd-MM-yyyy HH:mm:ss a");
+	LocalDateTime now1 = LocalDateTime.now();
+	String now = now1.format(formatter);
+	
+//	Date in = new Date();
+//	Instant now = Instant.ofEpochMilli(in.getTime());
 //	LocalDateTime ldt = LocalDateTime.ofInstant(in.toInstant(), ZoneId.systemDefault());
 //	Date now = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
 

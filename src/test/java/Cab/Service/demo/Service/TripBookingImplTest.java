@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
@@ -24,8 +25,10 @@ import Cab.Service.demo.model.TripBooking;
 @SpringBootTest
 public class TripBookingImplTest {
 	
-	Date in = new Date();
-	Instant now = Instant.ofEpochMilli(in.getTime());
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern(
+	        "dd-MM-yyyy HH:mm:ss a");
+		LocalDateTime now1 = LocalDateTime.now();
+		String now = now1.format(formatter);
 	
 	@Autowired
 	TripBookingServiceImpl tripservice;

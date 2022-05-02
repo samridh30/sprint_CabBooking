@@ -30,8 +30,8 @@ public class TripBooking {
 	private Driver driver;
 	private String fromLocation;
 	private String toLocation;
-	private Instant fromDateTime;
-	private Instant toDateTime;
+	private String fromDateTime;
+	private String toDateTime;
 
 	
 	private boolean status = true;
@@ -46,7 +46,7 @@ public class TripBooking {
 	 * @desc TripBooking Constructor
 	 */
 	public TripBooking(int tripBookingId, Customer customer, Driver driver, String fromLocation, String toLocation,
-			Instant fromDateTime, Instant toDateTime, boolean status, float distanceInKm, float bill) {
+			String fromDateTime, String toDateTime, boolean status, float distanceInKm, float bill) {
 		super();
 		this.tripBookingId = tripBookingId;
 		this.customer = customer;
@@ -64,7 +64,7 @@ public class TripBooking {
 	 * @desc TripBooking Constructor
 	 */
 	public TripBooking(Customer customer, Driver driver, String fromLocation, String toLocation,
-			Instant fromDateTime, Instant toDateTime, boolean status, float distanceInKm, float bill) {
+			String fromDateTime, String toDateTime, boolean status, float distanceInKm, float bill) {
 		super();
 		this.customer = customer;
 		this.driver = driver;
@@ -121,19 +121,19 @@ public class TripBooking {
 		this.toLocation = toLocation;
 	}
 
-	public Instant getFromDateTime() {
+	public String getFromDateTime() {
 		return fromDateTime;
 	}
 
-	public void setFromDateTime(Instant fromDateTime) {
+	public void setFromDateTime(String fromDateTime) {
 		this.fromDateTime = fromDateTime;
 	}
 
-	public Instant getToDateTime() {
+	public String getToDateTime() {
 		return toDateTime;
 	}
 
-	public void setToDateTime(Instant toDateTime) {
+	public void setToDateTime(String toDateTime) {
 		this.toDateTime = toDateTime;
 	}
 

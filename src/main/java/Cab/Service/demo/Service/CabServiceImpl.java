@@ -40,7 +40,6 @@ public class CabServiceImpl implements ICabService {
 			throw new UserNotLoggedInException("Login First");
 		}
 	}
-	
 
 	@Override
 	public Cab updateCab(Cab cab) {
@@ -62,7 +61,6 @@ public class CabServiceImpl implements ICabService {
 		}
 	}
 
-
 	@Override
 	public Cab deleteCab(int cabId) {
 		if (AppUser.loggedInUser.toString() != null) {
@@ -74,6 +72,21 @@ public class CabServiceImpl implements ICabService {
 				} else {
 					throw new CabNotFoundException("Invalid Id");
 				}
+			} else {
+				throw new InvalidUserException("Not logged in as admin");
+			}
+		} else {
+			throw new UserNotLoggedInException("Login First");
+		}
+	}
+
+	@Override
+	public Cab getCabById(int cabId) {
+		if (AppUser.loggedInUser.toString() != null) {
+			if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
+				Optional<Cab> car = car_repo.findById(cabId);
+				System.out.println(car.get());
+				return car.get();
 			} else {
 				throw new InvalidUserException("Not logged in as admin");
 			}
@@ -125,7 +138,3 @@ public class CabServiceImpl implements ICabService {
 
 	}
 }
-
-	
-
-

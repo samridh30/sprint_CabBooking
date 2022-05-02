@@ -22,29 +22,30 @@ import Cab.Service.demo.model.Cab;
 
 @RestController
 @RequestMapping("/cab")
-@CrossOrigin(origins="http://localhost:3000/")
+@CrossOrigin(origins = "http://localhost:3000/")
 public class CabController {
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private CabServiceImpl car;
-	
+
 	// http://localhost:8088/cab/insert-cab
-		// Inserts a new cab
+	// Inserts a new cab
 	@PostMapping("/insert-cab")
 	public ResponseEntity<Cab> insertCab(@RequestBody Cab cab) {
 		LOG.info(cab.toString());
 		return new ResponseEntity<Cab>(car.insertCab(cab), HttpStatus.CREATED);
 	}
+
 	// http://localhost:8088/cab/update-cab
-		// Updates an existing cab
+	// Updates an existing cab
 	@PutMapping("/update-cab")
 	public ResponseEntity<Cab> updateCab(@RequestBody Cab cab) {
 		LOG.info(cab.toString());
 		return new ResponseEntity<Cab>(car.updateCab(cab), HttpStatus.CREATED);
 	}
-	
+
 	// http://localhost:8088/cab/delete-cab
-		// deletes an existing cab based on cabId
+	// deletes an existing cab based on cabId
 	@DeleteMapping("/delete/{cabId}")
 	public ResponseEntity<Cab> deleteCab(@PathVariable(name = "cabId") int cabId) {
 		LOG.info(Integer.toString(cabId));
@@ -57,18 +58,24 @@ public class CabController {
 		return new ResponseEntity<List<Cab>>(car.viewAllCabs(), HttpStatus.OK);
 
 	}
+
 	// http://localhost:8088/cab/viewCabsOfType/{Type}
 	@GetMapping("/viewCabsOfType/{Type}")
-	public ResponseEntity<List<Cab>> viewCabsOfType(@PathVariable(name="Type") String Type){
-		return new ResponseEntity<List<Cab>>(car.viewCabsOfType(Type),HttpStatus.OK);
-		
+	public ResponseEntity<List<Cab>> viewCabsOfType(@PathVariable(name = "Type") String Type) {
+		return new ResponseEntity<List<Cab>>(car.viewCabsOfType(Type), HttpStatus.OK);
+
 	}
-	
+
 	// http://localhost:8088/cab/countCabsOfType/{Type}
 	@GetMapping("/countCabsOfType/{Type}")
-	public ResponseEntity<Integer> countCabsOfType(@PathVariable(name="Type") String Type) {
-		return new ResponseEntity<Integer>(car.countCabsOfType(Type),HttpStatus.OK);
+	public ResponseEntity<Integer> countCabsOfType(@PathVariable(name = "Type") String Type) {
+		return new ResponseEntity<Integer>(car.countCabsOfType(Type), HttpStatus.OK);
 
-		
+	}
+
+	@GetMapping("/getCabById/{id}")
+	public ResponseEntity<Cab> getCabByIDs(@PathVariable(name = "id") int cabId) {
+		return new ResponseEntity<Cab>(car.getCabById(cabId), HttpStatus.OK);
+
 	}
 }

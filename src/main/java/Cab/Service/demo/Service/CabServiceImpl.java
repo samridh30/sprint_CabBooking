@@ -137,4 +137,17 @@ public class CabServiceImpl implements ICabService {
 		}
 
 	}
+
+	public List<Integer> getAvailableCabs() {
+		if (AppUser.loggedInUser.toString() != null) {
+			if (AppUser.loggedInUser.getRole() == Role.ADMIN) {
+				return car_repo.availableCabs();
+			} else {
+				throw new InvalidUserException("Not logged in as admin");
+			}
+		} else {
+			throw new UserNotLoggedInException("Login first");
+		}
+
+	}
 }

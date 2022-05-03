@@ -11,7 +11,7 @@ public interface ICustomerService {
 
 	Customer updateCustomer(Customer customer);
 
-	Customer deleteCustomer();
+//	Customer deleteCustomer();
 
 	List<Customer> viewCustomers();
 
@@ -20,5 +20,12 @@ public interface ICustomerService {
 	Customer loginUser(AppUser user);
 
 	Customerdto viewCustomer();
+
+	/**
+	 * @desc To Delete a Customer
+	 * @return Deleted Customer Object
+	 * 
+	 */
+	Customer deleteCustomer(int customerId);
 
 }

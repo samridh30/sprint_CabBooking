@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +26,7 @@ import Cab.Service.demo.model.Customer;
 
 @RestController
 @RequestMapping("/Customer")
-@CrossOrigin(origins="http://localhost:3000/")
+@CrossOrigin(origins = "http://localhost:3000/")
 public class CustomerController {
 	@Autowired
 	private CustomerServiceImpl cust;
@@ -46,9 +47,9 @@ public class CustomerController {
 	}
 
 	// http://localhost:8088/Customer/delete/{Id}
-	@DeleteMapping("/delete")
-	public ResponseEntity<Customer> deleteCustomer() {
-		return new ResponseEntity<Customer>(cust.deleteCustomer(), HttpStatus.OK);
+	@DeleteMapping("/delete/{Id}")
+	public ResponseEntity<Customer> deleteCustomer(@PathVariable(name = "Id") int customerId) {
+		return new ResponseEntity<Customer>(cust.deleteCustomer(customerId), HttpStatus.OK);
 	}
 
 	@PostMapping("/login")

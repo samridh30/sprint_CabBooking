@@ -20,7 +20,7 @@ import Cab.Service.demo.repository.TripBookingRepositoryImpl;
 
 /**
  * @desc Class for Customer services
- * @author  Srikanth
+ * @author Srikanth
  * 
  */
 @Service
@@ -33,7 +33,7 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Autowired
 	Customer loggedInUser;
-	
+
 	/**
 	 * @desc To Register a New customer to DataBase
 	 * @return Customer Object
@@ -42,16 +42,14 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Override
 	public Customer insertCustomer(Customer customer) {
-			Optional<Customer> cus = custRepo.findByEmail(customer.getEmail());
-			if (cus.isPresent()) {
-				throw new InvalidUserNamePasswordException("Email Address Already Exists");
-			} else {
-				customer.setStatus("Active");
-				custRepo.save(customer);
-				return customer;
-			}
-		
-
+		Optional<Customer> cus = custRepo.findByEmail(customer.getEmail());
+		if (cus.isPresent()) {
+			throw new InvalidUserNamePasswordException("Email Address Already Exists");
+		} else {
+			customer.setStatus("Active");
+			custRepo.save(customer);
+			return customer;
+		}
 
 	}
 
@@ -62,32 +60,32 @@ public class CustomerServiceImpl implements ICustomerService {
 	 */
 	@Override
 	public Customer updateCustomer(Customer customer) {
-		if (loggedInUser.getRole() != null ) {
-			if(loggedInUser.getCustomerId()==customer.getCustomerId()) {
-			Optional<Customer> cus = custRepo.findById(customer.getCustomerId());
-			if (cus.isPresent()) {
-				custRepo.save(customer);
-				return customer;
+		if (loggedInUser.getRole() != null) {
+			if (loggedInUser.getCustomerId() == customer.getCustomerId()) {
+				Optional<Customer> cus = custRepo.findById(customer.getCustomerId());
+				if (cus.isPresent()) {
+					custRepo.save(customer);
+					return customer;
+				} else {
+					throw new CustomerNotFoundException("Invalid Customer");
+				}
 			} else {
-				throw new CustomerNotFoundException("Invalid Customer");
-			}
-		}else{
 				throw new InvalidAccessException("Access Denied");
 			}
+		} else {
+			throw new UserNotLoggedInException("User Not Login");
 		}
-			else {
-			throw new UserNotLoggedInException("User Not Login");}
 	}
 
 	/**
-	 * @desc To Delete a Customer 
+	 * @desc To Delete a Customer
 	 * @return Deleted Customer Object
 	 * 
 	 */
 	@Override
-	public Customer deleteCustomer() {
+	public Customer deleteCustomer(int customerId) {
 		if (loggedInUser.getRole() != null) {
-			int customerId=loggedInUser.getCustomerId();
+//			int customerId = loggedInUser.getCustomerId();
 			Optional<Customer> cus = custRepo.findById(customerId);
 			if (cus.isPresent()) {
 
@@ -98,10 +96,10 @@ public class CustomerServiceImpl implements ICustomerService {
 				throw new CustomerNotFoundException("Invalid Id-" + customerId);
 
 			}
-			
-			}
-			
-		 else {
+
+		}
+
+		else {
 			throw new UserNotLoggedInException("User Not Login");
 		}
 
@@ -162,15 +160,13 @@ public class CustomerServiceImpl implements ICustomerService {
 			loggedInUser = cust.get();
 			return cust.get();
 		} else {
-			throw new InvalidUserNamePasswordException("Invalid UserName or Password");}
+			throw new InvalidUserNamePasswordException("Invalid UserName or Password");
+		}
 	}
 
-
-	
-
 	/**
-	 * @desc Logout fuction 
-	 * @author  String(User Name)
+	 * @desc Logout fuction
+	 * @author String(User Name)
 	 * 
 	 */
 	@Override
@@ -182,7 +178,6 @@ public class CustomerServiceImpl implements ICustomerService {
 		} else {
 			throw new UserNotLoggedInException("Login First");
 		}
-		
 
 	}
 }
